@@ -366,12 +366,138 @@ Person him=new Him();
 ##### Benefits.
 - Data Hiding, increases flexibility and reusability.
 
+### 23- Introduce the Class modifiers in dart "3"! ?
+
+#### No modifier.
+
+##### To allow unrestricted permission to construct or subtype from any library, use a class or mixin declaration without a modifier. By default, you can:
+- Construct new instances of a class.
+-  Extend a class to create a new subtype.
+-  Implement a class or mixin’s interface.
+-  Mix in a mixin or mixin class.
 
 
+#### abstract.
+- To define a class that doesn’t require a full, concrete implementation of its entire interface, use the abstract modifier.
+- Abstract classes cannot be constructed from any library, whether its own or an outside library. Abstract classes often have abstract methods.
+- If you want your abstract class to appear to be instantiable, define a factory constructor.
+```
+// Library a.dart
+abstract class Vehicle {
+  void moveForward(int meters);
+}
 
+// Library b.dart
+import 'a.dart';
 
+// Error: Cannot be constructed
+Vehicle myVehicle = Vehicle();
 
+// Can be extended
+class Car extends Vehicle {
+  int passengers = 4;
+  // ···
+}
 
+// Can be implemented
+class MockVehicle implements Vehicle {
+  @override
+  void moveForward(int meters) {
+    // ...
+  }
+}
+```
 
+#### base.
+##### To enforce inheritance of a class or mixin’s implementation, use the base modifier. A base class disallows implementation outside of its own library. This guarantees:
+- The base class constructor is called whenever an instance of a subtype of the class is created.
+- All implemented private members exist in subtypes.
+- A new implemented member in a base class does not break subtypes, since all subtypes inherit the new member. This is true unless the subtype already declares a member with the same name and an incompatible signature.
+- You must mark any class which implements or extends a base class as base, final, or sealed. This prevents outside libraries from breaking the base class guarantees.
 
+```
+// Library a.dart
+base class Vehicle {
+  void moveForward(int meters) {
+    // ...
+  }
+}
 
+// Library b.dart
+import 'a.dart';
+
+// Can be constructed
+Vehicle myVehicle = Vehicle();
+
+// Can be extended
+base class Car extends Vehicle {
+  int passengers = 4;
+  // ...
+}
+
+// ERROR: Cannot be implemented
+base class MockVehicle implements Vehicle {
+  @override
+  void moveForward() {
+    // ...
+  }
+}
+```
+
+#### interface.
+##### To define an interface, use the interface modifier. Libraries outside of the interface’s own defining library can implement the interface, but not extend it. This guarantees:
+- When one of the class’s instance methods calls another instance method on this, it will always invoke a known implementation of the method from the same library.
+- Other libraries can’t override methods that the interface class’s own methods might later call in unexpected ways. This reduces the fragile base class problem.
+```
+// Library a.dart
+interface class Vehicle {
+  void moveForward(int meters) {
+    // ...
+  }
+}
+
+// Library b.dart
+import 'a.dart';
+
+// Can be constructed
+Vehicle myVehicle = Vehicle();
+
+// ERROR: Cannot be inherited
+class Car extends Vehicle {
+  int passengers = 4;
+  // ...
+}
+
+// Can be implemented
+class MockVehicle implements Vehicle {
+  @override
+  void moveForward(int meters) {
+    // ...
+  }
+}
+```
+
+#### abstract interface.
+- The most common use for the interface modifier is to define a pure interface. Combine the interface and abstract modifiers for an abstract interface class.
+- Like an interface class, other libraries can implement, but cannot inherit, a pure interface. Like an abstract class, a pure interface can have abstract members.
+
+<br/>
+
+#### final.
+
+#### sealed.
+
+### 24- What is Enum ?
+### 25- Difference Between Enum and sealed class.
+### 26- Extenstions in dart?
+### 27- Named Constructor?
+### 28- Factory constructor?
+### 29- Design patterns?
+### 30- Iterables?
+### 31- this keyword?
+### 32- Types of streams?
+### 33- Get, Post, Delete, update?
+### 34- Blocprovider, bloclistener, blocbuilder?
+### 35- listview, listview.builder?
+### 36- AssetImage, Image.asset?
+### 37- insureinitialized?
