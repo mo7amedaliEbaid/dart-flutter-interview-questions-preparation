@@ -5,8 +5,34 @@
 </p>
 
 ## Flutter architectural overview.
-### Architectural layers.
 
+- Flutter is a cross-platform UI toolkit that is designed to allow code reuse across operating systems such as iOS and Android, while also allowing applications to interface directly with underlying platform services. The goal is to enable developers to deliver high-performance apps that feel natural on different platforms, embracing differences where they exist while sharing as much code as possible.
+
+- During development, Flutter apps run in a VM that offers stateful hot reload of changes without needing a full recompile. For release, Flutter apps are compiled directly to machine code, whether Intel x64 or ARM instructions, or to JavaScript if targeting the web. The framework is open source, with a permissive BSD license, and has a thriving ecosystem of third-party packages that supplement the core library functionality.
+
+
+### Architectural layers.
+<p float="left">
+   <img src="https://github.com/mo7amedaliEbaid/dart-flutter-interview-questions/blob/b3f2edbccd35b594ea589729248c3d4b322938ca/assets/flutt.png" width="770" />
+</p>
+
+- Flutter is designed as an extensible, layered system. It exists as a series of independent libraries that each depend on the underlying layer. No layer has privileged access to the layer below, and every part of the framework level is designed to be optional and replaceable.
+
+#### Embedder.
+- To the underlying operating system, Flutter applications are packaged in the same way as any other native application. A platform-specific embedder provides an entrypoint; coordinates with the underlying operating system for access to services like rendering surfaces, accessibility, and input; and manages the message event loop. The embedder is written in a language that is appropriate for the platform: currently Java and C++ for Android, Objective-C/Objective-C++ for iOS and macOS, and C++ for Windows and Linux. Using the embedder, Flutter code can be integrated into an existing application as a module, or the code may be the entire content of the application. Flutter includes a number of embedders for common target platforms, but other embedders also exist.
+
+#### Engine.
+- At the core of Flutter is the Flutter engine, which is mostly written in C++ and supports the primitives necessary to support all Flutter applications. The engine is responsible for rasterizing composited scenes whenever a new frame needs to be painted. It provides the low-level implementation of Flutter’s core API, including graphics (through Impeller on iOS and coming to Android, and Skia on other platforms) text layout, file and network I/O, accessibility support, plugin architecture, and a Dart runtime and compile toolchain.
+- The engine is exposed to the Flutter framework through dart:ui, which wraps the underlying C++ code in Dart classes. This library exposes the lowest-level primitives, such as classes for driving input, graphics, and text rendering subsystems.
+
+#### Framework.
+- Typically, developers interact with Flutter through the Flutter framework, which provides a modern, reactive framework written in the Dart language. It includes a rich set of platform, layout, and foundational libraries, composed of a series of layers. Working from the bottom to the top, we have:
+
+- Basic foundational classes, and building block services such as animation, painting, and gestures that offer commonly used abstractions over the underlying foundation.
+- The rendering layer provides an abstraction for dealing with layout. With this layer, you can build a tree of renderable objects. You can manipulate these objects dynamically, with the tree automatically updating the layout to reflect your changes.
+- The widgets layer is a composition abstraction. Each render object in the rendering layer has a corresponding class in the widgets layer. In addition, the widgets layer allows you to define combinations of classes that you can reuse. This is the layer at which the reactive programming model is introduced.
+- The Material and Cupertino libraries offer comprehensive sets of controls that use the widget layer’s composition primitives to implement the Material or iOS design languages.
+- The Flutter framework is relatively small; many higher-level features that developers might use are implemented as packages, including platform plugins like camera and webview, as well as platform-agnostic features like characters, http, and animations that build upon the core Dart and Flutter libraries. Some of these packages come from the broader ecosystem, covering services like in-app payments, Apple authentication, and animations.
 
 
 ### 1- What is a typedef ?
@@ -493,11 +519,113 @@ class MockVehicle implements Vehicle {
 <br/>
 
 #### final.
+#### To close the type hierarchy, use the final modifier. This prevents subtyping from a class outside of the current library. Disallowing both inheritance and implementation prevents subtyping entirely. This guarantees:
 
+- You can safely add incremental changes to the API.
+- You can call instance methods knowing that they haven’t been overwritten in a third-party subclass.
+- Final classes can be extended or implemented within the same library. The final modifier encompasses the effects of base, and therefore any subclasses must also be marked base, final, or sealed.
+
+```
+// Library a.dart
+final class Vehicle {
+  void moveForward(int meters) {
+    // ...
+  }
+}
+
+// Library b.dart
+import 'a.dart';
+
+// Can be constructed
+Vehicle myVehicle = Vehicle();
+
+// ERROR: Cannot be inherited
+class Car extends Vehicle {
+  int passengers = 4;
+  // ...
+}
+
+class MockVehicle implements Vehicle {
+  // ERROR: Cannot be implemented
+  @override
+  void moveForward(int meters) {
+    // ...
+  }
+}
+
+```
 #### sealed.
+- To create a known, enumerable set of subtypes, use the sealed modifier. This allows you to create a switch over those subtypes that is statically ensured to be exhaustive.
+
+#### The sealed modifier prevents a class from being extended or implemented outside its own library. Sealed classes are implicitly abstract.
+
+- They cannot be constructed themselves.
+- They can have factory constructors.
+- They can define constructors for their subclasses to use.
+- Subclasses of sealed classes are, however, not implicitly abstract.
+
+- The compiler is aware of any possible direct subtypes because they can only exist in the same library. This allows the compiler to alert you when a switch does not exhaustively handle all possible subtypes in its cases:
+```
+sealed class Vehicle {}
+
+class Car extends Vehicle {}
+
+class Truck implements Vehicle {}
+
+class Bicycle extends Vehicle {}
+
+// ERROR: Cannot be instantiated
+Vehicle myVehicle = Vehicle();
+
+// Subclasses can be instantiated
+Vehicle myCar = Car();
+
+String getVehicleSound(Vehicle vehicle) {
+  // ERROR: The switch is missing the Bicycle subtype or a default case.
+  return switch (vehicle) {
+    Car() => 'vroom',
+    Truck() => 'VROOOOMM',
+  };
+}
+```
+- If you don’t want exhaustive switching, or want to be able to add subtypes later without breaking the API, use the final modifier.
 
 ### 24- What is Enum ?
-### 25- Difference Between Enum and sealed class.
+- Enum stands for enumerated type, a type of data where only a set of predefined values exist.
+- In Dart, Enum is simply a special kind of class used to represent a fixed number of constant values.
+- All enums automatically extend the Enum class. They are also sealed, meaning they cannot be subclassed, implemented, mixed in, or otherwise explicitly instantiated.
+- Abstract classes and mixins can explicitly implement or extend Enum, but unless they are then implemented by or mixed into an enum declaration, no objects can actually implement the type of that class or mixin.
+
+```
+enum OperatingSystem { macOS, windows, linux }
+```
+
+### 25- Difference Override and overload in programming ?
+- Firstly, Dart doesn't support overloading.
+- Overriding occurs when the method signature is the same in the superclass and the child class. 
+- Overloading occurs when two or more methods in the same class have the same name but different parameters.
+- Method overloading deals with the notion of having two or more methods in the same class with the same name but different arguments.
+```
+void foo(int a)
+void foo(int a, float b)
+```
+- Method overriding means having two methods with the same arguments, but different implementations. One of them would exist in the parent class, while another will be in the derived, or child class. The @Override annotation, while not required, can be helpful to enforce proper overriding of a method at compile time.
+```
+class Parent {
+    void foo(double d) {
+        // do something
+    }
+}
+
+class Child extends Parent {
+
+    @Override
+    void foo(double d){
+        // this method is overridden.  
+    }
+}
+```
+
 ### 26- Extenstions in dart?
 ### 27- Named Constructor?
 ### 28- Factory constructor?
@@ -509,4 +637,15 @@ class MockVehicle implements Vehicle {
 ### 34- Blocprovider, bloclistener, blocbuilder?
 ### 35- listview, listview.builder?
 ### 36- AssetImage, Image.asset?
-### 37- insureinitialized?
+### 37- What Does WidgetsFlutterBinding.ensureInitialized() do ?
+- The WidgetFlutterBinding is used to interact with the Flutter engine.
+- Ex. Firebase.initializeApp() needs to call native code to initialize Firebase, and since the plugin needs to use platform channels to call the native code, which is done asynchronously therefore you have to call ensureInitialized() to make sure that you have an instance of the WidgetsBinding.
+- Returns an instance of the WidgetsBinding, creating and initializing it if necessary. If one is created, it will be a WidgetsFlutterBinding. If one was previously initialized, then it will at least implement WidgetsBinding.
+- You only need to call this method if you need the binding to be initialized before calling runApp.
+```
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MyApp());
+}
+```
