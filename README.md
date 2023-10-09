@@ -92,3 +92,146 @@ main() {
 
 ### 10- What is an inhereted widget in flutter ?
 - Base class of widgets that efficiently propaget information down the tree ( Scaffold, Theme ).
+
+### 11- Difference between var and dynamic ?
+#### var.
+- can't change TYPE of the variable.
+- but can change the VALUE of the variable later in code.
+
+#### dynamic.
+- can change TYPE of the variable.
+- can change VALUE of the variable later in code.
+
+### 12- Difference between Visibility, Opacity & OffStage ?
+#### Visibility.
+- Visibility widget is to show/hide widgets.
+- it has a visible property, which helps us in showing or hiding child.
+- when visible is set to false, the actual child is replaced with zero- sized box instead.
+```
+// manage visibility
+              Visibility(
+                 
+                // showing the child widget
+                visible: true, // true to show, false to hide
+                child: Text(
+                  "Visible/Hide Text Example",
+                  
+                ),
+              ),
+```
+#### Opacity.
+- The opacity widget in flutter is used to make it’s child transparent.
+- it can be done by using opacity property and set it 0, (range 0.0 - 1.0).
+- The child is completely invisible when set to opacity 0, but will acquire the space & widget is also interactive.
+```
+Opacity(
+  opacity: _visible ? 1.0 : 0.0,
+  child: const Text("Now you see me, now you don't!"),
+)
+```
+#### OffStage.
+- OffStage in flutter widget lays it child out, as if it in true but don’t draw/render the child widget view on screen, and all don’t take space of screen.
+- most of the time offstage is used to measure the dimension of widget without showing it on screen.
+```
+import 'package:flutter/material.dart';
+
+void main() => runApp(const MyApp());
+
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  static const String _title = 'Flutter Code Sample';
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: _title,
+      home: Scaffold(
+        appBar: AppBar(title: const Text(_title)),
+        body: const Center(
+          child: MyStatefulWidget(),
+        ),
+      ),
+    );
+  }
+}
+
+class MyStatefulWidget extends StatefulWidget {
+  const MyStatefulWidget({Key? key}) : super(key: key);
+
+  @override
+  State<MyStatefulWidget> createState() => _MyStatefulWidgetState();
+}
+
+class _MyStatefulWidgetState extends State<MyStatefulWidget> {
+  final GlobalKey _key = GlobalKey();
+  bool _offstage = true;
+
+  Size _getFlutterLogoSize() {
+    final RenderBox renderLogo =
+        _key.currentContext!.findRenderObject()! as RenderBox;
+    return renderLogo.size;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Offstage(
+          offstage: _offstage,
+          child: FlutterLogo(
+            key: _key,
+            size: 150.0,
+          ),
+        ),
+        Text('Flutter logo is offstage: $_offstage'),
+        ElevatedButton(
+          child: const Text('Toggle Offstage Value'),
+          onPressed: () {
+            setState(() {
+              _offstage = !_offstage;
+            });
+          },
+        ),
+        if (_offstage)
+          ElevatedButton(
+              child: const Text('Get Flutter Logo size'),
+              onPressed: () {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content:
+                        Text('Flutter Logo size is ${_getFlutterLogoSize()}'),
+                  ),
+                );
+              }),
+      ],
+    );
+  }
+}
+```
+### 13- Difference between Expanded and Flexible ?
+- Flexible takes only the needed space, and Expanded takes all available space, respecting the flex factor.
+- The Expanded widget simply takes all available space.
+- One important distinction between the Flexible and Expanded widgets is that Flexible does not force its children to take the same size as itself where the Expanded widget forces its child to take the same size.
+- Widget under Flexible are by default WRAP_CONTENT although you can change it using parameter fit.
+- Widget under Expanded is MATCH_PARENT you can change it using flex.
+
+### 14- What id generic programming ?
+- Style of computer programming in which algorithims are written in terms of types to be specified later that are then instantiated when needed for specific types provided.
+
+### 15- Solid Principles ?
+
+#### S=> Single responsibility principle .
+- A class should only be responsible for one thing that means a class could change for one reason.
+
+#### O=> Opened-Closed Principle .
+- An entity should be open for extension but closed for modification.
+- Adding new features without modifying the existing code.
+
+#### L=>Liskov substitution principle.
+- Objects of a superclass should be replacable with objects of its subclass without breaking the application.
+- Objects of our subclass behaves the same way as objects of our superclass.
+
+#### I=>Interface Segregation Principle .
+#### D=>Dependency inversion principle .
