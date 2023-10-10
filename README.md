@@ -234,4 +234,71 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 - Objects of our subclass behaves the same way as objects of our superclass.
 
 #### I=>Interface Segregation Principle .
+- It states that no client should be forced to depend on methods it does not use.
+- Client should never depend on any thing more than the method it's calling.
+
 #### D=>Dependency inversion principle .
+- Abstractions should not depend on details (Concrete implementations), they should depend on abstractions.
+- You will be able to change the implementation without altering the high level code.
+- Depending on abstractions gives the freedom to be independent of the implementations.
+
+### 16- What is Records in dart ?
+- Records are an anonymous, immutable, aggregate type. Like other collection types, they let you bundle multiple objects into a single object. Unlike other collection types, records are fixed-sized, heterogeneous, and typed.
+- Records are real values; you can store them in variables, nest them, pass them to and from functions, and store them in data structures such as lists, maps, and sets.
+```
+var record = ('first', a: 2, b: true, 'last');
+```
+### 17- What is the difference between .map() and .foreach() methods in Dart while iterating over an array ?
+- The major difference is forEach doesn't returns anything while map() does return another array which satisfies the conditions.
+- forEach iterates over each element in the array, it's a function which won't return.
+```
+xyz = [1,2,3,4,5]
+
+newArray = xyz.map( (x) => x == 3)
+
+xyz.forEach( (x) {  
+if(x == 3) print("Yo"); 
+})
+```
+### 18- What is Spread Operator and Null-aware Spread Operator in dart ?
+- In Dart, Spread Operator (…) and Null-aware Spread Operator (…?) are used for inserting multiple elements in a collection like Lists, Maps, etc.
+- Spread Operator.
+```
+...Data_structure
+```
+- Null-aware Spread operator.
+```
+...?Data_structure
+```
+```
+void main() { 
+  
+   // initialise a List l1 
+   List? l1 = ["Geeks","For","Geeks"]; 
+    
+  // initialize another List l2 using l1 
+  List? l2=["Wow",...l1,"is","amazing"]; 
+  
+   // print List l2 
+   print(l2); 
+}
+```
+### 19- Difference between .then() and .whenCompleted() methods when working with Futures ?
+- .whenComplete will fire a function either when the Future completes with an error or not, instead .then will fire a function after the Future completes without an error.
+- catchError runs if the future fails.
+```
+someFuture().then((value) {
+  print('Future finished successfully i.e. without error');
+}).catchError((error) {
+  print('Future finished with error');
+}).whenComplete(() {
+  print('Either of then or catchError has run at this point');
+});
+```
+### 20- What is a mixin class in dart ?
+- A way of defining code that can be reused in multiple class hierarchies.
+```
+mixin Mixin{}
+
+class Me extends Person with Mixin{}
+```
