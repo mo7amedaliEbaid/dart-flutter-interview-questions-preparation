@@ -631,6 +631,12 @@ class Child extends Parent {
 ### 28- Factory constructor?
 ### 29- Design patterns?
 ### 30- Iterables?
+- Iterable is a collection of elements that can be accessed sequentially.
+- Iterable is an abstract class .
+- You can't instantiate it directly. You can create a new Iterable by creating new list.
+- List => Read elements by their indexies.
+- Set => Contain elements that occur once.
+- Map => Read elements using key.
 ### 31- this keyword?
 ### 32- Types of streams?
 ### 33- Get, Post, Delete, update?
