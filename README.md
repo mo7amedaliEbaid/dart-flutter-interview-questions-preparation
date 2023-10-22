@@ -639,8 +639,51 @@ class Child extends Parent {
 - Map => Read elements using key.
 ### 31- this keyword?
 ### 32- Types of streams?
+- Streams provide an asynchronous sequence of data .
+- data sequences include use-generated events and data read from files.
+##### Types of Straems:
+- Single Subscription Stream => Contains Sequence of events that are parts of a larger whole , Events need to be delivered in the correct order and without missing any of them. (read file , recieve web request). Such a stream can only be listened to once , listening again later could mean missing out on initial events. when you start listening, the data will be fetched and provided in chuncks.
+- Broad Cast Stream => Intended for individual messages that can be handled one at a time . (Mouse events in a browser. You can start listening at any time and you get the events that are fired while you listen, more than a alistner can listen at the same time. and you can listen again after canceling a previous subscription.
 ### 33- Get, Post, Delete, update?
-### 34- Blocprovider, bloclistener, blocbuilder?
+### 34- Blocprovider, bloclistener, blocbuilder, blocconsumer ?
+- BlocProvider => Takes a Create function that is responsible for creating the Bloc or Cubit and a child which will have access to the instance via BlocProvider.of(context). It is used as a dependency injection (DI) widget so that a single instance of a Bloc or Cubit can be provided to multiple widgets within a subtree.
+```
+BlocProvider(
+  create: (BuildContext context) => BlocA(),
+  child: ChildA(),
+);
+```
+- BlocBuilder => BlocBuilder handles building a widget in response to new states. BlocBuilder is analogous to StreamBuilder but has simplified API to reduce the amount of boilerplate code needed as well as bloc-specific performance improvements.
+```
+BlocBuilder<BlocA, BlocAState>(
+  builder: (context, state) {
+  // return widget here based on BlocA's state
+  }
+)
+```
+- BlocListener => Takes a BlocWidgetListener and an optional bloc and invokes the listener in response to state changes in the bloc. It should be used for functionality that needs to occur only in response to a state change such as navigation, showing a SnackBar, showing a Dialog, etc... The listener is guaranteed to only be called once for each state change unlike the builder in BlocBuilder.If the bloc parameter is omitted, BlocListener will automatically perform a lookup using BlocProvider and the current BuildContext.
+```
+BlocListener<BlocA, BlocAState>(
+  listener: (context, state) {
+    // do stuff here based on BlocA's state
+  },
+  child: Container(),
+)
+```
+- The builder is run upon state change. But the builder function is also run when the framework deems necessary to rebuild.
+- The listener function is not affected by the frameworks need to rebuild.
+- BlocConsumer => BlocConsumer exposes a builder and listener in order react to new states. BlocConsumer is analogous to a nested BlocListener and BlocBuilder but reduces the amount of boilerplate needed. BlocConsumer should only be used when it is necessary to both rebuild UI and execute other reactions to state changes in the bloc. BlocConsumer takes a required BlocWidgetBuilder and BlocWidgetListener and an optional bloc, BlocBuilderCondition, and BlocListenerCondition. If the bloc parameter is omitted, BlocConsumer will automatically perform a lookup using BlocProvider and the current BuildContext.
+```
+BlocConsumer<BlocA, BlocAState>(
+  listener: (context, state) {
+    // do stuff here based on BlocA's state
+  },
+  builder: (context, state) {
+    // return widget here based on BlocA's state
+  }
+)
+```
+
 ### 35- listview, listview.builder?
 ### 36- AssetImage, Image.asset?
 ### 37- What Does WidgetsFlutterBinding.ensureInitialized() do ?
@@ -655,3 +698,12 @@ void main() async {
   runApp(MyApp());
 }
 ```
+### 38- Json?
+- Javascript object notation => It is a standard text-based format for representing structured data based on javascript object syntax.
+- It is commonly used for transmitting data in web applications.
+
+### 39- Difference between Bloc and Cubit?
+- Cubit is a subset of the BLoC Pattern package that does not rely on events and instead uses methods to emit new states.
+- Cubit is a subset of Bloc; so, it reduces complexity. Cubit eliminates the event classes. Cubit uses emit rather than yield to emit state. Since emit works synchronously, you can ensure that the state is updated in the next line.
+- Cubit is not event driven.
+- Bloc is event driven.
