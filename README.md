@@ -686,6 +686,13 @@ notified and updated automatically.
 - Single Subscription Stream => Contains Sequence of events that are parts of a larger whole , Events need to be delivered in the correct order and without missing any of them. (read file , recieve web request). Such a stream can only be listened to once , listening again later could mean missing out on initial events. when you start listening, the data will be fetched and provided in chuncks.
 - Broad Cast Stream => Intended for individual messages that can be handled one at a time . (Mouse events in a browser. You can start listening at any time and you get the events that are fired while you listen, more than a alistner can listen at the same time. and you can listen again after canceling a previous subscription.
 ### 33- Get, Post, Delete, update?
+- The GET method is used to retrieve data from the server. This is a read-only method, so it has no risk of mutating or corrupting the data. For example, if we call the get method on our API, we’ll get back a list of all to-dos.
+- The POST method sends data to the server and creates a new resource. The resource it creates is subordinate to some other parent resource. When a new resource is POSTed to the parent, the API service will automatically associate the new resource by assigning it an ID (new resource URI). In short, this method is used to create a new data entry.
+- The PUT method is most often used to update an existing resource. If you want to update a specific resource (which comes with a specific URI), you can call the PUT method to that resource URI with the request body containing the complete new version of the resource you are trying to update.
+- The PATCH method is very similar to the PUT method because it also modifies an existing resource. The difference is that for the PUT method, the request body contains the complete new version, whereas for the PATCH method, the request body only needs to contain the specific changes to the resource, specifically a set of instructions describing how that resource should be changed, and the API service will create a new version according to that instruction.
+- The DELETE method is used to delete a resource specified by its URI.
+- 
+
 ### 34- Blocprovider, bloclistener, blocbuilder, blocconsumer ?
 - BlocProvider => Takes a Create function that is responsible for creating the Bloc or Cubit and a child which will have access to the instance via BlocProvider.of(context). It is used as a dependency injection (DI) widget so that a single instance of a Bloc or Cubit can be provided to multiple widgets within a subtree.
 ```
