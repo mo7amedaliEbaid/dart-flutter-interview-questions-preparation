@@ -595,9 +595,12 @@ String getVehicleSound(Vehicle vehicle) {
 - In Dart, Enum is simply a special kind of class used to represent a fixed number of constant values.
 - All enums automatically extend the Enum class. They are also sealed, meaning they cannot be subclassed, implemented, mixed in, or otherwise explicitly instantiated.
 - Abstract classes and mixins can explicitly implement or extend Enum, but unless they are then implemented by or mixed into an enum declaration, no objects can actually implement the type of that class or mixin.
+- makes the code readable and reusable.
 
 ```
 enum OperatingSystem { macOS, windows, linux }
+final favsystem=OperatingSystem.linux;
+if(favsystem==OperatingSystem.linux){}
 ```
 
 ### 25- Difference Override and overload in programming ?
@@ -627,8 +630,19 @@ class Child extends Parent {
 ```
 
 ### 26- Extenstions in dart?
+- Extensions methods add functionality to existing libraries.
+```
+extension NumberParsing on String {}
+```
 ### 27- Named Constructor?
+- Giving your constructor different names allows your class to have many constructors and also to be better reoresent their use cases outside of the class.
+- Image.asset().
+- Image.network().
+
 ### 28- Factory constructor?
+- factory keyword is used when implementing a constructor that doesn't always create a new instance of its class.
+- it might return an instance os a subtype.
+- it's used to initialize a final variable using logic that can't be handled in the initializer list.
 ### 29- Design patterns?
 ### 30- Iterables?
 - Iterable is a collection of elements that can be accessed sequentially.
@@ -736,3 +750,83 @@ void main() async {
 - can be accessed without the class prefix only in the class where they are declared.
 - class name.static variable.
 
+### 44- What is SDK ?
+- Software development Kit => that includes a comprehensive set of development tools ( Emulator, Libraries, Debugger ).
+
+### 45- What is an Api ?
+- Application Programming Interface => Software intermediary that allows two applications to talk to each other .
+- Apis are an accessible way to extract and share data within and across organizations .
+- let your product or service communicate with other without having to know how they were implemented.
+
+### 46- What is dependency injection ?
+- Design Pattern used to implement inversion of control .
+- It allows the creation of dependent objects outside of a class and provides those objects to a class through different ways.
+- Is one of subtypes of inversion of control => decoupling.
+
+### 47- What is PreferredSizeWidget ?
+- An interface for widgets that can return the size this widget would prefer if it were otherwise unconstrained.
+- There are a few cases, notably AppBar and TabBar, where it would be undesirable for the widget to constrain its own size but where the widget needs to expose a preferred or "default" size.
+- Widgets that need to know the preferred size of their child can require that their child implement this interface by using this class rather than Widget as the type of their child property.
+- Use PreferredSize to give a preferred size to an arbitrary widget.
+
+### 48- What is WillPopScope class?
+- Registers a callback to veto attempts by the user to dismiss the enclosing ModalRoute.
+- Whenever the back button is pressed, you will get a callback at onWillPop, which returns a Future. If the Future returns true, the screen is popped.
+```
+class WillPopScopeExample extends StatefulWidget {
+  const WillPopScopeExample({super.key});
+
+  @override
+  State<WillPopScopeExample> createState() => _WillPopScopeExampleState();
+}
+
+class _WillPopScopeExampleState extends State<WillPopScopeExample> {
+  bool shouldPop = true;
+  @override
+  Widget build(BuildContext context) {
+    return WillPopScope(
+      onWillPop: () async {
+        return shouldPop;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Flutter WillPopScope demo'),
+        ),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              OutlinedButton(
+                child: const Text('Push'),
+                onPressed: () {
+                  Navigator.of(context).push<void>(
+                    MaterialPageRoute<void>(
+                      builder: (BuildContext context) {
+                        return const WillPopScopeExample();
+                      },
+                    ),
+                  );
+                },
+              ),
+              OutlinedButton(
+                child: Text('shouldPop: $shouldPop'),
+                onPressed: () {
+                  setState(
+                    () {
+                      shouldPop = !shouldPop;
+                    },
+                  );
+                },
+              ),
+              const Text('Push to a new screen, then tap on shouldPop '
+                  'button to toggle its value. Press the back '
+                  'button in the appBar to check its behavior '
+                  'for different values of shouldPop'),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+```
