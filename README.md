@@ -868,3 +868,32 @@ class _WillPopScopeExampleState extends State<WillPopScopeExample> {
 ### 49- Spacer class ?
 - Spacer creates an adjustable, empty spacer that can be used to tune the spacing between widgets in a Flex container, like Row or Column.
 - The Spacer widget will take up any available space, so setting the Flex.mainAxisAlignment on a flex container that contains a Spacer to MainAxisAlignment.spaceAround, MainAxisAlignment.spaceBetween, or MainAxisAlignment.spaceEvenly will not have any visible effect: the Spacer has taken up all of the additional space, therefore there is none left to redistribute.
+
+### 50 - callback and anonymous functions ?
+- callback => a function or method that we pass as an argument into another function or method.
+- anonymous => doesn't have a name
+```
+list.foreach((item){});
+```
+### 51- Scaffold ?
+- is responsible for implementing the basic material design , visual layout structure of an app.
+### 52- super keyword ?
+- is used to denote the instant parent class object of the current child class .
+- It's used to invoke super class methods , super class constructor in its child class.
+- to refer the super class properties and methods.
+### 53- Materialapp ?
+- A convenience widget that wraps a number of widgets that are commonly required for Material Design applications. It builds upon a WidgetsApp by adding material-design specific functionality, such as AnimatedTheme and GridPaper.
+- MaterialApp configures its WidgetsApp.textStyle with an ugly red/yellow text style that's intended to warn the developer that their app hasn't defined a default text style. Typically the app's Scaffold builds a Material widget whose default Material.textStyle defines the text style for the entire scaffold.
+- Material widgets implements the Material design language for iOS, Android, and web.
+- Cupertino widgets implements the current iOS design language based on Apple's Human Interface Guidelines.
+### 54- runapp ?
+```
+void runApp(
+Widget app
+)
+```
+- Inflate the given widget and attach it to the screen.
+- The widget is given constraints during layout that force it to fill the entire screen. If you wish to align your widget to one side of the screen (e.g., the top), consider using the Align widget. If you wish to center your widget, you can also use the Center widget.
+- Calling runApp again will detach the previous root widget from the screen and attach the given widget in its place. The new widget tree is compared against the previous widget tree and any differences are applied to the underlying render tree, similar to what happens when a StatefulWidget rebuilds after calling State.setState.
+- The main() function is the entry point of the app and it is the first method that is executed when the app starts.
+- The runApp() method is responsible for creating the WidgetsFlutterBinding which is the binding between the framework and the Flutter engine.
