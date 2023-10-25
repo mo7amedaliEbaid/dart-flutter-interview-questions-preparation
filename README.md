@@ -638,6 +638,9 @@ class Child extends Parent {
 - Set => Contain elements that occur once.
 - Map => Read elements using key.
 ### 31- this keyword?
+- Is used to remove ambiguisty that can be caused if the class attributes and the parameters have the same name.
+- represent an implicit object pointing to the current class object.
+- The this keyword is used to refer to the current class instance. this can be used to invoke the current class's constructors or methods. It also helps access the current class's instance variables. The this keyword can be used to set the instance variable's values or get the current instance of the class.
 ### 32- Types of streams?
 - Streams provide an asynchronous sequence of data .
 - data sequences include use-generated events and data read from files.
@@ -685,6 +688,8 @@ BlocConsumer<BlocA, BlocAState>(
 ```
 
 ### 35- listview, listview.builder?
+- The ListView constructor requires us to create all items at once. This is good when list items are less and all will be seen on the screen, but if not then for long list items its not the good practice.
+- the ListView.Builder constructor will create items as they are scrolled onto the screen like on-demand. This is the best practice for development for List widget where items will only render only when items are going seen on the screen.
 ### 36- AssetImage, Image.asset?
 ### 37- What Does WidgetsFlutterBinding.ensureInitialized() do ?
 - The WidgetFlutterBinding is used to interact with the Flutter engine.
@@ -707,3 +712,27 @@ void main() async {
 - Cubit is a subset of Bloc; so, it reduces complexity. Cubit eliminates the event classes. Cubit uses emit rather than yield to emit state. Since emit works synchronously, you can ensure that the state is updated in the next line.
 - Cubit is not event driven.
 - Bloc is event driven.
+
+### 40- What is a context?
+- A handle to the location of a widget in the widget tree.
+- In Flutter, the context refers to the location of a widget in the widget tree. It provides information about the surrounding environment and services that the widget might need. For example, the context can contain information such as the theme of the app, the locale, the screen size, and more.
+
+### 41- What is a key?
+- Preserves state when widget move around in the widget tree.
+- Keys can be found in almost every widget as named parameters. It is useful when we need to store the widget's state having the same type of data. It's used with a stateful widget where states change.
+- You don't need to use Keys most of the time, the framework handles it for you and uses them internally to differentiate between widgets. There are a few cases where you may need to use them though.
+- A common case is if you need to differentiate between widgets by their keys, ObjectKey and ValueKey can be useful for defining how the widgets are differentiated.
+- Another example is that if you have a child you want to access from a parent, you can make a GlobalKey in the parent and pass it to the child's constructor. Then you can do globalKey.state to get the child's state (say for example in a button press callback). Note that this shouldn't be used excessively as there are often better ways to get around it.
+
+### 42- What is a widget?
+- A blueprint or recipe of what this part of the ui should be, And they appear with other widgets to complete the whole ui.
+- Widgets are the central class hierarchy in the Flutter framework. A widget is an immutable description of part of a user interface. Widgets can be inflated into elements, which manage the underlying render tree.
+
+### 43- The use of static keyword in dart ?
+- static used for memory management of global data members.
+- the static variables and methods are part of the class instead of a specific instance.
+- used for class-level variable and method that is the same for every instance of a class.
+- can't be overriden.
+- can be accessed without the class prefix only in the class where they are declared.
+- class name.static variable.
+
