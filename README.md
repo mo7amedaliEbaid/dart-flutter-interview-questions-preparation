@@ -644,6 +644,30 @@ extension NumberParsing on String {}
 - it might return an instance os a subtype.
 - it's used to initialize a final variable using logic that can't be handled in the initializer list.
 ### 29- Design patterns?
+#### 1- Creational design patterns?    
+- Creational design patterns abstract the instantiation process. They help make a system independent of how its objects are created, composed, and represented. A class creational pattern uses inheritance to vary the class that's instantiated, whereas an object creational pattern will delegate instantiation to another object.
+- Singleton => Ensure a class only has one instance, and provide a global point of access to it.
+- One of the main advantages of using the singleton pattern is that it can reduce the memory usage of your application. By creating only one instance of a class, you can avoid allocating and deallocating memory for multiple objects of the same type.
+- Instance control: Singleton prevents other objects from instantiating their own copies of the Singleton object, ensuring that all objects access the single instance.
+- Instance control: Singleton prevents other objects from instantiating their own copies of the Singleton object, ensuring that all objects access the single instance.
+- The singleton class provides a global access point to get the instance of the class.
+#### 2- Structural patterns?
+- Adapter or Wrapper.
+Convert the interface of a class into another interface clients expect. Adapter lets classes work together that
+couldn't otherwise because of incompatible interfaces.
+- Decorator or Wrapper.
+Attach additional responsibilities to an object dynamically. Decorators provide a flexible alternative to subclassing
+for extending functionality
+#### 3- Behavioral patterns?
+- Behavioral patterns are concerned with algorithms and the assignment of responsibilities between
+objects. Behavioral patterns describe not just patterns of objects or classes but also the patterns of
+communication between them. These patterns characterize complex control flow that's difficult to follow
+at run-time. They shift your focus away from flow of control to let you concentrate just on the way
+objects are interconnected.
+- Observer.
+Define a one-to-many dependency between objects so that when one object changes state, all its dependents are
+notified and updated automatically.
+
 ### 30- Iterables?
 - Iterable is a collection of elements that can be accessed sequentially.
 - Iterable is an abstract class .
@@ -705,6 +729,10 @@ BlocConsumer<BlocA, BlocAState>(
 - The ListView constructor requires us to create all items at once. This is good when list items are less and all will be seen on the screen, but if not then for long list items its not the good practice.
 - the ListView.Builder constructor will create items as they are scrolled onto the screen like on-demand. This is the best practice for development for List widget where items will only render only when items are going seen on the screen.
 ### 36- AssetImage, Image.asset?
+- Image is a StatefulWidget and Image.asset is just a named constructor, you can use it directly on your widget tree.
+- AssetImage is an ImageProvider which is responsible for obtaining the image of the specified path.
+- AssetImage => Image provider => provides an image from the pass , It is not a widget.
+- Image.asset => Creates a widget.
 ### 37- What Does WidgetsFlutterBinding.ensureInitialized() do ?
 - The WidgetFlutterBinding is used to interact with the Flutter engine.
 - Ex. Firebase.initializeApp() needs to call native code to initialize Firebase, and since the plugin needs to use platform channels to call the native code, which is done asynchronously therefore you have to call ensureInitialized() to make sure that you have an instance of the WidgetsBinding.
