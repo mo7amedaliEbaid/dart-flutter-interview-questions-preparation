@@ -871,6 +871,10 @@ class _WillPopScopeExampleState extends State<WillPopScopeExample> {
 
 ### 50 - callback and anonymous functions ?
 - callback => a function or method that we pass as an argument into another function or method.
+- VoidCallback typedef => Signature of callbacks that have no arguments and return no data.
+```
+typedef VoidCallback = void Function();
+```
 - anonymous => doesn't have a name
 ```
 list.foreach((item){});
@@ -897,3 +901,97 @@ Widget app
 - Calling runApp again will detach the previous root widget from the screen and attach the given widget in its place. The new widget tree is compared against the previous widget tree and any differences are applied to the underlying render tree, similar to what happens when a StatefulWidget rebuilds after calling State.setState.
 - The main() function is the entry point of the app and it is the first method that is executed when the app starts.
 - The runApp() method is responsible for creating the WidgetsFlutterBinding which is the binding between the framework and the Flutter engine.
+
+### 55- Changenotifier?
+- A class that can be extended or mixed in that provides a change notification API using VoidCallback for notifications.
+- A data structure can extend or mix in ChangeNotifier to implement the Listenable interface and thus become usable with widgets that listen for changes to Listenables, such as ListenableBuilder.
+### 56- ListenableBuilder class?
+- A general-purpose widget for building a widget subtree when a Listenable changes.
+- ListenableBuilder is useful for more complex widgets that wish to listen to changes in other objects as part of a larger build function. To use ListenableBuilder, construct the widget and pass it a builder function.
+- Any subtype of Listenable (such as a ChangeNotifier, ValueNotifier, or Animation) can be used with a ListenableBuilder to rebuild only certain parts of a widget when the Listenable notifies its listeners. Although they have identical implementations, if an Animation is being listened to, consider using an AnimatedBuilder instead for better readability.
+```
+import 'package:flutter/material.dart';
+
+/// Flutter code sample for a [ChangeNotifier] with a [ListenableBuilder].
+
+void main() {
+  runApp(const ListenableBuilderExample());
+}
+
+class CounterModel with ChangeNotifier {
+  int _count = 0;
+  int get count => _count;
+
+  void increment() {
+    _count += 1;
+    notifyListeners();
+  }
+}
+
+class ListenableBuilderExample extends StatefulWidget {
+  const ListenableBuilderExample({super.key});
+
+  @override
+  State<ListenableBuilderExample> createState() =>
+      _ListenableBuilderExampleState();
+}
+
+class _ListenableBuilderExampleState extends State<ListenableBuilderExample> {
+  final CounterModel _counter = CounterModel();
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(title: const Text('ListenableBuilder Example')),
+        body: CounterBody(counterNotifier: _counter),
+        floatingActionButton: FloatingActionButton(
+          onPressed: _counter.increment,
+          child: const Icon(Icons.add),
+        ),
+      ),
+    );
+  }
+}
+
+class CounterBody extends StatelessWidget {
+  const CounterBody({super.key, required this.counterNotifier});
+
+  final CounterModel counterNotifier;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          const Text('Current counter value:'),
+          // Thanks to the ListenableBuilder, only the widget displaying the
+          // current count is rebuilt when counterValueNotifier notifies its
+          // listeners. The Text widget above and CounterBody itself aren't
+          // rebuilt.
+          ListenableBuilder(
+            listenable: counterNotifier,
+            builder: (BuildContext context, Widget? child) {
+              return Text('${counterNotifier.count}');
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}
+```
+### 57 - VlueNotifier ?
+- A ChangeNotifier that holds a single value.
+- When value is replaced with something that is not equal to the old value as evaluated by the equality operator ==, this class notifies its listeners.
+- Because this class only notifies listeners when the value's identity changes, listeners will not be notified when mutable state within the value itself changes.
+- For example, a ValueNotifier<List<int>> will not notify its listeners when the contents of the list are changed.
+As a result, this class is best used with only immutable data types.
+For mutable data types, consider extending ChangeNotifier directly.
+
+### 58- notifylisteners ?
+- Call all the registered listeners.
+- Call this method whenever the object changes, to notify any clients the object may have changed. Listeners that are added during this iteration will not be visited. Listeners that are removed during this iteration will not be visited after they are removed.
+
+
