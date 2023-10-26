@@ -1081,3 +1081,69 @@ class _FormExampleState extends State<FormExample> {
   }
 }
 ```
+### 62- Flutter clip image?
+- ClipRect - Clips the image in rectangle.
+```
+ClipRect(
+  child: Container(
+    child: Align(
+      alignment: Alignment.center,
+        widthFactor: 0.4,
+        heightFactor: 1.0,
+        child: Image.network(
+          'https://images.unsplash.com/photo-1473992243898-fa7525e652a5'
+        ),
+    ),
+  ),
+)
+```
+ClipRect prevents the child from painting outside the box. The size and location of the clipper can be customized by changing the arguments in the clipper. The code above shows how to clip an image with a rectangular shape. You can wrap the image widget with an Align widget to easily position the image inside the clipper. The widthFactor and heightFactor properties are used to decide the size of the clipper and alignment is used to decide the position of the clipper. Here we are clipping the image at the center.
+
+- ClipRRect - Clips the image with rounded corners or clip circle.
+```
+ClipRRect(
+  borderRadius: BorderRadius.circular(300.0),
+  child: Image.network(
+    "https://images.unsplash.com/photo-1523285367489-d38aec03b6bd"
+  ),
+)
+```
+ClipRRect can be used to clip image circle or clip the edges with a circular radius. The extra R stands for rounded. The borderRadius property can be used to change the radius of the rounded corners.
+
+- ClipOval - Clips the image in oval.
+```
+ClipOval(
+  child: Container(
+    child: Image.network(
+      'https://images.unsplash.com/photo-1523965671143-ac717f1cb928'
+    ),
+  ),
+)
+```
+ClipOval can be used to clip the child widget in an oval shape. The clipper uses the widgets bounding box to determine the width and height of the oval. Therefore, if the width and height of the child widget are equal, then it will be a circle.
+
+- ClipPath - Clips image in custom shape.
+```
+ClipPath(
+  clipper: TriangleClipper(),
+  child: Image.network(
+    "https://images.unsplash.com/photo-1513775192371-1b9d33760c3f"
+  ),
+)
+
+class TriangleClipper extends CustomClipper {
+  @override
+  Path getClip(Size size) {
+      final path = Path();
+      path.moveTo(size.width/2, 0.0);
+      path.lineTo(size.width, size.height);
+      path.lineTo(0.0, size.height);
+      path.close();
+      return path;
+  }
+  @override
+  bool shouldReclip(TriangleClipper oldClipper) => false;
+}
+```
+ClipPath can be used to clip the child widget in custom shape using a custom Clipper defined. In this code, we clip the widget in a triangle shape. Here we are supplying a custom TriangleClipper class to the clipper attribute. If you want to know more about how a custom clipper can be defined to achieve the desired shape, follow the detailed tutorial on custom clippers here.
+
