@@ -994,4 +994,90 @@ For mutable data types, consider extending ChangeNotifier directly.
 - Call all the registered listeners.
 - Call this method whenever the object changes, to notify any clients the object may have changed. Listeners that are added during this iteration will not be visited. Listeners that are removed during this iteration will not be visited after they are removed.
 
+### 59- Difference between inkwell and gesturedetector ?
+- They both provide many common features like onTap, onLongPress etc. The main difference is GestureDetector provides more controls like dragging etc. on the other hand it doesn't include ripple effect tap, which InkWell does.
+- You can use either of them according to your needs, you want ripple effects go with InkWell, need more controls go with GestureDetector or even combine both of them.
 
+### 60- ColorScheme ?
+- primary => The color displayed most frequently across your app’s screens and components.
+- onPrimary => A color that's clearly legible when drawn on primary.
+- secondary => An accent color used for less prominent components in the UI, such as filter chips, while expanding the opportunity for color expression.
+- error => The color to use for input validation errors, e.g. for InputDecoration.errorText.
+- surface => The background color for widgets like Card.
+- background => A color that typically appears behind scrollable content.
+### 61- Textfield and textformfield ?
+- If you making a Form where you require save, reset, or validate operations- use TextFormField. Else For Simple user input capture TextField is sufficient.
+- TextFormField, which integrates with the Form widget.
+- A Form ancestor is not required. The Form simply makes it easier to save, reset, or validate multiple fields at once.
+- TextField, which is the underlying text field without the Form integration.
+- Form class
+An optional container for grouping together multiple form field widgets (e.g. TextField widgets).
+Each individual form field should be wrapped in a FormField widget, with the Form widget as a common ancestor of all of those. Call methods on FormState to save, reset, or validate each FormField that is a descendant of this Form. To obtain the FormState, you may use Form.of with a context whose ancestor is the Form, or pass a GlobalKey to the Form constructor and call GlobalKey.currentState.
+```
+import 'package:flutter/material.dart';
+
+/// Flutter code sample for [Form].
+
+void main() => runApp(const FormExampleApp());
+
+class FormExampleApp extends StatelessWidget {
+  const FormExampleApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(title: const Text('Form Sample')),
+        body: const FormExample(),
+      ),
+    );
+  }
+}
+
+class FormExample extends StatefulWidget {
+  const FormExample({super.key});
+
+  @override
+  State<FormExample> createState() => _FormExampleState();
+}
+
+class _FormExampleState extends State<FormExample> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Form(
+      key: _formKey,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          TextFormField(
+            decoration: const InputDecoration(
+              hintText: 'Enter your email',
+            ),
+            validator: (String? value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter some text';
+              }
+              return null;
+            },
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 16.0),
+            child: ElevatedButton(
+              onPressed: () {
+                // Validate will return true if the form is valid, or false if
+                // the form is invalid.
+                if (_formKey.currentState!.validate()) {
+                  // Process data.
+                }
+              },
+              child: const Text('Submit'),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+```
