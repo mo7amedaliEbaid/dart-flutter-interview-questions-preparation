@@ -1255,3 +1255,29 @@ void main() {
 // output
 The balance is 100.0 USD.
 ```
+### 67- get_it?
+```
+final sl = GetIt.instance;
+
+Future<void> init() async {
+
+  sl.registerLazySingleton<QuranCubit>(
+      () => QuranCubit(quranUsecase: sl(), quranAudioUsecase: sl()));
+  sl.registerLazySingleton<SurahCubit>(() => SurahCubit(surahUsecase: sl()));
+  sl.registerLazySingleton<RecitationsCubit>(
+      () => RecitationsCubit(recitationsUsecase: sl()));
+  sl.registerLazySingleton<AudioCubit>(() => AudioCubit(audioUsecase: sl()));
+
+}
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await di.init();
+  runApp(const MyApp());
+}
+
+providers: [
+        BlocProvider(create: (context) => sl<QuranCubit>()),
+        BlocProvider(create: (context) => sl<SurahCubit>()),
+        BlocProvider(create: (context) => sl<RecitationsCubit>()),
+      ],
+```
