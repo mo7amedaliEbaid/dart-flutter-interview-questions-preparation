@@ -691,7 +691,13 @@ notified and updated automatically.
 - The PUT method is most often used to update an existing resource. If you want to update a specific resource (which comes with a specific URI), you can call the PUT method to that resource URI with the request body containing the complete new version of the resource you are trying to update.
 - The PATCH method is very similar to the PUT method because it also modifies an existing resource. The difference is that for the PUT method, the request body contains the complete new version, whereas for the PATCH method, the request body only needs to contain the specific changes to the resource, specifically a set of instructions describing how that resource should be changed, and the API service will create a new version according to that instruction.
 - The DELETE method is used to delete a resource specified by its URI.
-- 
+- readBytes => Sends an HTTP GET request with the given headers to the given URL and returns a Future that completes to the body of the response as a list of bytes.
+```
+Future<Uint8List> readBytes(
+Uri url,
+{Map<String, String>? headers}
+)
+```
 
 ### 34- Blocprovider, bloclistener, blocbuilder, blocconsumer ?
 - BlocProvider => Takes a Create function that is responsible for creating the Bloc or Cubit and a child which will have access to the instance via BlocProvider.of(context). It is used as a dependency injection (DI) widget so that a single instance of a Bloc or Cubit can be provided to multiple widgets within a subtree.
@@ -1147,3 +1153,105 @@ class TriangleClipper extends CustomClipper {
 ```
 ClipPath can be used to clip the child widget in custom shape using a custom Clipper defined. In this code, we clip the widget in a triangle shape. Here we are supplying a custom TriangleClipper class to the clipper attribute. If you want to know more about how a custom clipper can be defined to achieve the desired shape, follow the detailed tutorial on custom clippers here.
 
+### 63- showBottomSheet vs showModalBottomSheet?
+- A modal bottom sheet is an alternative to a menu or a dialog and prevents the user from interacting with the rest of the app. A closely related widget is a persistent bottom sheet, which shows information that supplements the primary content of the app without preventing the user from interacting with the app. Persistent bottom sheets can be created and displayed with the showBottomSheet function or the ScaffoldState.showBottomSheet method.
+- DraggableScrollableSheet class
+A container for a Scrollable that responds to drag gestures by resizing the scrollable until a limit is reached, and then scrolling.
+```
+Future<T?> showModalBottomSheet<T>(
+{required BuildContext context,
+required WidgetBuilder builder,
+Color? backgroundColor,
+String? barrierLabel,
+double? elevation,
+ShapeBorder? shape,
+Clip? clipBehavior,
+BoxConstraints? constraints,
+Color? barrierColor,
+bool isScrollControlled = false,
+bool useRootNavigator = false,
+bool isDismissible = true,
+bool enableDrag = true,
+bool? showDragHandle,
+bool useSafeArea = false,
+RouteSettings? routeSettings,
+AnimationController? transitionAnimationController,
+Offset? anchorPoint}
+)
+
+PersistentBottomSheetController<T> showBottomSheet<T>(
+{required BuildContext context,
+required WidgetBuilder builder,
+Color? backgroundColor,
+double? elevation,
+ShapeBorder? shape,
+Clip? clipBehavior,
+BoxConstraints? constraints,
+bool? enableDrag,
+AnimationController? transitionAnimationController}
+)
+
+```
+### 64- Uint8List class?
+- A fixed-length list of 8-bit unsigned integers.
+- For long lists, this implementation can be considerably more space- and time-efficient than the default List implementation.
+- Integers stored in the list are truncated to their low eight bits, interpreted as an unsigned 8-bit integer with values in the range 0 to 255.
+- It is a compile-time error for a class to attempt to extend or implement Uint8List.
+### 65- How to upload images to server in Flutter?
+- Use MultipartRequest class
+Such a request has both string fields, which function as normal form fields, and (potentially streamed) binary files.
+This request automatically sets the Content-Type header to multipart/form-data. This value will override any value set by the user.
+```
+Upload(File imageFile) async {    
+    var stream = new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
+      var length = await imageFile.length();
+
+      var uri = Uri.parse(uploadURL);
+
+     var request = new http.MultipartRequest("POST", uri);
+      var multipartFile = new http.MultipartFile('file', stream, length,
+          filename: basename(imageFile.path));
+          //contentType: new MediaType('image', 'png'));
+
+      request.files.add(multipartFile);
+      var response = await request.send();
+      print(response.statusCode);
+      response.stream.transform(utf8.decoder).listen((value) {
+        print(value);
+      });
+    }
+```
+### 66- override tostring?
+```
+class BankAccount {
+  double _balance = 0;
+
+  BankAccount({double balance = 0}) : _balance = balance;
+
+  double get balance => _balance;
+
+  deposit(double amount) {
+    _balance += amount;
+  }
+
+  bool withdraw(double amount) {
+    if (amount <= _balance) {
+      _balance -= amount;
+      return true;
+    }
+    return false;
+  }
+
+  @override
+  String toString() {
+    return 'The balance is $balance USD.';
+  }
+}
+
+void main() {
+  var account = BankAcount(balance: 100);
+  print(account);
+}
+// output
+The balance is 100.0 USD.
+```
