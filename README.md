@@ -1,4 +1,4 @@
-- This Repo Some questions i have been asked in my previous interviews and other related questions.
+- This Repo includes Some questions i have been asked in my previous interviews and other related questions.
 - I created This Repo to collect most questions , topics and resources in one place, So I wouldn't waste much time in my preparation for technical interviews.
 
 # General Questions
