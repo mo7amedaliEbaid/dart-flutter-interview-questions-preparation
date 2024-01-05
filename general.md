@@ -164,6 +164,45 @@ main() {
 - Isolates don't share memory; they communicate with each other by passing messages (usually immutable data) using ports.
 - This approach helps to avoid common issues related to shared-memory concurrency, like race conditions or deadlocks.
 - Each isolate has its own event queue and event loop, which processes incoming messages and ensures that only one message is handled at a time, preserving sequential consistency within the isolate.
+- Isolates communicate with each other by passing messages, and they are independent of each other in terms of memory. This isolation provides a level of safety when dealing with concurrent programming, as there is no shared state that can be modified by multiple isolates simultaneously.
+- To create an isolate in Dart, you use the Isolate class. Each isolate runs its own Dart program, and communication between isolates is typically done through message passing using the SendPort and ReceivePort classes.
+- Isolates are especially useful for tasks that can be parallelized, such as processing data in the background or performing heavy computations without blocking the main thread of an application.
+```dart
+import 'dart:isolate';
+
+void main() async {
+  // Create a ReceivePort for the main isolate
+  ReceivePort mainReceivePort = ReceivePort();
+
+  // Spawn a new isolate and send the mainReceivePort to it
+  Isolate.spawn(isolateFunction, mainReceivePort.sendPort);
+
+  // Receive and print messages from the spawned isolate
+  mainReceivePort.listen((message) {
+    print('Received message from isolate: $message');
+  });
+
+  // Send a message to the spawned isolate
+  mainReceivePort.sendPort.send('Hello from the main isolate!');
+}
+
+void isolateFunction(SendPort sendPort) {
+  // Create a ReceivePort for the spawned isolate
+  ReceivePort isolateReceivePort = ReceivePort();
+
+  // Send the isolateReceivePort back to the main isolate
+  sendPort.send(isolateReceivePort.sendPort);
+
+  // Receive and print messages from the main isolate
+  isolateReceivePort.listen((message) {
+    print('Received message from main isolate: $message');
+  });
+
+  // Send a message to the main isolate
+  sendPort.send('Hello from the spawned isolate!');
+}
+```
+
 
 ### 8- Difference between function and method ?
 #### function.
@@ -681,7 +720,7 @@ String getVehicleSound(Vehicle vehicle) {
 - Abstract classes and mixins can explicitly implement or extend Enum, but unless they are then implemented by or mixed into an enum declaration, no objects can actually implement the type of that class or mixin.
 - makes the code readable and reusable.
 
-```
+```dart
 enum OperatingSystem { macOS, windows, linux }
 final favsystem=OperatingSystem.linux;
 if(favsystem==OperatingSystem.linux){}
@@ -763,6 +802,57 @@ notified and updated automatically.
 - Is used to remove ambiguisty that can be caused if the class attributes and the parameters have the same name.
 - represent an implicit object pointing to the current class object.
 - The this keyword is used to refer to the current class instance. this can be used to invoke the current class's constructors or methods. It also helps access the current class's instance variables. The this keyword can be used to set the instance variable's values or get the current instance of the class.
+- In Dart, the this keyword is a reference to the current instance of the class. It is often used to differentiate between instance variables and local variables when they have the same name. Here are a few examples to illustrate the usage of this:
+```dart
+// Differentiating between instance and local variables
+class Person {
+  String name;
+
+  Person(this.name); // Constructor
+
+  void printName() {
+    print('Name: $name');
+  }
+
+  void updateName(String newName) {
+    // Using 'this' to refer to the instance variable
+    this.name = newName;
+  }
+}
+
+void main() {
+  Person person = Person('John Doe');
+  person.printName(); // Output: Name: John Doe
+
+  person.updateName('Jane Doe');
+  person.printName(); // Output: Name: Jane Doe
+}
+```
+- In this example, the updateName method takes a parameter with the same name as the instance variable name. The this keyword is used to refer to the instance variable, making it clear that we want to update the name of the current instance.
+
+
+```dart
+// Using 'this' in a constructor
+class Rectangle {
+  double width;
+  double height;
+
+  Rectangle(this.width, this.height); // Constructor
+
+  double calculateArea() {
+    // Using 'this' to access instance variables in a method
+    return this.width * this.height;
+  }
+}
+
+void main() {
+  Rectangle rectangle = Rectangle(5.0, 10.0);
+  print('Area: ${rectangle.calculateArea()}'); // Output: Area: 50.0
+}
+```
+- In this example, the Rectangle class has a constructor that uses the this keyword to initialize the instance variables width and height. The calculateArea method also uses this to access the instance variables within the method.
+- The this keyword is optional in many cases in Dart, and you can often omit it. However, using this can make your code more explicit and readable, especially in situations where variable names might be ambiguous.
+
 ### 32- Types of streams?
 - Streams provide an asynchronous sequence of data .
 - data sequences include use-generated events and data read from files.
@@ -1371,3 +1461,47 @@ providers: [
 - Unlike some cross-platform frameworks that use web views to render content, Flutter doesn't rely on them. It compiles Dart code to native machine code, allowing Flutter apps to run directly on the device without the need for an intermediary web-based rendering engine. This contributes to a more efficient and responsive user experience.
 - Frameworks like Apache Cordova or React Native often use web views to render the user interface. This involves embedding a web browser component within the app, interpreting JavaScript, HTML, and CSS to display the content. In contrast, Flutter doesn't use web views, opting for a direct compilation approach for native performance.
 - Web views are components in mobile app development that display web content within an application. They essentially embed a web browser within the app, allowing the rendering of HTML, CSS, and JavaScript. This approach is common in cross-platform frameworks that leverage web technologies to create mobile apps.
+
+### 69- difference between sealed class and enum?
+- Sealed classes and enums are both constructs used in programming languages for modeling and representing a fixed set of values or types, but they have some key differences.
+#### Sealed Class:
+##### Hierarchy and Subtypes:
+
+- Sealed classes allow you to define a hierarchy of types, similar to regular classes.
+- Subtypes of a sealed class can be created and extended, providing more flexibility in terms of structure.
+##### Properties and Methods:
+
+- Sealed classes can have properties and methods, making them more versatile when you need to associate behavior or additional data with each subtype.
+##### Instance Creation:
+
+- You can create instances of sealed class subtypes using constructors.
+###### Pattern Matching:
+
+- Sealed classes are often used in languages that support pattern matching, enabling more complex and expressive control flow based on the type of the sealed class instance.
+
+#### Enum:
+##### Fixed Set of Values:
+
+- Enums represent a fixed set of named values, often used to define a set of constants or options.
+##### No Hierarchy:
+
+- Enums do not have a subtype hierarchy. Each enum value is equal to every other value within the enum.
+##### No Additional Properties or Methods:
+
+- Enum values typically don't have associated properties or methods. They are simple, distinct values.
+##### Limited Use Cases:
+
+- Enums are suitable for situations where you have a predefined set of constant values, such as days of the week or status codes.
+
+```kotlin
+sealed class Result {
+    data class Success(val data: String) : Result()
+    data class Error(val message: String) : Result()
+}
+```
+```java
+public enum Day {
+    SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY;
+}
+```
+- In summary, sealed classes are more flexible and versatile, allowing you to define hierarchies with associated properties and methods, while enums are simpler and more focused on representing a fixed set of distinct values without hierarchy or additional features. The choice between them depends on the specific needs of your program or system.
