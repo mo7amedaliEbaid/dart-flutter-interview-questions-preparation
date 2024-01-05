@@ -68,3 +68,4 @@
 - https://climbtheladder.com/flutter-bloc-interview-questions/
 - https://interviewprep.org/bloc-pattern-interview-questions/
 - https://www.fullstack.cafe/blog/dart-interview-questions
+- https://www.w3schools.com/sql/default.asp
