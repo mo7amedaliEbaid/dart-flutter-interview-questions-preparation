@@ -1365,3 +1365,9 @@ providers: [
         BlocProvider(create: (context) => sl<RecitationsCubit>()),
       ],
 ```
+### 68- How is flutter considered native ?
+
+- Flutter is often described as providing a "native-like" experience because it uses a compiled programming language (Dart) and doesn't rely on web views. This allows Flutter apps to interact directly with the device's hardware, providing performance and user experience similar to native applications.
+- Unlike some cross-platform frameworks that use web views to render content, Flutter doesn't rely on them. It compiles Dart code to native machine code, allowing Flutter apps to run directly on the device without the need for an intermediary web-based rendering engine. This contributes to a more efficient and responsive user experience.
+- Frameworks like Apache Cordova or React Native often use web views to render the user interface. This involves embedding a web browser component within the app, interpreting JavaScript, HTML, and CSS to display the content. In contrast, Flutter doesn't use web views, opting for a direct compilation approach for native performance.
+- Web views are components in mobile app development that display web content within an application. They essentially embed a web browser within the app, allowing the rendering of HTML, CSS, and JavaScript. This approach is common in cross-platform frameworks that leverage web technologies to create mobile apps.
