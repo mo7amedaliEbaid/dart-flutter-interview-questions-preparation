@@ -189,3 +189,12 @@ CustomScrollView(
 #### Answer:
 - Text is a simple widget for displaying a single style of text.
 - RichText allows displaying multiple styles and formatting within a single text widget.
+
+## textBaseline
+- In Flutter's Row widget, the textBaseline property is used to align children along their baseline when they have different text baseline alignments. This is particularly useful when you have text in different children of the Row widget, and you want to align them based on a common baseline.
+- The textBaseline property accepts a value of type TextBaseline, which can have the following values:
+- alphabetic: Aligns the text such that the alphabetic baselines of the children match. This is the default behavior.
+
+- ideographic: Aligns the text such that the ideographic baselines of the children match. Ideographic baseline is used for CJK (Chinese, Japanese, Korean) characters.
+
+#### This property is particularly useful when you have a row of text with different font sizes, and you want them to visually align along a common baseline.
