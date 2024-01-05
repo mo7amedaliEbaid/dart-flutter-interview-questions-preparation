@@ -35,9 +35,18 @@
 # Riverpod Docs
 
 - https://riverpod.dev/docs/introduction/why_riverpod
+
+# Getx
+- https://pub.dev/packages/get#reactive-state-manager
+- https://stackoverflow.com/questions/67121941/flutter-get-when-to-use-getxcontroller-getbuildercontroller-or-obx?rq=3
+
+# Provider
+- https://pub.dev/packages/provider
+- https://docs.flutter.dev/data-and-backend/state-mgmt/simple
   
 # Design Patterns
 
+- https://github.com/mo7amedaliEbaid/dart-flutter-interview-questions-preparation/blob/main/design-patterns.md
 - https://github.com/AhmedLSayed9/dart_design_patterns
 - https://github.com/hamed-rezaee/dart_design_patterns_collection
 
