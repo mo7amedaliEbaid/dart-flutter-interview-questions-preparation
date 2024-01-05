@@ -9,6 +9,16 @@
 
 - https://github.com/mo7amedaliEbaid/dart-flutter-interview-questions/blob/main/bloc.md
 
+# Solid
+- https://github.com/mo7amedaliEbaid/dart-flutter-interview-questions/blob/main/solid.md
+
+# Architectural Pattern
+- https://github.com/mo7amedaliEbaid/dart-flutter-interview-questions-preparation/blob/main/architectural-patterns.md
+
+# Clean Arch Overview
+
+- https://github.com/mo7amedaliEbaid/dart-flutter-interview-questions-preparation/blob/main/clean-arch.md
+
 # Flutter Documentaion
 - https://docs.flutter.dev/
 
@@ -31,8 +41,7 @@
 - https://github.com/AhmedLSayed9/dart_design_patterns
 - https://github.com/hamed-rezaee/dart_design_patterns_collection
 
-# Solid
-- https://github.com/mo7amedaliEbaid/dart-flutter-interview-questions/blob/main/solid.md
+
 
 # Related Repos
 
