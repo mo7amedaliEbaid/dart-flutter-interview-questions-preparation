@@ -362,7 +362,7 @@ var record = ('first', a: 2, b: true, 'last');
 ### 17- What is the difference between .map() and .foreach() methods in Dart while iterating over an array ?
 - The major difference is forEach doesn't returns anything while map() does return another array which satisfies the conditions.
 - forEach iterates over each element in the array, it's a function which won't return.
-```
+```dart
 xyz = [1,2,3,4,5]
 
 newArray = xyz.map( (x) => x == 3)
@@ -373,15 +373,23 @@ if(x == 3) print("Yo");
 ```
 ### 18- What is Spread Operator and Null-aware Spread Operator in dart ?
 - In Dart, Spread Operator (…) and Null-aware Spread Operator (…?) are used for inserting multiple elements in a collection like Lists, Maps, etc.
-- Spread Operator.
+- Spread Operator: Used to bundle a list into another list.
 ```
 ...Data_structure
 ```
-- Null-aware Spread operator.
+- The Null-aware Spread Operator (...?) in Dart is used to perform a spread operation only if the operand is non-null. It's a convenient way to conditionally spread elements in a collection, such as a list or a map, without causing a null reference error.
+
 ```
 ...?Data_structure
 ```
+```dart
+List<int>? numbers = [1, 2, 3];
+List<int> moreNumbers = [4, 5, ...?numbers];
+
+print(moreNumbers);  // Output: [4, 5, 1, 2, 3]
 ```
+
+```dart
 void main() { 
   
    // initialise a List l1 
@@ -397,7 +405,7 @@ void main() {
 ### 19- Difference between .then() and .whenCompleted() methods when working with Futures ?
 - .whenComplete will fire a function either when the Future completes with an error or not, instead .then will fire a function after the Future completes without an error.
 - catchError runs if the future fails.
-```
+```dart
 someFuture().then((value) {
   print('Future finished successfully i.e. without error');
 }).catchError((error) {
@@ -408,7 +416,7 @@ someFuture().then((value) {
 ```
 ### 20- What is a mixin class in dart ?
 - A way of defining code that can be reused in multiple class hierarchies.
-```
+```dart
 mixin Mixin{}
 
 class Me extends Person with Mixin{}
@@ -492,7 +500,7 @@ Person him=new Him();
 - To define a class that doesn’t require a full, concrete implementation of its entire interface, use the abstract modifier.
 - Abstract classes cannot be constructed from any library, whether its own or an outside library. Abstract classes often have abstract methods.
 - If you want your abstract class to appear to be instantiable, define a factory constructor.
-```
+```dart
 // Library a.dart
 abstract class Vehicle {
   void moveForward(int meters);
@@ -526,7 +534,7 @@ class MockVehicle implements Vehicle {
 - A new implemented member in a base class does not break subtypes, since all subtypes inherit the new member. This is true unless the subtype already declares a member with the same name and an incompatible signature.
 - You must mark any class which implements or extends a base class as base, final, or sealed. This prevents outside libraries from breaking the base class guarantees.
 
-```
+```dart
 // Library a.dart
 base class Vehicle {
   void moveForward(int meters) {
@@ -601,7 +609,7 @@ class MockVehicle implements Vehicle {
 - You can call instance methods knowing that they haven’t been overwritten in a third-party subclass.
 - Final classes can be extended or implemented within the same library. The final modifier encompasses the effects of base, and therefore any subclasses must also be marked base, final, or sealed.
 
-```
+```dart
 // Library a.dart
 final class Vehicle {
   void moveForward(int meters) {
@@ -641,7 +649,7 @@ class MockVehicle implements Vehicle {
 - Subclasses of sealed classes are, however, not implicitly abstract.
 
 - The compiler is aware of any possible direct subtypes because they can only exist in the same library. This allows the compiler to alert you when a switch does not exhaustively handle all possible subtypes in its cases:
-```
+```dart
 sealed class Vehicle {}
 
 class Car extends Vehicle {}
@@ -768,7 +776,7 @@ notified and updated automatically.
 - The PATCH method is very similar to the PUT method because it also modifies an existing resource. The difference is that for the PUT method, the request body contains the complete new version, whereas for the PATCH method, the request body only needs to contain the specific changes to the resource, specifically a set of instructions describing how that resource should be changed, and the API service will create a new version according to that instruction.
 - The DELETE method is used to delete a resource specified by its URI.
 - readBytes => Sends an HTTP GET request with the given headers to the given URL and returns a Future that completes to the body of the response as a list of bytes.
-```
+```dart
 Future<Uint8List> readBytes(
 Uri url,
 {Map<String, String>? headers}
@@ -777,14 +785,14 @@ Uri url,
 
 ### 34- Blocprovider, bloclistener, blocbuilder, blocconsumer ?
 - BlocProvider => Takes a Create function that is responsible for creating the Bloc or Cubit and a child which will have access to the instance via BlocProvider.of(context). It is used as a dependency injection (DI) widget so that a single instance of a Bloc or Cubit can be provided to multiple widgets within a subtree.
-```
+```dart
 BlocProvider(
   create: (BuildContext context) => BlocA(),
   child: ChildA(),
 );
 ```
 - BlocBuilder => BlocBuilder handles building a widget in response to new states. BlocBuilder is analogous to StreamBuilder but has simplified API to reduce the amount of boilerplate code needed as well as bloc-specific performance improvements.
-```
+```dart
 BlocBuilder<BlocA, BlocAState>(
   builder: (context, state) {
   // return widget here based on BlocA's state
@@ -792,7 +800,7 @@ BlocBuilder<BlocA, BlocAState>(
 )
 ```
 - BlocListener => Takes a BlocWidgetListener and an optional bloc and invokes the listener in response to state changes in the bloc. It should be used for functionality that needs to occur only in response to a state change such as navigation, showing a SnackBar, showing a Dialog, etc... The listener is guaranteed to only be called once for each state change unlike the builder in BlocBuilder.If the bloc parameter is omitted, BlocListener will automatically perform a lookup using BlocProvider and the current BuildContext.
-```
+```dart
 BlocListener<BlocA, BlocAState>(
   listener: (context, state) {
     // do stuff here based on BlocA's state
@@ -803,7 +811,7 @@ BlocListener<BlocA, BlocAState>(
 - The builder is run upon state change. But the builder function is also run when the framework deems necessary to rebuild.
 - The listener function is not affected by the frameworks need to rebuild.
 - BlocConsumer => BlocConsumer exposes a builder and listener in order react to new states. BlocConsumer is analogous to a nested BlocListener and BlocBuilder but reduces the amount of boilerplate needed. BlocConsumer should only be used when it is necessary to both rebuild UI and execute other reactions to state changes in the bloc. BlocConsumer takes a required BlocWidgetBuilder and BlocWidgetListener and an optional bloc, BlocBuilderCondition, and BlocListenerCondition. If the bloc parameter is omitted, BlocConsumer will automatically perform a lookup using BlocProvider and the current BuildContext.
-```
+```dart
 BlocConsumer<BlocA, BlocAState>(
   listener: (context, state) {
     // do stuff here based on BlocA's state
@@ -827,7 +835,7 @@ BlocConsumer<BlocA, BlocAState>(
 - Ex. Firebase.initializeApp() needs to call native code to initialize Firebase, and since the plugin needs to use platform channels to call the native code, which is done asynchronously therefore you have to call ensureInitialized() to make sure that you have an instance of the WidgetsBinding.
 - Returns an instance of the WidgetsBinding, creating and initializing it if necessary. If one is created, it will be a WidgetsFlutterBinding. If one was previously initialized, then it will at least implement WidgetsBinding.
 - You only need to call this method if you need the binding to be initialized before calling runApp.
-```
+```dart
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -889,7 +897,7 @@ void main() async {
 ### 48- What is WillPopScope class?
 - Registers a callback to veto attempts by the user to dismiss the enclosing ModalRoute.
 - Whenever the back button is pressed, you will get a callback at onWillPop, which returns a Future. If the Future returns true, the screen is popped.
-```
+```dart
 class WillPopScopeExample extends StatefulWidget {
   const WillPopScopeExample({super.key});
 
