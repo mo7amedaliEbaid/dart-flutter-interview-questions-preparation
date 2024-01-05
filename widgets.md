@@ -110,6 +110,80 @@
 - const is used for compile-time constants, and the value must be known at compile-time.
 - final is used for values that won't change after they're initialized, but the value can be known at runtime.
 
+## gridDelegate in gridview
+- Type: SliverGridDelegate
+
+- Description: A delegate that controls the layout of the grid. It defines the size and positioning of items within the grid. There are two commonly used delegates:
+
+#### SliverGridDelegateWithFixedCrossAxisCount: Specifies a fixed number of cross-axis cells.
+```dart
+SliverGridDelegateWithFixedCrossAxisCount(
+  crossAxisCount: 2,
+  mainAxisSpacing: 10.0,
+  crossAxisSpacing: 10.0,
+  childAspectRatio: 1.0,
+)
+```
+#### SliverGridDelegateWithMaxCrossAxisExtent: Specifies a maximum cross-axis extent for the items.
+```dart
+SliverGridDelegateWithMaxCrossAxisExtent(
+  maxCrossAxisExtent: 200.0,
+  mainAxisSpacing: 10.0,
+  crossAxisSpacing: 10.0,
+  childAspectRatio: 1.0,
+)
+```
+- scrollDirection:
+- Type: Axis (enum)
+- Description: The axis along which the GridView scrolls. It can be either Axis.horizontal or Axis.vertical.
+## CustomScrollView
+- CustomScrollView in Flutter is a powerful and flexible widget that allows you to create custom scrolling effects by combining multiple slivers. A sliver is a portion of a scrollable area, and CustomScrollView is composed of a list of slivers that work together to create complex scrollable layouts. It's often used to implement custom scrolling behaviors, such as parallax effects, sticky headers, or sliver-based UIs.
+### Slivers:
+- A sliver is a portion of a scrollable area. In the context of CustomScrollView, slivers represent various scrollable components like headers, footers, or custom scroll effects. There are different types of slivers:
+- SliverAppBar: A material design app bar that integrates with CustomScrollView.
+
+- SliverList: A sliver that displays a linear list of items.
+
+- SliverGrid: A sliver that displays a 2D array of items.
+
+- SliverToBoxAdapter: A sliver that contains a single box widget.
+
+- SliverPersistentHeader: A sliver that remains pinned at the top regardless of the scroll position.
+
+- SliverFillRemaining: A sliver that fills the remaining space.
+### CustomScrollView Parameters:
+- slivers: List of slivers that make up the scrollable area.
+
+- scrollDirection: Axis along which the scroll view scrolls (either Axis.vertical or Axis.horizontal).
+
+- physics: The physics of the scroll view, controlling the scrolling behavior.
+
+- controller: A scroll controller that can be used to control the position of the scroll view.
+```dart
+CustomScrollView(
+  slivers: <Widget>[
+    SliverAppBar(
+      // App bar configuration
+      expandedHeight: 200.0,
+      flexibleSpace: FlexibleSpaceBar(
+        title: Text('CustomScrollView Example'),
+        background: Image.network('https://example.com/image.jpg', fit: BoxFit.cover),
+      ),
+    ),
+    SliverList(
+      // List of items
+      delegate: SliverChildBuilderDelegate(
+        (BuildContext context, int index) {
+          return ListTile(
+            title: Text('Item $index'),
+          );
+        },
+        childCount: 20,
+      ),
+    ),
+  ],
+)
+```
 
 ## Compare Text and RichText widgets in Flutter for displaying text.
 #### Answer:
