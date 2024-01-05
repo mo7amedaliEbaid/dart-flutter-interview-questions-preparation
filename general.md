@@ -37,7 +37,7 @@
 - typedef can be used as a pointer that references a function.
 - It is a type alias allows you to provide a new name for an existing data type into your program.
 - Type alias don't create a new types , they simply provide a new name to an existing type.
-```
+```dart
 typedef IntList=List<int>;
 IntList il=[1,2,3];
 ```
@@ -45,7 +45,7 @@ IntList il=[1,2,3];
 - In Dart, typedef is used to create a named function type. It allows you to define a function signature with a custom name, which can then be used to declare variables and parameters of that function type. This can make your code more readable and expressive, especially when dealing with complex or recurring function signatures.
 
 Here's a simple example:
-```
+```dart
 typedef String GreetFunction(String name);
 
 String greetSomeone(GreetFunction greeter, String name) {
@@ -75,7 +75,7 @@ void main() {
 - once it has been initialized with a value, the variable cannot be reassigned.
 - A final variable may rely on runtime excution of code to determine its state, but it must occur during initialization.
 - :thumbsup:
-    ```
+    ```dart
   final Datetime datetime=Datetime.now();
   ```
 #### const.
@@ -83,8 +83,9 @@ void main() {
 - A Constant's entire deep state must be determinable at compile time.
 - the const value will be frozen and immutable while the program is running.
 - :thumbsdown:
-    ```
+    ```dart
     const Datetime datetime=Datetime.now();     xxxxxx
+    // Error
     ```
 
 ### 3- Does Dart Single threaded language and why ?
@@ -139,7 +140,7 @@ immutableInt += 10;
 
 ### 6- What is a singleton ?
 - Singleton pattern ensures that a class has only one instance and also provides a global point of access to it.
-```
+```dart
 class Singleton {
   static final Singleton _singleton = Singleton._internal();
 
@@ -194,7 +195,7 @@ main() {
 - Visibility widget is to show/hide widgets.
 - it has a visible property, which helps us in showing or hiding child.
 - when visible is set to false, the actual child is replaced with zero- sized box instead.
-```
+```dart
 // manage visibility
               Visibility(
                  
@@ -210,7 +211,7 @@ main() {
 - The opacity widget in flutter is used to make it’s child transparent.
 - it can be done by using opacity property and set it 0, (range 0.0 - 1.0).
 - The child is completely invisible when set to opacity 0, but will acquire the space & widget is also interactive.
-```
+```dart
 Opacity(
   opacity: _visible ? 1.0 : 0.0,
   child: const Text("Now you see me, now you don't!"),
@@ -219,7 +220,7 @@ Opacity(
 #### OffStage.
 - OffStage in flutter widget lays it child out, as if it in true but don’t draw/render the child widget view on screen, and all don’t take space of screen.
 - most of the time offstage is used to measure the dimension of widget without showing it on screen.
-```
+```dart
 import 'package:flutter/material.dart';
 
 void main() => runApp(const MyApp());
@@ -297,6 +298,29 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   }
 }
 ```
+- ChatGpt Answer
+- In Flutter, the Offstage widget is used to conditionally hide its child widget without removing it from the widget tree. It takes a boolean parameter called offstage to determine whether its child should be visible or hidden.
+- Here's a simple example:
+```dart
+  Offstage(
+  offstage: condition,
+  child: SomeWidget(),
+)
+```
+- In this example, if the condition is true, the SomeWidget will be hidden (offstage), and if the condition is false, the SomeWidget will be visible.
+- Using Offstage can be more efficient than using other methods like setting the Visibility or Container widget to hide/show the child, because it avoids the cost of rebuilding the widget tree when hiding or showing the child.
+- Keep in mind that even though the widget is offstage, it still consumes memory and resources, so it's not suitable for situations where you want to optimize performance by completely removing a widget from the tree. In such cases, you might want to consider conditional widget creation or using other techniques depending on your specific use case.
+- The Visibility and Offstage widgets in Flutter serve similar purposes—they both control the visibility of their child widgets based on a condition. However, there are some key differences between them:
+- 1- Rebuilding the Widget Tree:
+- When you use Visibility and set visible to false, the child widget is still part of the widget tree, and it will be built and laid out even though it's not visible. This means it might have some performance implications in terms of widget tree construction.
+- On the other hand, Offstage avoids building and laying out its child widget when offstage is set to true. It is more efficient in terms of performance because it skips the build process for the offstage child.
+- 2-Space Occupancy:
+- With Visibility, even if the child is not visible, it still occupies space in the layout. The space is there, but the contents are just not drawn.
+- Offstage not only hides the child but also avoids it occupying any space in the layout when offstage is set to true.
+- In general, if you need to toggle visibility frequently and want a more efficient approach in terms of performance, Offstage might be a better choice. If you still want the child to occupy space even when hidden, then Visibility would be more appropriate.
+
+
+
 ### 13- Difference between Expanded and Flexible ?
 - Flexible takes only the needed space, and Expanded takes all available space, respecting the flex factor.
 - The Expanded widget simply takes all available space.
