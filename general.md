@@ -1553,3 +1553,66 @@ public enum Day {
 }
 ```
 - In summary, sealed classes are more flexible and versatile, allowing you to define hierarchies with associated properties and methods, while enums are simpler and more focused on representing a fixed set of distinct values without hierarchy or additional features. The choice between them depends on the specific needs of your program or system.
+
+## Types Of Parameters?
+- In Dart, parameters can be categorized into several types based on their nature and usage. Here are the main types:
+
+#### Positional Parameters:
+
+- These are the most common type of parameters.
+- They are passed to a function based on their position in the function call.
+- Example:
+```dart
+void printDetails(String name, int age) {
+  print('Name: $name, Age: $age');
+}
+```
+#### Named Parameters:
+
+- Named parameters are specified by name in the function call, allowing you to pass them in any order.
+- They are enclosed in curly braces {}.
+- Example:
+```dart
+void printDetails({String name, int age}) {
+  print('Name: $name, Age: $age');
+}
+```
+#### Default Values:
+
+- Both positional and named parameters can have default values.
+- Default values are used when the caller does not provide a value for the parameter.
+- Example:
+```dart
+void printDetails(String name, {int age = 30}) {
+  print('Name: $name, Age: $age');
+}
+```
+#### Required Parameters (Null Safety):
+
+- In Dart's null safety feature, you can mark a parameter as required using the required keyword.
+- The caller must provide a non-null value for required parameters.
+- Example:
+dart
+Copy code
+void printDetails({required String name, required int age}) {
+  print('Name: $name, Age: $age');
+}
+Positional Optional Parameters (Null Safety):
+
+In Dart null safety, you can also make positional parameters optional by providing a default value or using the ? syntax.
+Example:
+dart
+Copy code
+void printDetails(String name, [int? age]) {
+  print('Name: $name, Age: $age');
+}
+Function Parameters:
+
+Dart allows you to pass functions as parameters to other functions.
+Example:
+```dart
+void performOperation(int x, int y, int Function(int, int) operation) {
+  print('Result: ${operation(x, y)}');
+}
+```
+- These are the main types of parameters in Dart, and you can often combine them in various ways to create flexible and expressive function signatures.
