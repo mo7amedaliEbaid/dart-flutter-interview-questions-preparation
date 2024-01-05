@@ -69,32 +69,61 @@ person.sayHello();
 #### In summary, a class serves as a blueprint for creating objects, and an instance is a specific realization of that blueprint. Objects encapsulate both data and behavior, providing a way to model and represent entities in your Dart program.
 
 # Encapsulation.
-- Encapsulation involves bundling data and methods that operate on that data into a single unit called a class.
+- Encapsulation in Dart refers to the concept of bundling the data (attributes) and the methods (functions) that operate on the data into a single unit, often known as a class. It also involves controlling access to the internal details of an object, typically by using access modifiers like private, public, or protected..
+- In Dart, you can use underscores (_) to denote private members (variables or methods) within a class.
 ```dart
 class Person {
-  String name;
-  int age;
+  String _name; // Private variable
 
-  Person(this.name, this.age);
+  // Constructor
+  Person(this._name);
 
-  void sayHello() {
-    print('Hello, my name is $name and I am $age years old.');
+  // Getter for the private variable
+  String get name => _name;
+
+  // Setter for the private variable
+  set name(String newName) {
+    if (newName.length > 0) {
+      _name = newName;
+    } else {
+      print("Name cannot be empty.");
+    }
+  }
+
+  // Public method
+  void introduceYourself() {
+    print("Hello, I'm $_name.");
   }
 }
 
 void main() {
   // Creating an instance of Person
-  Person person = Person('John', 25);
+  var person = Person("John");
 
-  // Accessing data and methods through the object
-  print(person.name);    // Output: John
-  person.sayHello();      // Output: Hello, my name is John and I am 25 years old.
+  // Accessing the private variable using the getter
+  print("Original name: ${person.name}");
+
+  // Attempting to set an empty name (will not change the name)
+  person.name = "";
+
+  // Setting a new name using the setter
+  person.name = "Doe";
+
+  // Accessing the private variable again using the getter
+  print("Updated name: ${person.name}");
+
+  // Calling a public method
+  person.introduceYourself();
 }
+
 ```
 - in this example, Person is a class encapsulating data (name and age) and a method (sayHello).
 
 # Inheritance.
 - Inheritance allows a class to inherit properties and behaviors from another class. Dart supports single inheritance.
+- Inheritance is a fundamental concept in object-oriented programming that allows a class (subclass or derived class) to inherit properties and behaviors from another class (superclass or base class). Dart supports single inheritance, meaning a class can inherit from only one superclass.
+
+
 ```dart
 class Animal {
   void makeSound() {
@@ -119,8 +148,70 @@ void main() {
 ```
 - Here, Dog inherits from Animal, gaining the makeSound method and introducing a specific method bark.
 
+```dart
+// Base class (superclass)
+class Animal {
+  String name;
+  int age;
+
+  Animal(this.name, this.age);
+
+  void eat() {
+    print("$name is eating.");
+  }
+
+  void makeSound() {
+    print("$name makes a generic animal sound.");
+  }
+}
+
+// Subclass inheriting from Animal
+class Dog extends Animal {
+  String breed;
+
+  Dog(String name, int age, this.breed) : super(name, age);
+
+  // Overriding the makeSound method in the subclass
+  @override
+  void makeSound() {
+    print("$name barks!");
+  }
+
+  void fetch() {
+    print("$name is fetching.");
+  }
+}
+
+void main() {
+  // Creating an instance of the subclass
+  var myDog = Dog("Buddy", 3, "Golden Retriever");
+
+  // Accessing inherited properties and methods
+  print("Name: ${myDog.name}, Age: ${myDog.age}, Breed: ${myDog.breed}");
+
+  // Calling inherited methods
+  myDog.eat();         // Calls Animal's eat method
+  myDog.makeSound();   // Calls Dog's overridden makeSound method
+
+  // Calling subclass-specific method
+  myDog.fetch();
+}
+```
+##### In this example:
+
+- Animal is the base class with common properties (name, age) and methods (eat, makeSound).
+- Dog is a subclass of Animal that inherits its properties and methods. It also has its own property (breed) and a specific implementation of the makeSound method (method overriding).
+
+##### Key points to note:
+- The super keyword is used to refer to the superclass and invoke its constructor.
+- The @override annotation indicates that the method in the subclass is intended to override a method in the superclass.
+- Inherited methods and properties can be accessed and extended in the subclass, and the subclass can provide its own implementations.
+
+##### Inheritance promotes code reuse, extensibility, and the creation of hierarchies in your codebase. However, it's important to use it judiciously to avoid creating overly complex or tightly coupled class hierarchies.
+
 # Polymorphism.
 - Polymorphism allows objects to be treated as instances of their parent class, providing a consistent interface. Dart supports polymorphism through method overriding.
+- Polymorphism in Dart allows objects of different types to be treated as objects of a common type. There are two types of polymorphism: compile-time (or static) polymorphism and runtime (or dynamic) polymorphism.
 ```dart
 class Shape {
   void draw() {
@@ -145,9 +236,57 @@ void main() {
 ```
 - In this case, Circle overrides the draw method of its superclass Shape.
 
+### Compile-time Polymorphism:
+##### Method Overloading:
+- Dart supports method overloading by providing multiple methods with the same name but different parameter lists. The method called depends on the number and types of arguments during compile-time.
+```dart
+class MathOperations {
+  int add(int a, int b) => a + b;
+
+  double add(double a, double b) => a + b;
+}
+
+void main() {
+  var mathOps = MathOperations();
+  print(mathOps.add(2, 3));       // Calls int add(int a, int b)
+  print(mathOps.add(2.5, 3.5));   // Calls double add(double a, double b)
+}
+```
+### Runtime Polymorphism:
+##### Method Overriding:
+- Dart supports method overriding, where a subclass provides a specific implementation of a method that is already defined in its superclass. The method called is determined at runtime.
+```dart
+class Animal {
+  void makeSound() => print("Generic Animal Sound");
+}
+
+class Dog extends Animal {
+  @override
+  void makeSound() => print("Woof! Woof!");
+}
+
+class Cat extends Animal {
+  @override
+  void makeSound() => print("Meow!");
+}
+
+void main() {
+  Animal dog = Dog();
+  Animal cat = Cat();
+
+  dog.makeSound();  // Calls Dog's makeSound method
+  cat.makeSound();  // Calls Cat's makeSound method
+}
+```
+- In this example, makeSound is overridden in both Dog and Cat classes, and the method called is based on the actual type of the object at runtime.
+##### Polymorphism simplifies code and makes it more flexible. It allows you to work with objects of different classes through a common interface, promoting code reuse and flexibility in design.
+
 # Abstraction.
 
-- Abstraction involves simplifying complex systems by modeling classes based on essential properties and behaviors. Dart supports abstraction through interfaces and abstract classes. Example:
+- Abstraction involves simplifying complex systems by modeling classes based on essential properties and behaviors. Dart supports abstraction through interfaces and abstract classes.
+- Abstraction in Dart is a concept that allows you to define the essential features of an object while hiding the unnecessary details. It helps in simplifying complex systems by modeling classes based on their essential characteristics and behaviors. In Dart, abstraction is often achieved through abstract classes and interfaces.
+
+
 ```dart
 abstract class Shape {
   void draw();  // Abstract method
@@ -169,6 +308,77 @@ void main() {
 }
 ```
 - Here, Shape is an abstract class with an abstract method draw, and Circle implements this method.
+
+```dart
+// Abstract class representing a shape
+abstract class Shape {
+  // Abstract method for calculating area
+  double calculateArea();
+  
+  // Concrete method for displaying the shape type
+  void displayType() {
+    print("This is a generic shape.");
+  }
+}
+
+// Concrete class representing a Circle
+class Circle extends Shape {
+  double radius;
+
+  Circle(this.radius);
+
+  @override
+  double calculateArea() {
+    return 3.14 * radius * radius;
+  }
+
+  @override
+  void displayType() {
+    print("This is a Circle.");
+  }
+}
+
+// Concrete class representing a Rectangle
+class Rectangle extends Shape {
+  double length;
+  double width;
+
+  Rectangle(this.length, this.width);
+
+  @override
+  double calculateArea() {
+    return length * width;
+  }
+
+  @override
+  void displayType() {
+    print("This is a Rectangle.");
+  }
+}
+
+void main() {
+  // Using abstraction to create objects
+  Shape circle = Circle(5.0);
+  Shape rectangle = Rectangle(4.0, 6.0);
+
+  // Calling abstract method
+  print("Circle Area: ${circle.calculateArea()}");
+
+  // Calling concrete method
+  circle.displayType();
+
+  // Calling abstract method
+  print("Rectangle Area: ${rectangle.calculateArea()}");
+
+  // Calling concrete method
+  rectangle.displayType();
+}
+```
+##### In this example:
+- Shape is an abstract class with an abstract method calculateArea() that needs to be implemented by its concrete subclasses.
+- Circle and Rectangle are concrete classes that extend the Shape abstract class, providing their own implementations of calculateArea().
+
+##### Abstraction allows you to create a common interface (Shape) for different shapes, and clients can use this interface without worrying about the specific implementation details of each shape. It helps in managing complexity and building more modular and maintainable code.
 
 ## what is a factory constructor and how to use it.
 
@@ -507,4 +717,88 @@ class DataService with Loggable {
   // ...
 }
 ```
-- In Dart, while there are no explicit interfaces, you can use abstract classes and mixins to achieve similar goals. Dart's design philosophy focuses on providing flexibility and expressive ways to achieve abstraction without being constrained by rigid interface definitions. 
+- In Dart, while there are no explicit interfaces, you can use abstract classes and mixins to achieve similar goals. Dart's design philosophy focuses on providing flexibility and expressive ways to achieve abstraction without being constrained by rigid interface definitions.
+
+## explain super keyword and its usage in dart
+- In Dart, the super keyword is used to refer to the superclass (parent class) from within a subclass. It allows you to access members (fields or methods) of the superclass and invoke its constructor. The super keyword is particularly useful in scenarios where a subclass wants to extend or override behavior defined in its superclass.
+
+##### Here are the main usages of the super keyword in Dart:
+
+### Invoking Superclass Constructor:
+- When a subclass is created, it can invoke the constructor of its superclass using the super keyword. This is necessary to initialize the inherited members from the superclass.
+```dart
+class Animal {
+  String name;
+
+  Animal(this.name);
+}
+
+class Dog extends Animal {
+  String breed;
+
+  Dog(String name, this.breed) : super(name);
+}
+
+void main() {
+  var myDog = Dog("Buddy", "Golden Retriever");
+  print("Name: ${myDog.name}, Breed: ${myDog.breed}");
+}
+```
+- In this example, Dog calls the constructor of the Animal superclass using super(name) to initialize the name property inherited from Animal.
+
+### Invoking Superclass Methods:
+- The super keyword can be used to invoke methods from the superclass when a method with the same name is overridden in the subclass.
+```dart
+class Animal {
+  void makeSound() {
+    print("Generic animal sound");
+  }
+}
+
+class Dog extends Animal {
+  @override
+  void makeSound() {
+    super.makeSound(); // Invoking the makeSound method of the superclass
+    print("Woof! Woof!");
+  }
+}
+
+void main() {
+  var myDog = Dog();
+  myDog.makeSound();
+}
+```
+- Here, Dog overrides the makeSound method from Animal and uses super.makeSound() to invoke the superclass's implementation before adding its own behavior.
+
+### Accessing Superclass Members:
+- The super keyword can be used to access fields or methods of the superclass directly from within the subclass.
+```dart
+class Animal {
+  String name;
+
+  Animal(this.name);
+
+  void printName() {
+    print("Animal's name: $name");
+  }
+}
+
+class Dog extends Animal {
+  String breed;
+
+  Dog(String name, this.breed) : super(name);
+
+  void printDetails() {
+    super.printName(); // Accessing the printName method from the superclass
+    print("Dog's breed: $breed");
+  }
+}
+
+void main() {
+  var myDog = Dog("Buddy", "Golden Retriever");
+  myDog.printDetails();
+}
+```
+- In this example, Dog uses super.printName() to access the printName method from the Animal superclass.
+
+#### The super keyword is crucial for maintaining a connection between the subclass and the superclass, enabling proper initialization and interaction within the class hierarchy.
