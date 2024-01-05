@@ -150,6 +150,17 @@ BlocListener<BlocA, BlocAState>(
   child: Container(),
 )
 ```
+## Difference between flutter-bloc and bloc packages?
+### bloc Package:
+
+- The bloc package provides the core functionality for implementing the BLoC (Business Logic Component) pattern in Dart, which is a design pattern for managing state in Flutter applications.
+- It includes the Bloc and Cubit classes, which are the building blocks for creating and managing business logic components in your application.
+
+### flutter_bloc Package:
+- The flutter_bloc package is an extension of the bloc package specifically tailored for Flutter applications.
+- It introduces additional Flutter-specific features and widgets that work seamlessly with the bloc package. For example, it includes the BlocBuilder and BlocProvider widgets, which simplify the integration of BLoC pattern into Flutter UI.
+- It provides tools to easily connect your BLoCs with your Flutter widgets, making it more convenient for managing the state in a Flutter application.
+##### In summary, while the bloc package offers the core BLoC functionality in Dart, the flutter_bloc package builds on top of it to provide Flutter-specific utilities and widgets for a more seamless integration of the BLoC pattern into your Flutter app.
 
 
 
