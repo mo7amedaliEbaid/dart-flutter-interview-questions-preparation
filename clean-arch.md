@@ -1,3 +1,13 @@
+<p float="left">
+   <img src="https://miro.medium.com/v2/resize:fit:772/1*wOmAHDN_zKZJns9YDjtrMw.jpeg" width="770" />
+</p>
+
+### Domain
+- Domain. The Domain layer contains the enterprise logic and types. This layer should not depend on anything outside of itself. This layer typically defines the models and data structures that represent the business entities and concepts.
+### UseCases
+- In Clean Architecture, a use case is a piece of business logic that represents a single task that the system needs to perform. The use case encapsulates the rules and logic required to perform the task, and defines the inputs and outputs required for the operation.
+
+
 - Let's break down the Flutter counter app using BLoC state management and clean architecture principles, explaining each layer and concept:
 
 # 1. Project Structure:
