@@ -1616,3 +1616,27 @@ void performOperation(int x, int y, int Function(int, int) operation) {
 }
 ```
 - These are the main types of parameters in Dart, and you can often combine them in various ways to create flexible and expressive function signatures.
+
+### Dart – Runes
+- In Dart language, strings are simply a sequence of UTF-16 (16-bit Unicode Transformation Format) code units. The Unicode format maps a unique numeric character to represent every digit, letter, or symbol.
+- A rune can be defined as an integer used to represent any Unicode code point. As a Dart string is a simple sequence of UTF-16 code units, 32-bit Unicode values in a string are represented using a special syntax. The String class in the dart:core library gives ways to access runes. Runes can be accessed in the following ways :
+- Using String.codeUnits property
+- Using String.runes property
+- Using String.codeUnitAt() function
+#### String.codeUnits property
+- This property returns an unchangeable list of the 16-bit UTF-16 code units of the given string.
+```dart
+import 'dart:core';   
+main(){  
+   String gfg = 'GeeksforGeeks';  
+   print(gfg.codeUnits);  
+}
+```
+- Output
+```
+[71, 101, 101, 107, 115, 102, 111, 114, 71, 101, 101, 107, 115]
+```
+### Domain
+- Domain. The Domain layer contains the enterprise logic and types. This layer should not depend on anything outside of itself. This layer typically defines the models and data structures that represent the business entities and concepts.
+### UseCases
+- In Clean Architecture, a use case is a piece of business logic that represents a single task that the system needs to perform. The use case encapsulates the rules and logic required to perform the task, and defines the inputs and outputs required for the operation.
