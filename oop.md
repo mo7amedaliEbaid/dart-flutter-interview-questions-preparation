@@ -802,3 +802,62 @@ void main() {
 - In this example, Dog uses super.printName() to access the printName method from the Animal superclass.
 
 #### The super keyword is crucial for maintaining a connection between the subclass and the superclass, enabling proper initialization and interaction within the class hierarchy.
+
+#### Abstraction.
+- The process of hiding the internal data and implementation details from the outer world.
+- Its used to describe things in simple terms.
+- It's used to create a boundary between the application and the client programs.
+##### Abstract class.
+- Cannot be instantiated and can contain abstract and non-abstract methods.
+##### Interface class.
+- Specifies a set of methods that a class must implement.
+##### Benefits.
+- Reduces boilerplate code (Code sections repeated throughout a program or software).
+- Increase reuseability, maintainability and readability.
+ 
+<br/>
+
+#### Inheritance.
+- One class inherits the attributes and methods of another class.
+- Child class from parent class.
+
+##### Benefits.
+- Code reusability, save time and reduce code boilerplate.
+
+##### Types.
+- Single Inheritence.
+- Multiple Inheritence (Dart doesn't support multiple inheritence but we can use mixins to inherit multiple classes).
+- Multilevel Inheritence.
+
+<br/>
+
+#### Polymorphism.
+- Multi form => the concept that you can access objects of different types through the same interface.
+- The ability of any data to be processed in more than one form.
+- the ability of an object to take many forms.
+- Allows to compensate any reference of the super class by any object of the sub class.
+- Allows to perform a single action in different ways.
+- Reduces Coupling.
+- Increase Reusability.
+```
+abstract class Person{}
+class Me extends Person{}
+class Him extends Person{}
+
+Person me=new Me();
+
+Person him=new Him();
+```
+<br/>
+
+#### Encapsulation.
+- bundling of data and methods that operate on that data within single unit (class).
+- The method of hiding the implementation details of a class from outside access and only exposing a public interface.
+- It's a protective shield that prevent data from being accessed by code outside this shield.
+- In dart we use _var instead of private keyword.
+- Getters => Read only.
+- Setters => Write only.
+
+##### Benefits.
+- Data Hiding, increases flexibility and reusability.
+
