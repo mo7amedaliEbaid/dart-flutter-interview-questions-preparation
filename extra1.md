@@ -1,3 +1,7 @@
+- What is Software?
+- Refers to a set of instructions that tell a computer how to perform specific tasks.
+- It Includes programs, applications and other excutable files that enable computers to carry out various functions.
+
 - What is Software Engineering?
 - Software engineering is defined as the process of identifying user needs, then designing, creating, and testing software to meet those requirements. It is a discipline of engineering concerned with the growth of software products by the use of well-defined scientific concepts, methodologies, and procedures. It follows a set of principles, best practices, and procedures that have been fine-tuned through time, evolving as software and technology evolves. Software engineering results in a product that is dependable, efficient, and effective in its function.
 
@@ -130,3 +134,7 @@ The cost of design is also reduced if proper algorithms are used.
 
 - Complexity of Time: The running time of a program as a function of the size of the input is known as time complexity.
 - Complexity of Space: Space complexity examines algorithms based on how much space they require to fulfil their tasks. In the early days of computers, space complexity analysis was crucial (when storage space on the computer was limited).
+
+- What is asynchronous programming?
+- Allows tasks to be excuted independntly and concurrently without waiting for each other to complete ,
+- It inables a non-blocking operations , allowing a program to continue processing other tasks while waiting for certain operations to finish. 
