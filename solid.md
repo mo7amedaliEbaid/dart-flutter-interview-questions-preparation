@@ -221,7 +221,28 @@ class Switch {
   }
 }
 ```
+
 - The Switchable interface is introduced as an abstraction for devices that can be switched on and off.
 - The Switch class now depends on the abstraction (Switchable), adhering to DIP and making it more flexible to changes in devices.
 
 ## Applying these SOLID principles helps in creating code that is more modular, maintainable, and adaptable to changes in requirements without affecting existing functionality.
+
+#### S=> Single responsibility principle .
+- A class should only be responsible for one thing that means a class could change for one reason.
+
+#### O=> Opened-Closed Principle .
+- An entity should be open for extension but closed for modification.
+- Adding new features without modifying the existing code.
+
+#### L=>Liskov substitution principle.
+- Objects of a superclass should be replacable with objects of its subclass without breaking the application.
+- Objects of our subclass behaves the same way as objects of our superclass.
+
+#### I=>Interface Segregation Principle .
+- It states that no client should be forced to depend on methods it does not use.
+- Client should never depend on any thing more than the method it's calling.
+
+#### D=>Dependency inversion principle .
+- Abstractions should not depend on details (Concrete implementations), they should depend on abstractions.
+- You will be able to change the implementation without altering the high level code.
+- Depending on abstractions gives the freedom to be independent of the implementations.
