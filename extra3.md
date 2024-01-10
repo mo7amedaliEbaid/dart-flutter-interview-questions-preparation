@@ -28,4 +28,7 @@
 - In Ios, You can have up to 10 apps in a single app bundle. Each app bundle has its own dedicated product page, icon, and title which is indexed on several keywords (E.g., your brand name). All the apps included in the app bundle should be either paid or free with a subscription.
 - Apple uses bundles to represent apps, frameworks, plug-ins, and many other specific types of content. Bundles organize their contained resources into well-defined subdirectories, and bundle structures vary depending on the platform and the type of the bundle. By using a bundle object, you can access a bundle's resources without knowing the structure of the bundle. The bundle object provides a single interface for locating items, taking into account the bundle structure, user preferences, available localizations, and other relevant factors.
 
-- Any executable can use a bundle object to locate resources, either inside an app’s bundle or in a known bundle located elsewhere. You don't use a bundle object to locate files in a container directory or in other parts of the file system. 
+- Any executable can use a bundle object to locate resources, either inside an app’s bundle or in a known bundle located elsewhere. You don't use a bundle object to locate files in a container directory or in other parts of the file system.
+
+## Why is the build() method on State and not StatefulWidget?
+https://raw.githubusercontent.com/power19942/flutter-interview-questions/main/img/stateful_build.png
