@@ -1,5 +1,5 @@
-https://www.educba.com/mvp-vs-mvvm/
-https://medium.com/@samra.sajjad0001/unleashing-creativity-exploring-architecture-patterns-in-flutter-12b7465bc927
+- https://www.educba.com/mvp-vs-mvvm/
+- https://medium.com/@samra.sajjad0001/unleashing-creativity-exploring-architecture-patterns-in-flutter-12b7465bc927
 
 # architectural-patterns
 
