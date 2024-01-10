@@ -15,6 +15,7 @@
 # Architectural Pattern
 - https://github.com/mo7amedaliEbaid/dart-flutter-interview-questions-preparation/blob/main/architectural-patterns.md
 - https://www.educba.com/mvp-vs-mvvm/
+- https://medium.com/@samra.sajjad0001/unleashing-creativity-exploring-architecture-patterns-in-flutter-12b7465bc927
 
 # Clean Arch Overview
 
