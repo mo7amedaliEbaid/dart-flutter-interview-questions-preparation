@@ -1,3 +1,5 @@
+https://www.educba.com/mvp-vs-mvvm/
+
 # architectural-patterns
 
 ### MVVM (Model-View-ViewModel), MVP (Model-View-presenter), and MVC (Model-View-Controller) are architectural patterns used to structure code in software development, Here's a brief comparison of the three.
