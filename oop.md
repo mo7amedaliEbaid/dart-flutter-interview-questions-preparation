@@ -861,3 +861,5 @@ Person him=new Him();
 ##### Benefits.
 - Data Hiding, increases flexibility and reusability.
 
+## what is composition in oop?
+- Like Inheritance, Composition is a concept in object-oriented programming that models the relationship between two classes. Composition involves using other classes to build more complex classes and there is no parent/child relationship exists in this case. Basically, complex objects are composed of other objects.
