@@ -180,3 +180,61 @@ void main() {
 }
 ```
 - In the above example, WidgetsFlutterBinding.ensureInitialized() ensures that the binding is set up before calling the runApp function to start the Flutter application.
+
+### types of scope in Dart?
+- In Dart, the term "scope" refers to the region of code where a particular identifier (such as a variable or function) is accessible. Dart has lexical scoping, which means that the scope of a variable is determined by its location in the source code.
+- There are several types of scope in Dart, including:
+
+##### Global Scope:
+
+- Variables or functions declared outside of any function or class have global scope.
+- They are accessible throughout the entire Dart program.
+```dart
+var globalVariable = 42;
+
+void main() {
+  print(globalVariable); // Accessible in the main function
+}
+```
+##### Local Scope:
+
+- Variables or functions declared within a function or a block have local scope.
+- They are only accessible within the function or block where they are declared.
+```dart
+void myFunction() {
+  var localVariable = 10;
+  print(localVariable); // Accessible only within myFunction
+}
+```
+##### Class Scope:
+
+- Members (fields and methods) of a class have class scope.
+- They are accessible within the class where they are declared.
+```dart
+class MyClass {
+  var classVariable = 5;
+
+  void myMethod() {
+    print(classVariable); // Accessible within MyClass
+  }
+}
+```
+##### Block Scope:
+
+- Dart has block-level scoping, meaning that variables declared within a block (such as an if statement or a loop) are only accessible within that block.
+```dart
+void example() {
+  if (true) {
+    var insideIf = 'I am inside if';
+    print(insideIf); // Accessible only within the if block
+  }
+  // print(insideIf); // Error: 'insideIf' is not defined in this scope
+}
+```
+##### It's important to note that Dart uses a concept called "lexical scoping," where the scope of a variable is determined by its location in the source code. Understanding variable scope is crucial for writing clean and maintainable Dart code.
+
+
+
+
+
+
