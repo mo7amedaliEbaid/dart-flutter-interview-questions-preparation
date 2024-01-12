@@ -297,10 +297,7 @@ To avoid the needless rebuilding of the widgets one can divide the widget tree i
 
 - 57.Define spacer widget?
 
-In Flutter, the Spacer widget is a flexible widget that takes up available space within a Row, Column, or Flex layout. It is commonly used to create vertical or horizontal space between other widgets, or to distribute available space between multiple widgets.
-
-Looking for remote developer job at US companies?
-Work at Fortune 500 companies and fast-scaling startups from the comfort of your home
+In Flutter, the Spacer widget is a flexible widget that takes up available space within a Row, Column, or Flex layout. It is commonly used to create vertical or horizontal space between other widgets, or to distribute available space between multiple widgets
 
 - 1.Tell me about Flutter Provider.
 
