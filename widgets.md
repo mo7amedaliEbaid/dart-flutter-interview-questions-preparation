@@ -198,3 +198,22 @@ CustomScrollView(
 - ideographic: Aligns the text such that the ideographic baselines of the children match. Ideographic baseline is used for CJK (Chinese, Japanese, Korean) characters.
 
 #### This property is particularly useful when you have a row of text with different font sizes, and you want them to visually align along a common baseline.
+
+##  Explain the difference between ClipRect and ClipRRect in Flutter.
+
+- ClipRect clips its child to the shape of a rectangle, while ClipRRect clips its child to the shape of a rounded rectangle.
+## Compare AlertDialog and SimpleDialog in Flutter.
+
+- Both are used for displaying dialogs, but AlertDialog is a full-screen dialog with rounded corners, while SimpleDialog is a smaller dialog with options.
+## Explain the difference between AspectRatio and FractionallySizedBox in Flutter.
+
+- AspectRatio enforces a specific aspect ratio on its child, while FractionallySizedBox sizes its child based on a fraction of the available space.
+## What distinguishes IndexedStack and PageView in Flutter?
+
+- IndexedStack displays only one of its children at a time, based on the provided index, while PageView is a scrollable list of pages.
+##  What is the difference between AnimatedContainer and TweenAnimationBuilder in Flutter for animation?
+
+- AnimatedContainer automatically animates between two states, while TweenAnimationBuilder provides more control over the animation using a tween.
+## Compare Align and Positioned widgets in Flutter for positioning children.
+
+- Align positions a child within its parent using fractional values, while Positioned allows absolute positioning based on explicit coordinates.
