@@ -1,6 +1,13 @@
-### what is composition in oop?
+### what is composition in programming?
 - Like Inheritance, Composition is a concept in object-oriented programming that models the relationship between two classes. Composition involves using other classes to build more complex classes and there is no parent/child relationship exists in this case. Basically, complex objects are composed of other objects.
+- Composition in programming refers to a design principle where a class or object is composed of other classes or objects, allowing for the creation of complex structures by combining simpler components. This is in contrast to inheritance, where a class can inherit properties and behaviors from a single superclass.
+- There are two primary forms of composition: object composition and function composition.
 
+##### Object Composition:
+- In object-oriented programming, object composition involves creating instances of classes within another class, forming a relationship between the containing class (composite) and the contained classes (components). This allows for the creation of more modular and reusable code by assembling functionality from smaller, independent units.
+##### Function Composition:
+- In functional programming, function composition involves combining multiple functions to create a new function. This is often achieved through the use of higher-order functions or combinators. Each function in the composition takes the output of the previous one as its input.
+##### Both forms of composition—object and function composition—promote code reuse, maintainability, and flexibility in designing software systems. They allow developers to build complex systems by assembling smaller, well-defined components.
 ### Widget Lifecycle:
 
 - createRenderObject: Used to create the render object associated with the widget.
