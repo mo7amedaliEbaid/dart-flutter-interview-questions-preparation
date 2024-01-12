@@ -150,6 +150,20 @@ class Subject {
   }
 }
 ```
+# Strategy pattern:
+- The strategy pattern is a behavioral design pattern in software development that defines a family of algorithms, encapsulates each algorithm, and makes them interchangeable. The strategy pattern allows a client to choose an algorithm from a family of algorithms at runtime, and it lets the algorithm vary independently from the clients that use it.
+
+- Here's a breakdown of the key components of the strategy pattern:
+
+- Context: This is the class that maintains a reference to the chosen strategy. It is the client that uses the algorithm but does not implement it directly.
+
+- Strategy: This is an interface or an abstract class that defines the common interface for all concrete algorithms. Strategies typically have a single method that the context uses to execute the algorithm.
+
+- Concrete Strategies: These are the implementations of the strategy interface. Each concrete strategy provides a different algorithm that can be used by the context.
+
+- By encapsulating each algorithm in a separate strategy class, you can make the algorithms interchangeable without modifying the client code. The client can switch between different strategies at runtime.
+
+
 # Repository Pattern:
 - Type: Architectural
 - Explanation: Separates the logic that retrieves data from the underlying storage, allowing a clean separation between domain code and data access code.
