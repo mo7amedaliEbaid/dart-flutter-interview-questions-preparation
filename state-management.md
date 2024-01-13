@@ -1,12 +1,7 @@
 # Obx
-- when my controller is already registered elsewhere and I want
-- minimal code/noise
-- a reactive widget
+- when my controller is already registered elsewhere and I want minimal code/noise a reactive widget
 # GetX
-- when my controller isn't yet registered or
-- I want to be very explicit/obvious which controller is being used or
-- I need to run some initState calls during creation and I want
-- a reactive widget
+- when my controller isn't yet registered or I want to be very explicit/obvious which controller is being used or I need to run some initState calls during creation and I want a reactive widget
 # GetBuilder
 - I want to manually decide when a widget rebuilds
 - I have several state variables that make sense to refresh together as a group
