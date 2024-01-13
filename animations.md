@@ -64,6 +64,79 @@ void dispose() {
 ```
 ##### These basics provide a foundation for creating various animations in Flutter. Whether you're working with opacity, size, position, or other properties, these principles remain consistent across different types of animations.
 
+# what is a ticker?
+- In Flutter, a "ticker" refers to an object that produces a stream of periodic events. It is commonly used in animations to schedule updates or frames at a regular interval. The Ticker class is part of the animation framework in Flutter, and it is often used in conjunction with the AnimationController class.
+- TickerProvider: The TickerProvider interface is typically implemented by the widget that owns the AnimationController. It has a method called createTicker, which is responsible for creating a Ticker object.
+- Ticker: The Ticker class represents a ticking object that emits periodic events. It is created by a TickerProvider and connected to an AnimationController. The AnimationController uses the Ticker to advance the animation by a small amount (a "tick") at regular intervals.
+```dart
+  import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: MyAnimatedWidget(),
+    );
+  }
+}
+
+class MyAnimatedWidget extends StatefulWidget {
+  @override
+  _MyAnimatedWidgetState createState() => _MyAnimatedWidgetState();
+}
+
+class _MyAnimatedWidgetState extends State<MyAnimatedWidget> with TickerProviderStateMixin {
+  late AnimationController _controller;
+  late Ticker _ticker;
+
+  @override
+  void initState() {
+    super.initState();
+    
+    // Create AnimationController
+    _controller = AnimationController(
+      duration: Duration(seconds: 1),
+      vsync: this, // Specify the TickerProvider
+    );
+
+    // Create Ticker
+    _ticker = this.createTicker((Duration elapsed) {
+      // This function will be called on each tick
+      // Update animation logic here
+      // For example, update the state of a widget based on the animation value
+    });
+
+    // Start the animation
+    _controller.forward();
+  }
+
+  @override
+  void dispose() {
+    // Dispose of the AnimationController and Ticker when the widget is disposed
+    _controller.dispose();
+    _ticker.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Ticker Example'),
+      ),
+      body: Center(
+        // Your animated widget here
+      ),
+    );
+  }
+}
+```
+- In this example, _ticker is created using the createTicker method provided by the TickerProviderStateMixin. The _ticker then triggers the animation logic on each tick, allowing you to update the state of your widget or perform any other animations you need.
+
 # what types of animations in dart with examples
 ## Implicit Animations:
 - Implicit animations automatically animate changes to a property over time. Flutter provides several built-in implicit animations, such as AnimatedContainer, AnimatedOpacity, and AnimatedPositioned. 
