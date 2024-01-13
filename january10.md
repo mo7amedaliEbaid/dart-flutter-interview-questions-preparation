@@ -445,7 +445,8 @@ class MyApp extends StatelessWidget {
 
 
 
-
+### Difference between Where and takeWhile ?
+- where is a general-purpose method for filtering elements based on a condition, and it considers the entire iterable. On the other hand, takeWhile is specifically designed to take elements from the beginning of the iterable until the condition is no longer satisfied. The choice between them depends on your specific use case and whether you want to filter elements throughout the entire collection or only at the beginning.
 
 
 
