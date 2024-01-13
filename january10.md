@@ -115,6 +115,10 @@ class MyWidget extends StatefulWidget with WidgetsBindingObserver {
 - A plugin, on the other hand, is a special type of package that integrates platform-specific (native) code with Flutter's Dart code. It provides a bridge between the Flutter framework and native code written in languages like Java (for Android) or Swift/ObjC (for iOS).
 - Plugins are typically used when you need to access device-specific features or APIs that are not directly supported by Flutter.
 - Common examples of plugins include camera plugins, location plugins, or plugins for using specific native libraries.
+- In short: Native related developments.
+
+- Flutter plugin is the wrapper of the native code like android( Kotlin or java) and iOS(swift or objective c). ... Flutter can do anything that a native application can through the use of Platform Channels and Message Passing. Flutter instructs the native iOS/Android code to perform an action and returns the result to Dart.
+##### A "package" contains only Dart code.A "plugin" contains both Dart and Native code (kotlin/js/swift/...).
 ##### In summary, while a package is a broader term referring to a collection of Dart code and assets that can be reused, a plugin is a specific type of package designed to bridge the gap between Flutter and platform-specific (native) code, enabling access to device-specific functionality. Some plugins are packaged as Dart packages, and they might include both Dart and platform-specific code to achieve their goals.
 ### difference between futurebuilder and streambuilder?
 - In Flutter, both FutureBuilder and StreamBuilder are widgets designed to simplify the process of working with asynchronous data and updating the UI based on the completion or updates of asynchronous operations. However, they are used with different types of asynchronous data sources.
