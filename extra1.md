@@ -137,3 +137,45 @@ The cost of design is also reduced if proper algorithms are used.
 - What is asynchronous programming?
 - Allows tasks to be excuted independntly and concurrently without waiting for each other to complete ,
 - It inables a non-blocking operations , allowing a program to continue processing other tasks while waiting for certain operations to finish. 
+
+## Data Structure
+### Arrays:
+
+An ordered collection of elements, where each element is identified by an index or a key.
+Elements are stored in contiguous memory locations.
+Access time is constant, O(1), but inserting or deleting elements may be less efficient, O(n).
+### Linked Lists:
+
+A collection of nodes, where each node contains data and a reference (or link) to the next node in the sequence.
+Dynamic in size and can easily grow or shrink.
+Efficient insertion and deletion, but access time is O(n) since you have to traverse the list.
+### Stacks:
+
+A Last In, First Out (LIFO) data structure.
+Elements are added and removed from the same end, called the top.
+Common operations: push (add), pop (remove), and peek (view the top element).
+### Queues:
+
+A First In, First Out (FIFO) data structure.
+Elements are added at the rear (enqueue) and removed from the front (dequeue).
+Common operations: enqueue, dequeue, and peek.
+### Trees:
+
+A hierarchical data structure with a root node and branches leading to leaf nodes.
+Binary trees have at most two children per node.
+Common types include Binary Trees, Binary Search Trees (BST), and AVL Trees.
+### Graphs:
+
+A collection of nodes connected by edges.
+Can be directed or undirected, weighted or unweighted.
+Common representations: adjacency matrix or adjacency list.
+### Hash Tables:
+
+A data structure that uses a hash function to map keys to indexes in an array.
+Provides constant time average-case complexity for search, insert, and delete operations.
+### Heaps:
+
+A specialized tree-based data structure.
+Max heap: parent nodes are greater than or equal to their children.
+Min heap: parent nodes are less than or equal to their children.
+Useful for priority queues.
