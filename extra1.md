@@ -179,3 +179,104 @@ A specialized tree-based data structure.
 Max heap: parent nodes are greater than or equal to their children.
 Min heap: parent nodes are less than or equal to their children.
 Useful for priority queues.
+
+## What is a data structure?
+
+A data structure is a way of organizing and storing data to perform operations efficiently.
+## Explain the difference between an array and a linked list.
+
+An array is a static data structure with fixed size, while a linked list is dynamic and can grow or shrink. Arrays have constant time access, but insertion/deletion is less efficient. Linked lists have efficient insertion/deletion but slower access.
+## What is a stack?
+
+A stack is a Last In, First Out (LIFO) data structure where elements are added and removed from the same end (top). Common operations include push (add), pop (remove), and peek (view the top element).
+## Explain the concept of recursion.
+
+Recursion is a programming technique where a function calls itself in its own definition. It is often used to break down a problem into smaller subproblems.
+## What is a binary search tree (BST)?
+A binary search tree is a binary tree where the left subtree of a node contains only nodes with keys less than the node's key, and the right subtree contains only nodes with keys greater than the node's key.
+## Describe the depth-first search (DFS) algorithm.
+
+DFS is an algorithm for traversing or searching tree or graph data structures. It explores as far as possible along each branch before backtracking.
+## What is the time complexity of searching in a balanced binary search tree?
+
+The time complexity is O(log n) for a balanced binary search tree, where n is the number of nodes.
+## Explain the concept of hashing.
+
+Hashing is the process of converting a key into an index within a hash table using a hash function. It enables efficient retrieval, insertion, and deletion of data.
+## What is a queue?
+
+A queue is a First In, First Out (FIFO) data structure where elements are added at the rear and removed from the front. Common operations include enqueue (add), dequeue (remove), and peek.
+## How does a hash table handle collisions?
+
+Collisions are handled by using techniques such as chaining (using linked lists to store multiple elements at the same index) or open addressing (finding the next available slot in the array).
+## Linear Search:
+
+Sequentially checks each element in a list until a match is found or the end of the list is reached.
+Time Complexity: O(n)
+## Binary Search:
+
+Efficiently finds a target value within a sorted array by repeatedly dividing the search interval in half.
+Time Complexity: O(log n)
+## Bubble Sort:
+
+Repeatedly steps through the list, compares adjacent elements, and swaps them if they are in the wrong order.
+Time Complexity: O(n^2)
+## Insertion Sort:
+
+Builds the final sorted array one item at a time by repeatedly taking the next element and inserting it into the proper position.
+Time Complexity: O(n^2)
+## Merge Sort:
+
+Divides the unsorted list into n sublists, each containing one element, and then repeatedly merges sublists to produce new sorted sublists.
+Time Complexity: O(n log n)
+## Quick Sort:
+
+Chooses a 'pivot' element and partitions the array into two sub-arrays according to whether elements are less than or greater than the pivot.
+Time Complexity: O(n log n) on average, but can degrade to O(n^2) in worst-case scenarios.
+## Depth-First Search (DFS):
+
+Explores as far as possible along each branch before backtracking in a tree or graph.
+Used for: Tree and graph traversal.
+## Breadth-First Search (BFS):
+
+Visits all the vertices of a graph in breadth-first order, i.e., it visits all the vertices at the same level before moving on to the next level.
+Used for: Shortest path problems, network broadcasting.
+## Dijkstra's Algorithm:
+
+Finds the shortest path between two nodes in a graph with non-negative edge weights.
+Used for: Shortest path problems in weighted graphs.
+## Dynamic Programming:
+
+Breaks down a problem into simpler overlapping subproblems and solves each subproblem only once, storing the solutions to subproblems to avoid redundant computations.
+Used for: Optimization problems, such as the Fibonacci sequence or the knapsack problem.
+
+## What is an algorithm?
+
+An algorithm is a step-by-step procedure or set of rules for solving a specific problem or accomplishing a particular task.
+## Explain the difference between time complexity and space complexity.
+
+Time complexity measures the amount of time an algorithm takes to complete, while space complexity measures the amount of memory an algorithm uses.
+## What is the time complexity of binary search?
+
+O(log n) - Binary search efficiently finds a target value within a sorted array by dividing the search interval in half.
+## Describe the concept of Big O notation.
+
+Big O notation is used to describe the upper bound on the growth rate of an algorithm's time or space complexity in terms of the input size.
+## What is the difference between best-case, average-case, and worst-case time complexity?
+
+Best-case time complexity is the minimum time an algorithm takes, average-case is the expected time, and worst-case is the maximum time for any input size.
+## Explain the quicksort algorithm.
+
+Quicksort is a divide-and-conquer algorithm that selects a pivot, partitions the array into two subarrays, and recursively sorts the subarrays.
+## What is the significance of Dijkstra's algorithm?
+
+Dijkstra's algorithm is used to find the shortest path between two nodes in a graph with non-negative edge weights.
+## How does a hash table work, and what is its time complexity for search, insert, and delete operations?
+
+A hash table uses a hash function to map keys to indexes. The time complexity for search, insert, and delete is O(1) on average, but can be O(n) in the worst case due to collisions.
+## Explain the concept of dynamic programming.
+
+Dynamic programming breaks down a problem into simpler overlapping subproblems and solves each subproblem only once, storing solutions to avoid redundant computations.
+## What is the difference between breadth-first search (BFS) and depth-first search (DFS)?
+
+BFS explores all vertices of a graph in breadth-first order, while DFS explores as far as possible along each branch before backtracking.
