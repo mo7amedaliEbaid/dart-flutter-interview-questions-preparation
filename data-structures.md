@@ -80,6 +80,7 @@ Characteristics:
 
 - Trees
 - Graphs
+- Hash Tables
 ##### characteristics:
 
 - Elements are not arranged sequentially.
@@ -111,6 +112,8 @@ An ordered collection of elements, where each element is identified by an index 
 Elements are stored in contiguous memory locations.
 Access time is constant, O(1), but inserting or deleting elements may be less efficient, O(n).
 ### Linked Lists:
+![Linked-List-Data-Structure](https://github.com/mo7amedaliEbaid/dart-flutter-interview-questions-preparation/assets/131966482/bb0a6fb5-78fd-42e9-8c85-1b475c77aafa)
+![linkedList](https://github.com/mo7amedaliEbaid/dart-flutter-interview-questions-preparation/assets/131966482/bbd066c9-3d4e-434f-83f9-654b9ce5b8d7)
 
 A collection of nodes, where each node contains data and a reference (or link) to the next node in the sequence.
 Dynamic in size and can easily grow or shrink.
@@ -126,20 +129,24 @@ A First In, First Out (FIFO) data structure.
 Elements are added at the rear (enqueue) and removed from the front (dequeue).
 Common operations: enqueue, dequeue, and peek.
 ### Trees:
+![tree](https://github.com/mo7amedaliEbaid/dart-flutter-interview-questions-preparation/assets/131966482/31032f0b-c858-423c-baa3-f9b88aa24c92)
 
 A hierarchical data structure with a root node and branches leading to leaf nodes.
 Binary trees have at most two children per node.
 Common types include Binary Trees, Binary Search Trees (BST), and AVL Trees.
 ### Graphs:
+![graph18](https://github.com/mo7amedaliEbaid/dart-flutter-interview-questions-preparation/assets/131966482/4575f61a-4d35-4bfe-8d7b-28366aba71ad)
 
 A collection of nodes connected by edges.
 Can be directed or undirected, weighted or unweighted.
 Common representations: adjacency matrix or adjacency list.
 ### Hash Tables:
+![ComponentsofHashing](https://github.com/mo7amedaliEbaid/dart-flutter-interview-questions-preparation/assets/131966482/05e159f3-69ef-49bc-bd11-15ec63f5d888)
 
 A data structure that uses a hash function to map keys to indexes in an array.
 Provides constant time average-case complexity for search, insert, and delete operations.
 ### Heaps:
+![Heap-DS](https://github.com/mo7amedaliEbaid/dart-flutter-interview-questions-preparation/assets/131966482/1eb7ae0c-864b-46cb-8e6f-f1d55a1317f2)
 
 A specialized tree-based data structure.
 Max heap: parent nodes are greater than or equal to their children.
@@ -267,6 +274,83 @@ Traversal is a key concept in algorithms and programming when working with data 
 
 
 
+## difference between heap and tree data structures?
 
+- A tree is a hierarchical data structure that consists of nodes connected by edges. Trees have a root node, which is the topmost node, and each node has zero or more child nodes. A heap, on the other hand, is a specialized tree-based data structure with specific properties. Let's explore the key differences between a heap and a tree:
 
+### Tree:
 
+#### General Structure:
+
+- A tree is a generic structure that represents a hierarchy, where each node has a parent and zero or more children.
+- Trees can be of various types, such as binary trees, n-ary trees, and balanced trees (e.g., AVL trees, Red-Black trees).
+#### Traversal:
+
+- Trees support various traversal algorithms, such as in-order, pre-order, post-order, and level-order traversals.
+- Traversal in a tree depends on the type of tree and the specific algorithm chosen.
+#### Applications:
+
+- Trees are used in various applications, including representing hierarchical relationships, organizing data, and implementing search algorithms (e.g., binary search trees).
+#### Balanced and Unbalanced Trees:
+
+- Trees can be balanced or unbalanced. Balanced trees maintain a relatively uniform height, ensuring efficient operations, while unbalanced trees may degrade into linked lists in worst cases.
+### Heap:
+
+#### Specific Structure:
+
+- A heap is a specialized tree-based data structure that satisfies the heap property.
+- The heap property is specific to heaps and can be either a max-heap or a min-heap, dictating the relationship between parent and child nodes.
+#### Heap Property:
+
+- In a max-heap, the value of each node is greater than or equal to the values of its children. The maximum value is at the root.
+- In a min-heap, the value of each node is less than or equal to the values of its children. The minimum value is at the root.
+#### Heap Operations:
+
+- Heaps are commonly used to implement priority queues, where elements with higher priorities (in the case of max-heap) or lower priorities (in the case of min-heap) are processed before others.
+#### No Structural Constraints:
+
+- Unlike trees, heaps do not have the hierarchical parent-child relationships typical of general trees. The focus is on the heap property and the order of values.
+- In summary, while both heaps and trees are hierarchical data structures, a heap is a specific type of tree with a distinct property (heap property) that influences the arrangement of elements. Trees, on the other hand, represent a broader category of hierarchical structures with various types and applications.
+
+## types of tree data structure?
+- There are several types of tree data structures, each with its own characteristics and use cases. Here are some common types of tree data structures:
+
+### Binary Tree:
+
+- In a binary tree, each node has at most two children: a left child and a right child.
+- Common operations on binary trees include insertion, deletion, and traversal algorithms (in-order, pre-order, post-order).
+### Binary Search Tree (BST):
+
+- A binary search tree is a binary tree where the left child of a node contains values less than the node, and the right child contains values greater than the node.
+BSTs enable efficient searching, insertion, and deletion of elements.
+### AVL Tree:
+
+- An AVL tree (named after its inventors Adelson-Velsky and Landis) is a self-balancing binary search tree.
+- The balance factor of each node is maintained, and rotations are performed to ensure the tree remains balanced, reducing the height and optimizing search operations.
+### Red-Black Tree:
+
+- A red-black tree is another self-balancing binary search tree, where each node has an extra bit representing the color (red or black).
+- The color properties are maintained during insertion and deletion to ensure balance.
+### B-Tree:
+
+- A B-tree is a self-balancing tree data structure that maintains sorted data and is commonly used in databases and file systems.
+- B-trees have a variable number of children per node, improving performance for large datasets.
+### Trie (Prefix Tree):
+
+- A trie is a tree-like data structure used to store a dynamic set or associative array where keys are usually strings.
+- Trie nodes represent characters of the keys, and the path from the root to a node forms the key.
+### Heap:
+
+- A heap is a specialized tree-based data structure with a specific heap property (either min-heap or max-heap).
+- Heaps are commonly used in implementing priority queues.
+### Splay Tree:
+
+- A splay tree is a self-adjusting binary search tree where frequently accessed elements are moved closer to the root, improving access times.
+### Segment Tree:
+
+- A segment tree is a tree data structure used for range-query operations on an array, such as finding the sum, minimum, or maximum of elements in a given range.
+### Quadtree and Octree:
+
+- Quadtree is a tree data structure in which each internal node has four children, used in spatial partitioning for efficient spatial indexing.
+- Octree is an extension of a quadtree to three dimensions, commonly used in 3D graphics and spatial databases.
+- These are just a few examples of tree data structures. The choice of a particular tree structure depends on the specific requirements of the application, the nature of the data, and the operations that need to be performed efficiently.
