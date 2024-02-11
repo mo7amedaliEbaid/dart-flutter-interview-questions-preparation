@@ -3,7 +3,7 @@
 
 ## Why Create Data Structures?
 - Data structures serve a number of important functions in a program. They ensure that each line of code performs its function correctly and efficiently, they help the programmer identify and fix problems with his/her code, and they help to create a clear and organized code base.
--## Explain the process behind storing a variable in memory.
+## Explain the process behind storing a variable in memory.
 - A variable is stored in memory based on the amount of memory that is needed. Following are the steps followed to store a variable:
 - The required amount of memory is assigned first.
 - Then, it is stored based on the data structure being used.
