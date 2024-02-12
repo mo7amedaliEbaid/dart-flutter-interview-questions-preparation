@@ -765,7 +765,18 @@ extension NumberParsing on String {}
 - Giving your constructor different names allows your class to have many constructors and also to be better represent their use cases outside of the class.
 - Image.asset().
 - Image.network().
-
+```dart
+factory CurrentUser.fromSnapshot(DocumentSnapshot snap) {
+    return CurrentUser(
+      id: snap.id,
+      email: snap['email'],
+      userName: snap['userName'],
+      countryCode: snap['countryCode'],
+      country: snap['country'],
+      phoneNumber: snap['phoneNumber'],
+    );
+  }
+```
 ### 28- Factory constructor?
 - factory keyword is used when implementing a constructor that doesn't always create a new instance of its class.
 - it might return an instance of a subtype.
