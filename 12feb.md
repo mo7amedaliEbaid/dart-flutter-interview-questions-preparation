@@ -94,3 +94,37 @@ correct=> in mvc The Controller does pass back the Model, so there is knowledge 
 # stack, heap.
 
 ![memory](https://github.com/mo7amedaliEbaid/dart-flutter-interview-questions-preparation/assets/131966482/0af322e4-0647-4ce4-a66b-303db1161cb6)
+
+# pusher
+### Install the library
+- Add the library as a dependency to your project.
+```
+flutter pub add pusher_channels_flutter
+```
+### Create a connection
+- Open a connection to Channels using the key and cluster you copied earlier.
+```dart
+await pusher.init(
+  apiKey: API_KEY,
+  cluster: API_CLUSTER
+);
+await pusher.connect();
+```
+### Subscribe to a public channel
+- Before your web app can receive the event you publish, your web app needs to subscribe to the my-channel channel channel. Do this with pusher.subscribe.
+```dart
+final myChannel = await pusher.subscribe(
+  channelName: "my-channel"
+  onEvent: onEvent
+);
+```
+###  Listen for events
+- Once you have created an instance of Channel, set up event listener.
+```dart
+void onEvent(PusherEvent event) {
+  log("onEvent: $event");
+}
+```
+
+# TestFlight
+- TestFlight is an online service for over-the-air installation and testing of mobile applications, currently owned by Apple Inc. and only offered to developers within the iOS Developer Program.Developers sign up with the service to distribute applications to internal or external beta testers, who can subsequently send feedback about the application to developers.The TestFlight SDK additionally allows developers to receive remote logs, crash reports and tester feedback.
