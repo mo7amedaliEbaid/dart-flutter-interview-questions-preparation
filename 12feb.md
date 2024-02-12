@@ -140,6 +140,21 @@ void checkToProvider(Uri deepLink) {
     }
   }
 ```
+```dart
+ Future<Uri> createDynamicLink(String path, String provider) async {
+    var encoded = Uri.encodeFull('');
+    final DynamicLinkParameters parameters = DynamicLinkParameters(
+      link: Uri.parse(encoded),
+      uriPrefix: '',
+      androidParameters: AndroidParameters(packageName: packageName),
+      iosParameters: IOSParameters(bundleId: packageName, appStoreId: ''),
+    );
+
+    final dynamicUrl = await FirebaseDynamicLinks.instance.buildShortLink(parameters);
+    debugPrint(dynamicUrl.shortUrl.toString());
+    return dynamicUrl.shortUrl;
+  }
+```
 
 ## ShoreBird
 - Shorebird is a set of tools that allow you to build and deploy new versions of your Flutter app directly to your users' devices.
