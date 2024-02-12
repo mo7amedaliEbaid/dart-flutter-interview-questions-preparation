@@ -16,13 +16,17 @@
 - Flutter is designed as an extensible, layered system. It exists as a series of independent libraries that each depend on the underlying layer. No layer has privileged access to the layer below, and every part of the framework level is designed to be optional and replaceable.
 
 #### Embedder.
+- The Embedder acts as a bridge between Flutter and the host platform, facilitating integration with operating systems such as Android and iOS. It manages the communication between Flutter and the native environment, allowing Flutter apps to interact seamlessly with platform-specific features and APIs.
 - To the underlying operating system, Flutter applications are packaged in the same way as any other native application. A platform-specific embedder provides an entrypoint; coordinates with the underlying operating system for access to services like rendering surfaces, accessibility, and input; and manages the message event loop. The embedder is written in a language that is appropriate for the platform: currently Java and C++ for Android, Objective-C/Objective-C++ for iOS and macOS, and C++ for Windows and Linux. Using the embedder, Flutter code can be integrated into an existing application as a module, or the code may be the entire content of the application. Flutter includes a number of embedders for common target platforms, but other embedders also exist.
 
 #### Engine.
+- At the core of Flutter's runtime is the Engine, implemented in C++. This component handles the low-level tasks essential for app execution, including rendering, input handling, and threading. The Engine is responsible for efficiently executing Dart code and managing communication with the Embedder. Its architecture allows Flutter to achieve high performance and smooth animations across diverse platforms.
 - At the core of Flutter is the Flutter engine, which is mostly written in C++ and supports the primitives necessary to support all Flutter applications. The engine is responsible for rasterizing composited scenes whenever a new frame needs to be painted. It provides the low-level implementation of Flutter’s core API, including graphics (through Impeller on iOS and coming to Android, and Skia on other platforms) text layout, file and network I/O, accessibility support, plugin architecture, and a Dart runtime and compile toolchain.
 - The engine is exposed to the Flutter framework through dart:ui, which wraps the underlying C++ code in Dart classes. This library exposes the lowest-level primitives, such as classes for driving input, graphics, and text rendering subsystems.
 
 #### Framework.
+- The Framework, built with the Dart programming language, provides a comprehensive set of pre-designed widgets and abstractions for building user interfaces. Following a reactive and declarative paradigm, developers describe the UI as a function of the current state, allowing for expressive and flexible UI development. The Framework also includes libraries and tools for app logic, making it an integral part of the Flutter architecture.
+
 - Typically, developers interact with Flutter through the Flutter framework, which provides a modern, reactive framework written in the Dart language. It includes a rich set of platform, layout, and foundational libraries, composed of a series of layers. Working from the bottom to the top, we have:
 
 - Basic foundational classes, and building block services such as animation, painting, and gestures that offer commonly used abstractions over the underlying foundation.
