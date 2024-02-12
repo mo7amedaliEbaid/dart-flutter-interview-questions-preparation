@@ -235,3 +235,51 @@ OneSignal.shared.setNotificationOpenedHandler(
 - Support for SMS and email notifications: OneSignal allows you to send notifications to your users via SMS and email, in addition to push notifications. This can be helpful if you want to reach your users even if they don't have their app open or if they have push notifications turned off.
 - Advanced segmentation and targeting: OneSignal offers a variety of advanced segmentation and targeting options, such as the ability to target users based on their location, in-app behavior, and other factors. This can help you to send more relevant and timely notifications to your users.
 - Ease of use: Both OneSignal and FCM are relatively easy to use, but OneSignal is generally considered to be more user-friendly. OneSignal offers a variety of no-code tools and features, such as a drag-and-drop notification builder and pre-built templates. FCM also offers a variety of tools and features, but they are generally more geared towards developers.
+
+## just in time , ahead of time in flutter.
+- In Flutter, there are two compilation modes: Just-In-Time (JIT) and Ahead-Of-Time (AOT). These compilation modes serve different purposes in the Flutter development lifecycle.
+
+### Just-In-Time (JIT):
+
+- Purpose: JIT compilation is primarily used during development to provide a faster development cycle. It allows you to see changes to your code immediately without the need for a full restart of the application.
+- How to Run with JIT: During development, when you use the flutter run command without additional flags, Flutter runs in JIT mode by default.
+
+### Ahead-Of-Time (AOT):
+
+- Purpose: AOT compilation is used for production-ready builds. It involves compiling the Dart code into native machine code ahead of time, resulting in a smaller and more optimized binary size. AOT compilation is beneficial for improving the startup performance and reducing the size of the final application.
+- How to Build with AOT: To create a release build with AOT compilation, you can use the --release flag.
+
+#### In summary, during development, you typically use JIT for a faster development cycle, and for production releases, you use AOT for better performance and a smaller application size. The choice between JIT and AOT depends on the specific requirements of your project and whether you are in the development or production phase.
+## debug , profile and release modes in flutter.
+- In Flutter, there are three primary build modes that serve different purposes: Debug mode, Profile mode, and Release mode. Each mode has specific characteristics tailored for various stages of development and deployment.
+
+### Debug Mode:
+
+- Purpose: Debug mode is used during development to enable features like hot-reload, a more extensive set of debugging tools, and additional checks to aid in identifying and fixing issues.
+- How to Run in Debug Mode:
+```
+flutter run
+```
+- By default, flutter run uses the debug mode.
+
+### Profile Mode:
+
+- Purpose: Profile mode is a middle ground between Debug and Release modes. It includes some optimizations similar to Release mode but still retains debugging information for profiling and analyzing performance.
+- How to Run in Profile Mode:
+```
+flutter run --profile
+```
+### Release Mode:
+
+- Purpose: Release mode is intended for producing optimized and stripped-down versions of your application for deployment. It includes aggressive optimizations to reduce the size and improve performance.
+
+- How to Build in Release Mode:
+```
+flutter build <platform> --release
+```
+### In summary:
+
+- Debug mode is for development with a focus on debugging tools and a faster development cycle.
+- Profile mode is for profiling and performance analysis while still retaining some debugging capabilities.
+- Release mode is for deploying the optimized and minimized version of your application for production.
+- When developing and testing your application, you may often use the default debug mode. However, for performance testing and preparing your app for release, you'll want to test and build in profile and release modes, respectively.
