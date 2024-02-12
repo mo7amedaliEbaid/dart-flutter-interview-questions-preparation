@@ -128,3 +128,89 @@ void onEvent(PusherEvent event) {
 
 # TestFlight
 - TestFlight is an online service for over-the-air installation and testing of mobile applications, currently owned by Apple Inc. and only offered to developers within the iOS Developer Program.Developers sign up with the service to distribute applications to internal or external beta testers, who can subsequently send feedback about the application to developers.The TestFlight SDK additionally allows developers to receive remote logs, crash reports and tester feedback.
+## Firebase dynamic links
+- Firebase Dynamic Links is a feature provided by Google's Firebase platform that enables developers to create and manage deep links dynamically. Deep links are URLs that can navigate users directly to specific content or features within a mobile app, rather than just launching the app's home screen. Firebase Dynamic Links are particularly useful for scenarios like referral programs, content sharing, and user engagement.
+```dart
+void checkToProvider(Uri deepLink) {
+    if (deepLink.queryParameters.containsKey('')) {
+      final String? provider = deepLink.queryParameters['provider'];
+      //do something
+      Navigator.pushNamed(navigatorKey.currentState!.context, BRANCHES_SCREEN,
+          arguments: BranchesParams(provider_id: int.parse(provider ?? '0')));
+    }
+  }
+```
+
+## ShoreBird
+- Shorebird is a set of tools that allow you to build and deploy new versions of your Flutter app directly to your users' devices.
+### Shorebird consists of 3 major parts:
+
+- shorebird line tool that you use to build and deploy your app.
+- A modified Flutter engine that you include in your app.
+- Our public-cloud based infrastructure which hosts your app's updates.
+
+## what is one signal notifications, how to use it with flutter?
+- OneSignal is a popular mobile and web push notification service that allows developers to send messages to users across different platforms. It supports iOS, Android, and web applications. OneSignal provides a straightforward way to integrate push notifications into your Flutter app. Here's a basic guide on how to use OneSignal with Flutter:
+
+### Code
+- Add OneSignal Plugin:
+```
+dependencies:
+  onesignal_flutter: ^latest_version
+```
+- Initialize OneSignal:
+```dart
+import 'package:flutter/material.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    // Initialize OneSignal
+    OneSignal.shared.setAppId("YOUR_ONESIGNAL_APP_ID");
+    
+    return MaterialApp(
+      title: 'My Flutter App',
+      home: MyHomePage(),
+    );
+  }
+}
+```
+- Handle Notifications:
+- To handle notifications in your Flutter app, listen to the OneSignal.shared.setNotificationReceivedHandler callback. This callback is triggered when a notification is received:
+
+```dart
+OneSignal.shared.setNotificationReceivedHandler(
+  (OSNotification notification) {
+    // Handle notification received
+    print("Notification received: ${notification.jsonRepresentation()}");
+  },
+);
+```
+- Navigate to a Specific Screen on Notification Click:
+```dart
+OneSignal.shared.setNotificationOpenedHandler(
+  (OSNotificationOpenedResult result) {
+    // Handle notification opened
+    print("Notification opened: ${result.notification.jsonRepresentation()}");
+
+    // Navigate to a specific screen
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => YourTargetScreen()),
+    );
+  },
+);
+```
+- Send Test Notifications from OneSignal Dashboard:
+
+- In the OneSignal dashboard, you can send test notifications to your app to verify that the integration is working correctly.
+
+## Difference betweeb FCM, One Signal?
+- Support for SMS and email notifications: OneSignal allows you to send notifications to your users via SMS and email, in addition to push notifications. This can be helpful if you want to reach your users even if they don't have their app open or if they have push notifications turned off.
+- Advanced segmentation and targeting: OneSignal offers a variety of advanced segmentation and targeting options, such as the ability to target users based on their location, in-app behavior, and other factors. This can help you to send more relevant and timely notifications to your users.
+- Ease of use: Both OneSignal and FCM are relatively easy to use, but OneSignal is generally considered to be more user-friendly. OneSignal offers a variety of no-code tools and features, such as a drag-and-drop notification builder and pre-built templates. FCM also offers a variety of tools and features, but they are generally more geared towards developers.
