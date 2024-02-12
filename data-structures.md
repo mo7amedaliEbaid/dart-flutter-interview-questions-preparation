@@ -354,3 +354,34 @@ BSTs enable efficient searching, insertion, and deletion of elements.
 - Quadtree is a tree data structure in which each internal node has four children, used in spatial partitioning for efficient spatial indexing.
 - Octree is an extension of a quadtree to three dimensions, commonly used in 3D graphics and spatial databases.
 - These are just a few examples of tree data structures. The choice of a particular tree structure depends on the specific requirements of the application, the nature of the data, and the operations that need to be performed efficiently.
+## what is big o notation?
+
+- Big O notation is a mathematical notation used in computer science to describe the upper bound or worst-case complexity of an algorithm in terms of time or space. It provides a way to express the efficiency of an algorithm and how its performance scales with the size of the input. Big O notation is commonly used to analyze and compare the efficiency of algorithms.
+
+- In Big O notation, the complexity of an algorithm is expressed using a function O(f(n)), where "f(n)" represents the growth rate of the algorithm in terms of the input size "n." The "O" stands for "order of" or "order," and it provides an upper bound on the asymptotic growth of the algorithm.
+
+- Here are some common notations and their meanings:
+
+### O(1) - Constant Time:
+
+The algorithm's runtime or space requirement remains constant, regardless of the size of the input.
+### O(log n) - Logarithmic Time:
+
+The algorithm's performance grows logarithmically with the size of the input. Common in algorithms with divide-and-conquer strategies.
+### O(n) - Linear Time:
+
+The algorithm's performance grows linearly with the size of the input. For every additional input element, the algorithm takes a constant amount of time.
+### O(n log n) - Linearithmic Time:
+
+Common in efficient sorting algorithms like merge sort and heap sort.
+### O(n^2) - Quadratic Time:
+
+The algorithm's performance grows proportionally to the square of the size of the input. Common in nested loops.
+### O(2^n) - Exponential Time:
+
+The algorithm's performance doubles with each additional input, making it highly inefficient for large inputs. Common in recursive algorithms with branching.
+### O(n!) - Factorial Time:
+
+The algorithm's performance grows factorially with the size of the input. Highly inefficient and typically avoided for large inputs.
+- Big O notation provides a high-level understanding of how an algorithm scales and allows developers and computer scientists to compare algorithms without getting bogged down by specific implementation details. It focuses on the most significant factors influencing an algorithm's performance as the input size becomes arbitrarily large.
+
