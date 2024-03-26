@@ -123,8 +123,89 @@ class AppLocalizations {
 - Inside MyLocalizedWidget, you can access localized strings using the overridden locale.
 - By using Localizations.override, you can change the localization for a specific widget subtree without affecting the rest of the app.
 
+## write a query using sqflite in dart?
+```dart
+import 'package:sqflite/sqflite.dart';
+import 'package:path/path.dart';
+
+void main() async {
+  // Open the database
+  var databasesPath = await getDatabasesPath();
+  String path = join(databasesPath, 'example.db');
+  Database database = await openDatabase(path, version: 1,
+      onCreate: (Database db, int version) async {
+    // Create the table
+    await db.execute(
+        'CREATE TABLE Test (id INTEGER PRIMARY KEY, name TEXT, value INTEGER, other_value REAL)');
+  });
+
+  // Insert some records
+  await database.transaction((txn) async {
+    int id1 = await txn.rawInsert(
+        'INSERT INTO Test(name, value, other_value) VALUES("some name", 1234, 456.789)');
+    print('Inserted row id: $id1');
+    int id2 = await txn.rawInsert(
+        'INSERT INTO Test(name, value, other_value) VALUES(?, ?, ?)',
+        ['another name', 12345678, 3.1416]);
+    print('Inserted row id: $id2');
+  });
+
+  // Query the database
+  List<Map> list = await database.rawQuery('SELECT * FROM Test');
+  list.forEach((row) {
+    print('Record: ${row['id']}, ${row['name']}, ${row['value']}, ${row['other_value']}');
+  });
+
+  // Close the database
+  await database.close();
+}
+```
+#### This code demonstrates how to:
+
+- Open a database.
+- Create a table if it doesn't exist.
+- Insert records into the table using both raw SQL and parameterized queries.
+- Query the database and print out the results.
+- Close the database when finished.
 
 
+## Isolate
+```dart
+import 'dart:async';
+import 'dart:isolate';
 
+void main() async {
+  // Create a ReceivePort to receive messages from the spawned isolate
+  ReceivePort receivePort = ReceivePort();
+
+  // Spawn a new isolate
+  Isolate isolate = await Isolate.spawn(isolateFunction, receivePort.sendPort);
+
+  // Listen for messages from the spawned isolate
+  receivePort.listen((message) {
+    print('Received message from spawned isolate: $message');
+  });
+
+  // Print what Isolate.spawn returns
+  print('Isolate.spawn returned: $isolate');
+
+  // Send a message to the spawned isolate
+  isolate.send('Hello from main isolate!');
+}
+
+void isolateFunction(SendPort sendPort) {
+  // Receive messages from the main isolate
+  ReceivePort receivePort = ReceivePort();
+  sendPort.send(receivePort.sendPort);
+
+  // Listen for messages from the main isolate
+  receivePort.listen((message) {
+    print('Received message from main isolate: $message');
+  });
+
+  // Send a message to the main isolate
+  sendPort.send('Hello from spawned isolate!');
+}
+```
 
 
