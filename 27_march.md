@@ -1,3 +1,35 @@
+## what is the difference between deactivate and dispose
+- The key difference between deactivate and dispose in Flutter lies in the lifecycle of the widget and the finality of its removal from the widget tree.
+
+### deactivate:
+
+- Called when a widget is removed from the widget tree temporarily.
+- The framework might insert the widget back into the tree at a later point (e.g., during navigation using a GlobalKey).
+- This is a good opportunity to perform light-weight cleanup tasks like:
+- Canceling timers.
+- Unsubscribing from streams or change notifiers.
+- Pausing animations.
+- The widget instance itself is still alive and can be reused.
+### dispose:
+
+- Called when a widget is removed from the widget tree permanently.
+- This signifies the end of the widget's lifecycle and it won't be used again.
+- This is the ideal place for heavy-weight cleanup tasks such as:
+- Releasing resources like closing files or network connections.
+- Disposing of objects that might cause memory leaks.
+- After dispose is called, the widget instance is considered "dead" and removed from memory.
+### Temporarily Removed:
+
+- A widget is considered temporarily removed when it's taken out of the active widget tree but there's a chance it might be added back later.
+- This often happens during navigation in Flutter apps. For example, when you navigate from one screen to another, the widgets on the previous screen are temporarily removed. However, if you use a GlobalKey or navigate back to that screen, the same widget instances might be reused.
+- The deactivate method of a widget's lifecycle is called when it's temporarily removed. This allows you to perform light-weight cleanup tasks like canceling timers or subscriptions to prevent unnecessary resource usage while the widget is not visible.
+### Permanently Removed:
+
+- A widget is considered permanently removed when it's completely taken out of the widget tree and won't be used again. This typically happens when a widget is no longer needed in your app or when the entire app itself is closed.
+- The dispose method of a widget's lifecycle is called when it's permanently removed. This is the ideal place for heavy-weight cleanup tasks to ensure proper resource management and prevent memory leaks. Here you can close files, network connections, or dispose of any objects that might hold onto resources.
+- After dispose is called, the widget instance is considered "dead" and removed from memory.
+  
+
 ## what is flavors in flutter?
 - In Flutter, "flavors" typically refer to different configurations or variations of an application that share the same codebase but have different settings, branding, or functionality. This concept is particularly useful when you want to build multiple versions of your app, such as a production version, a development version, or different versions for different environments (e.g., staging, testing, production).
 
