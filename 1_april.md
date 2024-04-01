@@ -119,6 +119,23 @@
 - Use go_router if you prefer a lightweight and flexible routing solution without the need for code generation, or if you want simpler setup and customization options, although sacrificing some of the advantages of code generation.
 
 
+## what is the difference between dynamic liks and deep liks
 
+- Dynamic links and deep links are both mechanisms used in mobile apps to direct users to specific content or actions within an app. However, they serve different purposes and have different characteristics:
+
+### Deep Links:
+
+- Deep links are URLs that link directly to a specific piece of content within a mobile app.
+- They allow users to navigate to a particular screen or view within an app, bypassing the app's home screen.
+- Deep links are typically used to provide a seamless user experience by directing users to relevant content or actions within the app.
+- For example, a deep link might open a specific product page within a shopping app or a specific article within a news app.
+### Dynamic Links:
+
+- Dynamic links are URLs that can direct users to different destinations depending on factors such as the user's device, platform, or context.
+- They are often used in scenarios where the destination of the link may vary based on conditions like the user's device type (iOS or Android) or whether the app is installed on the user's device.
+- Dynamic links can be configured to direct users to different destinations based on rules set by the app developer or based on the user's context.
+- They are commonly used for features like referral programs, sharing content, or tracking marketing campaigns across different platforms.
+- Unlike traditional deep links, dynamic links can route users to a web page if the app is not installed on their device, providing a fallback mechanism to ensure a seamless user experience.
+### In summary, deep links are URLs that directly point to specific content within an app, while dynamic links are URLs that can adapt their destination based on factors such as device type or context. Dynamic links offer more flexibility and are often used in scenarios where the destination may vary or when a fallback to a web page is needed.
 
 
