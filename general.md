@@ -222,7 +222,85 @@ void isolateFunction(SendPort sendPort) {
 - Can't be extended outside of its library "file".
 
 ### 10- What is an inhereted widget in flutter ?
-- Base class of widgets that efficiently propaget information down the tree ( Scaffold, Theme ).
+- Base class of widgets that efficiently propagate information down the tree ( MediaQuery, Theme ).
+```dart
+import 'package:flutter/material.dart';
+
+// Define a custom data class that holds the data to be shared across the widget tree
+class UserData {
+  final String name;
+  final int age;
+
+  UserData({required this.name, required this.age});
+}
+
+// Define the InheritedWidget
+class UserDataWidget extends InheritedWidget {
+  // Data to be shared across the widget tree
+  final UserData data;
+
+  UserDataWidget({
+    required this.data,
+    required Widget child,
+  }) : super(child: child);
+
+  // A convenience method to access the UserDataWidget instance from the widget tree
+  static UserDataWidget of(BuildContext context) {
+    return context.dependOnInheritedWidgetOfExactType<UserDataWidget>()!;
+  }
+
+  // Determines whether the framework should notify widgets that depend on this widget
+  @override
+  bool updateShouldNotify(UserDataWidget oldWidget) {
+    return oldWidget.data != data; // Update only if the data has changed
+  }
+}
+
+// Example usage:
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    // Provide the UserDataWidget at the root of the widget tree
+    return UserDataWidget(
+      data: UserData(name: 'John', age: 30),
+      child: MaterialApp(
+        title: 'InheritedWidget Example',
+        home: HomeScreen(),
+      ),
+    );
+  }
+}
+
+class HomeScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    // Access the shared data using UserDataWidget.of(context)
+    final userData = UserDataWidget.of(context).data;
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('InheritedWidget Example'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              'Name: ${userData.name}',
+              style: TextStyle(fontSize: 18),
+            ),
+            Text(
+              'Age: ${userData.age}',
+              style: TextStyle(fontSize: 18),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+```
 
 ### 11- Difference between var and dynamic ?
 #### var.
