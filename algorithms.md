@@ -1,3 +1,5 @@
+## Arrays & Hashing.
+
 - [217. Contains Duplicate](https://leetcode.com/problems/contains-duplicate/)
 
 ```dart
@@ -42,6 +44,47 @@ class Solution {
 
     // Check if all counts are zero
     return charMap.values.every((count) => count == 0);
+  }
+}
+```
+
+## Two Pointers.
+
+- [125. Valid Palindrome](https://leetcode.com/problems/valid-palindrome/)
+
+```dart
+class Solution {
+  bool isPalindrome(String s) {
+    int left = 0;
+    int right = s.length - 1;
+
+    while (left < right) {
+      // Move left pointer to the next alphanumeric character
+      while (left < right && !isAlphaNumeric(s[left])) {
+        left++;
+      }
+
+      // Move right pointer to the previous alphanumeric character
+      while (left < right && !isAlphaNumeric(s[right])) {
+        right--;
+      }
+
+      // Compare characters in a case-insensitive manner
+      if (s[left].toLowerCase() != s[right].toLowerCase()) {
+        return false;
+      }
+
+      // Move both pointers towards the center
+      left++;
+      right--;
+    }
+
+    return true;
+  }
+
+  // Helper function to check if a character is alphanumeric
+  bool isAlphaNumeric(String ch) {
+    return RegExp(r'^[a-zA-Z0-9]$').hasMatch(ch);
   }
 }
 ```
