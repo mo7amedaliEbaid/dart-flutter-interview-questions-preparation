@@ -67,6 +67,24 @@ class Solution {
   }
 }
 ```
+- [1. Two Sum](https://leetcode.com/problems/two-sum/)
+
+```dart
+class Solution {
+  List<int> twoSum(List<int> nums, int target) {
+    Map<int, int> map = {};
+    for (var i = 0; i < nums.length; i++) {
+      int complement = target - nums[i];
+      if (map.containsKey(complement)) {
+        return [i, map[complement]!];
+      }
+      map[nums[i]] = i; // Store the current element with its index
+    }
+    return [];
+  }
+}
+```
+
 
 ## Two Pointers.
 
