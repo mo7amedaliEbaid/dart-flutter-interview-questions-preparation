@@ -135,6 +135,36 @@ class Solution {
   }
 }
 ```
+## Stack
+
+```dart
+class Solution {
+  bool isValid(String s) {
+    List<String> stack = [];
+    
+    for (var char in s.split('')) {
+      if (char == '(' || char == '{' || char == '[') {
+        // Push opening brackets onto the stack
+        stack.add(char);
+      } else {
+        // If stack is empty, there's no opening bracket to match with
+        if (stack.isEmpty) return false;
+        
+        // Check if the closing bracket matches the expected opening bracket
+        String last = stack.removeLast();
+        if ((char == ')' && last != '(') ||
+            (char == '}' && last != '{') ||
+            (char == ']' && last != '[')) {
+          return false;
+        }
+      }
+    }
+    
+    // If stack is empty, all brackets matched correctly
+    return stack.isEmpty;
+  }
+}
+```
 
 ## Trees 
 
