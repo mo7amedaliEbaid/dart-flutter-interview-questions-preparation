@@ -153,6 +153,36 @@ class Solution {
   }
 }
 ```
+## Sliding Window.
+
+- [121. Best Time to Buy and Sell Stock](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/)
+
+```dart
+class Solution {
+int maxProfit(List<int> prices) {
+  if (prices.isEmpty) return 0; // Edge case: if the prices list is empty
+  
+  int minPrice = prices[0]; // Initialize minPrice to the first day's price
+  int maxProfit = 0; // Initialize maxProfit to 0
+
+  for (int i = 1; i < prices.length; i++) {
+    // Update minPrice if the current price is lower
+    if (prices[i] < minPrice) {
+      minPrice = prices[i];
+    } else {
+      // Calculate the profit and update maxProfit if it's larger
+      int profit = prices[i] - minPrice;
+      if (profit > maxProfit) {
+        maxProfit = profit;
+      }
+    }
+  }
+
+  return maxProfit; // Return the maximum profit found
+}
+}
+```
+
 ## Stack
 
 ```dart
