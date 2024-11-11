@@ -185,6 +185,8 @@ int maxProfit(List<int> prices) {
 
 ## Stack
 
+- [20. Valid Parentheses](https://leetcode.com/problems/valid-parentheses/)
+
 ```dart
 class Solution {
   bool isValid(String s) {
