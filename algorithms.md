@@ -18,6 +18,29 @@ void selectionSort(List<int> arr) {
     arr[minIndex] = temp;
   }
 }
+
+// time = O(n^2)
+// space = O(1)
+```
+- Insersion Sort
+
+```dart
+List<int> insertionSort(List<int> nums) {
+  for (var i = 1; i < nums.length; i++) {
+    int curr = nums[i];
+    int j = i - 1;
+    while (j >= 0 && curr < nums[j]) {
+      nums[j + 1] = nums[j];
+      j--;
+    }
+    nums[j + 1] = curr;
+  }
+  return nums;
+}
+
+// time = O(n^2)
+// space = O(1)
+
 ```
 
 - [217. Contains Duplicate](https://leetcode.com/problems/contains-duplicate/)
