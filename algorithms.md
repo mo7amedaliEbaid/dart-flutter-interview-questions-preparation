@@ -45,7 +45,7 @@ List<int> insertionSort(List<int> nums) {
 
 - Merge Sort
 
-```
+```dart
 List<int> mergeSort(List<int> nums) {
   if (nums.length <= 1) {
     return nums;
