@@ -2,6 +2,8 @@
 - https://medium.com/@samra.sajjad0001/unleashing-creativity-exploring-architecture-patterns-in-flutter-12b7465bc927
 - https://www.geeksforgeeks.org/difference-between-mvp-and-mvvm-architecture-pattern-in-android/
 
+- Todo MVI
+
 # architectural-patterns
 
 ### MVVM (Model-View-ViewModel), MVP (Model-View-presenter), and MVC (Model-View-Controller) are architectural patterns used to structure code in software development, Here's a brief comparison of the three.
