@@ -105,5 +105,73 @@ final name = MyInheritedModel.of(context, aspect: 'username').username;
 * Use **InheritedModel** if you have a **complex object with multiple fields**, and you want **fine-grained control** over widget rebuilds.
 
 ---
+- Nice one 👍 — this is a **core method** in Flutter’s widget tree system. Let’s break it down:
 
-Do you want me to also show you a **visual rebuild example** (with print logs) so you can see how `InheritedWidget` rebuilds *everything* while `InheritedModel` only rebuilds specific consumers?
+---
+
+### **`dependOnInheritedWidgetOfExactType<T>()`**
+
+* **What it does**:
+  It searches **up the widget tree** for the nearest ancestor `InheritedWidget` of type `T`.
+
+  * If it finds one, it **registers the calling widget as a dependent** of that `InheritedWidget`.
+  * This means: when the `InheritedWidget` changes (and `updateShouldNotify` returns `true`), the dependent widget will **rebuild automatically**.
+
+---
+
+### **How it works in practice**
+
+```dart
+class MyInheritedWidget extends InheritedWidget {
+  final int counter;
+
+  const MyInheritedWidget({
+    required this.counter,
+    required Widget child,
+  }) : super(child: child);
+
+  static MyInheritedWidget of(BuildContext context) {
+    return context.dependOnInheritedWidgetOfExactType<MyInheritedWidget>()!;
+  }
+
+  @override
+  bool updateShouldNotify(MyInheritedWidget oldWidget) {
+    return oldWidget.counter != counter;
+  }
+}
+```
+
+Then in a widget:
+
+```dart
+class CounterText extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final inherited = MyInheritedWidget.of(context);
+    return Text("Counter: ${inherited.counter}");
+  }
+}
+```
+
+✅ Here’s what happens:
+
+1. `CounterText` calls `dependOnInheritedWidgetOfExactType<MyInheritedWidget>()`.
+2. Flutter finds the nearest `MyInheritedWidget` up the tree.
+3. `CounterText` gets registered as a **dependent**.
+4. When `counter` changes and `updateShouldNotify` returns true, **only `CounterText` rebuilds** (not the whole tree).
+
+---
+
+### **Important distinction**
+
+* If you use `getElementForInheritedWidgetOfExactType`, you **don’t register as a dependent** → you just *access* the widget without listening for changes.
+* With `dependOnInheritedWidgetOfExactType`, you **do listen** for changes and will rebuild automatically.
+
+---
+
+👉 In short:
+`dependOnInheritedWidgetOfExactType<T>()` = *“Find the nearest ancestor of type T, and rebuild me if it changes.”*
+
+---
+
+
