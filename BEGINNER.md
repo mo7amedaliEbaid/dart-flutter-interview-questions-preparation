@@ -977,3 +977,234 @@ for (var number in numbers) {
   print(number);
 }
 ```
+### 51.What is the lifecycle of StatefulWidget?
+In Flutter, a **StatefulWidget** actually has *two* lifecycles:
+- 1. The widget object (`MyWidget` – immutable, short-lived)
+- 2. The state object (`_MyWidgetState` – where most of the logic lives)
+When people say “StatefulWidget lifecycle,” they usually mean the **State** object lifecycle.
+#### 1. Widget vs State (quick reminder)
+```dart
+class MyWidget extends StatefulWidget {
+  const MyWidget({super.key});
+
+  @override
+  State<MyWidget> createState() => _MyWidgetState();
+}
+
+class _MyWidgetState extends State<MyWidget> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}
+```
+* `MyWidget` (the widget) is immutable.
+* `_MyWidgetState` (the state) is persistent and has the lifecycle methods.
+
+#### 2. State lifecycle – in order
+##### 1️⃣ `createState()`
+* Called **once** when Flutter needs a State for this widget.
+* Defined in the `StatefulWidget` class (not in the State).
+* You rarely override this beyond `=> _MyWidgetState();`.
+##### 2️⃣ `initState()`
+* First method called in the **State** object.
+* Called **once** when the state is inserted into the widget tree.
+* Good for:
+  * Initializing controllers, animations, focus nodes
+  * Setting up `Stream` / `Listener`
+  * One-time logic
+```dart
+@override
+void initState() {
+  super.initState();
+  // setup
+}
+```
+> Important: always call `super.initState()` **first**.
+##### 3️⃣ `didChangeDependencies()`
+* Called **after** `initState()`, and:
+  * Whenever an **inherited widget** it depends on changes
+    (e.g. `MediaQuery`, `Theme`, `Localizations`, `Provider`, `BlocProvider.of`, etc.).
+* Common use:
+  * Using `context.dependOnInheritedWidgetOfExactType`
+  * Subscribing to things that depend on `context`.
+```dart
+@override
+void didChangeDependencies() {
+  super.didChangeDependencies();
+  // runs after initState and when dependencies change
+}
+```
+### 4️⃣ `build(BuildContext context)`
+* Called:
+  * After `initState` + `didChangeDependencies`
+  * After every `setState(...)`
+  * After `didUpdateWidget` if needed
+* Should be **pure UI** (no heavy logic, no API calls directly).
+```dart
+@override
+Widget build(BuildContext context) {
+  return Text('Hello');
+}
+```
+##### 5️⃣ `didUpdateWidget(covariant MyWidget oldWidget)`
+* Called when the **parent** rebuilds and gives this State a **new widget instance** with possibly new properties.
+* Common when constructor parameters change.
+```dart
+@override
+void didUpdateWidget(covariant MyWidget oldWidget) {
+  super.didUpdateWidget(oldWidget);
+  if (widget.someId != oldWidget.someId) {
+    // react to changed props
+  }
+}
+```
+##### 6️⃣ `setState(fn)`
+* Not a lifecycle callback, but **central to the State lifecycle**.
+* Tells Flutter: “rebuild this widget with new data”.
+```dart
+setState(() {
+  counter++;
+});
+```
+* Triggers `build()` again.
+* Must only be called when the State is **mounted** (not yet disposed).
+##### 7️⃣ `deactivate()`
+* Called when the State is **removed** from the tree **temporarily**.
+* Example: moving the widget to another part of the tree within the same frame.
+* Rarely used in normal apps.
+```dart
+@override
+void deactivate() {
+  super.deactivate();
+}
+```
+##### 8️⃣ `dispose()`
+* Called when the State is **permanently removed** from the widget tree.
+* Last chance to clean up:
+  * Dispose controllers, animations
+  * Cancel timers, streams, subscriptions
+```dart
+@override
+void dispose() {
+  // clean up
+  myController.dispose();
+  myAnimation.dispose();
+  super.dispose();
+}
+```
+> Important: always call `super.dispose()` **last**.
+##### 3. Summary flow (State object)
+In order:
+1. `createState()`  *(on the widget)*
+2. `initState()`
+3. `didChangeDependencies()`
+4. `build()`
+5. `didUpdateWidget()`  *(when parent passes new props)*
+6. `setState()` → `build()` → (can repeat many times)
+7. `deactivate()`
+8. `dispose()`
+### What is InheritedWidget
+An **InheritedWidget** in Flutter is a special widget used to **share data down the widget tree** efficiently, so that **descendant widgets can read it and rebuild when it changes**.
+Think of it like a **“data provider” at the top of a subtree**.
+#### 1. Why do we need InheritedWidget?
+Without it, you’d have to:
+* Pass data down **through every widget constructor** (prop drilling):
+  ```dart
+  Home(user: user)
+  → Profile(user: user)
+    → Avatar(user: user)
+  ```
+This becomes messy.
+With **InheritedWidget**, you can put data high in the tree and any descendant can access it by using the `BuildContext`.
+#### 2. Key characteristics
+* It is **immutable** (like any widget).
+* It **stores data** you want to share (e.g. theme, settings, user, locale).
+* Children access it with something like:
+  ```dart
+  MyInherited.of(context)
+  ```
+* When the data inside changes (via the widget being rebuilt), Flutter calls:
+  ```dart
+  bool updateShouldNotify(oldWidget)
+  ```
+  If this returns true, **dependents rebuild**.
+#### 3. Classic example structure
+A simplified custom InheritedWidget:
+```dart
+class CounterProvider extends InheritedWidget {
+  final int counter;
+
+  const CounterProvider({
+    super.key,
+    required this.counter,
+    required Widget child,
+  }) : super(child: child);
+
+  static CounterProvider of(BuildContext context) {
+    return context.dependOnInheritedWidgetOfExactType<CounterProvider>()!;
+  }
+
+  @override
+  bool updateShouldNotify(CounterProvider oldWidget) {
+    return counter != oldWidget.counter;
+  }
+}
+```
+Usage:
+```dart
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return CounterProvider(
+      counter: 5,
+      child: const HomeScreen(),
+    );
+  }
+}
+
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final counter = CounterProvider.of(context).counter;
+
+    return Text('Counter: $counter');
+  }
+}
+```
+* `CounterProvider` wraps `HomeScreen`
+* `HomeScreen` gets `counter` using `of(context)`
+#### 4. How children “depend” on it
+There are **two ways** to access an InheritedWidget:
+- 1. **With dependency** (the normal way):
+   ```dart
+   context.dependOnInheritedWidgetOfExactType<CounterProvider>()
+   ```
+   * Widget **subscribes** to changes.
+   * It will **rebuild** when `updateShouldNotify` returns true.
+
+- 2. **Without dependency** (just read once):
+
+   ```dart
+   context.getInheritedWidgetOfExactType<CounterProvider>()
+   ```
+   * No rebuild on changes.
+   * Just fetch current value.
+#### 5. Where do we use this in real life?
+You already use InheritedWidget indirectly:
+* `MediaQuery.of(context)` → uses InheritedWidget internally
+* `Theme.of(context)`
+* `Navigator.of(context)`
+* State management libraries like:
+  * `Provider`
+  * `BlocProvider` (from flutter_bloc)
+  * Riverpod (conceptually similar, but different implementation)
+These are basically **nice wrappers around InheritedWidget**.
+#### 6. How to answer in an interview (short version)
+You can say something like:
+> *“InheritedWidget is a special widget in Flutter that allows data to be efficiently propagated down the widget tree. Descendant widgets can access it using the BuildContext (e.g. `MyInherited.of(context)`), and they automatically rebuild when the InheritedWidget updates and `updateShouldNotify` returns true. Flutter’s `Theme.of`, `MediaQuery.of`, and many state management solutions like Provider are built on top of InheritedWidget.”*
+
+
+
