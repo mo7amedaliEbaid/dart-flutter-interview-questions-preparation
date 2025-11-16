@@ -55,7 +55,6 @@ value = 123; // ✅ Valid - can change type
 ```
 ### 5. What is an Enum?
 An enum (enumerated type) represents a fixed set of constant values.
-
 **Example:**
 ```dart
 enum OperatingSystem { macOS, windows, linux }
@@ -71,6 +70,7 @@ void main() {
 - All enums automatically extend the `Enum` class
 - They are sealed (cannot be subclassed, implemented, or instantiated)
 - Makes code readable and reusable
+
 ### 6. Difference between `.map()` and `.forEach()`?
 **`.map()`:**
 - Returns a new iterable/collection
