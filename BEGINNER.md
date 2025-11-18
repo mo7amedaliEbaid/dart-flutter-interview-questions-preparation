@@ -23,10 +23,8 @@ A `typedef` (type alias) allows you to provide a new name for an existing data t
 ```dart
 typedef IntList = List<int>;
 IntList numbers = [1, 2, 3];
-
 // Function type alias
 typedef String GreetFunction(String name);
-
 String greetSomeone(GreetFunction greeter, String name) {
   return greeter(name);
 }
@@ -49,7 +47,6 @@ Private members are accessible only within their respective library (file).
 ```dart
 var name = "John"; // Type: String
 // name = 123; // ❌ Error - cannot change type
-
 dynamic value = "Hello";
 value = 123; // ✅ Valid - can change type
 ```
@@ -58,7 +55,6 @@ An enum (enumerated type) represents a fixed set of constant values.
 **Example:**
 ```dart
 enum OperatingSystem { macOS, windows, linux }
-
 void main() {
   final favSystem = OperatingSystem.linux;
   if (favSystem == OperatingSystem.linux) {
@@ -83,10 +79,8 @@ void main() {
 **Example:**
 ```dart
 List<int> numbers = [1, 2, 3, 4, 5];
-
 // map() returns a new list
 var doubled = numbers.map((x) => x * 2).toList(); // [2, 4, 6, 8, 10]
-
 // forEach() returns nothing
 numbers.forEach((x) {
   if (x == 3) print("Found 3!");
@@ -106,7 +100,6 @@ List<int> list2 = [4, 5, ...list1]; // [4, 5, 1, 2, 3]
 ```dart
 List<int>? numbers = [1, 2, 3];
 List<int> moreNumbers = [4, 5, ...?numbers]; // [4, 5, 1, 2, 3]
-
 List<int>? nullList = null;
 List<int> safe = [1, 2, ...?nullList]; // [1, 2] - no error
 ```
@@ -140,7 +133,6 @@ mixin LoggerMixin {
     print('Log: $message');
   }
 }
-
 class DataService with LoggerMixin {
   void fetchData() {
     log('Fetching data');
@@ -172,14 +164,11 @@ A stream represents an asynchronous sequence of data events.
 ```dart
 class Counter {
   static int count = 0;
-  
   Counter() {
     count++;
   }
-  
   static int getCount() => count;
 }
-
 void main() {
   Counter c1 = Counter();
   Counter c2 = Counter();
@@ -195,7 +184,6 @@ extension NumberParsing on String {
     return int.parse(this);
   }
 }
-
 void main() {
   String number = "42";
   int value = number.parseInt(); // Using extension
@@ -207,13 +195,10 @@ Named constructors provide different ways to create instances of a class.
 ```dart
 class Image {
   String source;
-  
   Image(this.source);
-  
   Image.network(String url) : source = url;
   Image.asset(String path) : source = path;
 }
-
 // Usage
 var networkImage = Image.network('https://example.com/image.jpg');
 var assetImage = Image.asset('assets/image.png');
@@ -228,9 +213,7 @@ A factory constructor doesn't always create a new instance. It might return:
 class Logger {
   final String name;
   static final Map<String, Logger> _cache = {};
-  
   Logger._internal(this.name);
-  
   factory Logger(String name) {
     if (_cache.containsKey(name)) {
       return _cache[name]!;
@@ -283,24 +266,19 @@ A widget is a blueprint or recipe describing part of the UI.
 // StatelessWidget
 class MyText extends StatelessWidget {
   final String text;
-  
   const MyText(this.text);
-  
   @override
   Widget build(BuildContext context) {
     return Text(text);
   }
 }
-
 // StatefulWidget
 class Counter extends StatefulWidget {
   @override
   _CounterState createState() => _CounterState();
 }
-
 class _CounterState extends State<Counter> {
-  int count = 0;
-  
+  int count = 0; 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
@@ -394,7 +372,6 @@ Ensures the binding is initialized before calling `runApp()`.
 - Before async operations in `main()`
 - When using plugins that need platform channels
 - Before `Firebase.initializeApp()`
-
 **Example:**
 ```dart
 void main() async {
@@ -421,7 +398,6 @@ Row(
     Text('C'),
   ],
 )
-
 Column(
   children: [
     Text('A'),
@@ -465,7 +441,6 @@ Container(
   decoration: BoxDecoration(color: Colors.blue),
   child: Text('Hello'),
 )
-
 // Padding - just padding
 Padding(
   padding: EdgeInsets.all(16),
@@ -488,7 +463,6 @@ ListView.builder(
   itemCount: items.length,
   itemBuilder: (context, index) => ListTile(title: Text(items[index])),
 )
-
 // GridView
 GridView.builder(
   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
@@ -512,7 +486,6 @@ GridView.builder(
 ListView(
   children: items.map((item) => ListTile(title: Text(item))).toList(),
 )
-
 // ListView.builder - creates on demand
 ListView.builder(
   itemCount: items.length,
@@ -539,7 +512,6 @@ Column(
     Text('Bottom'),
   ],
 )
-
 // Stack
 Stack(
   children: [
@@ -572,13 +544,11 @@ Visibility(
   visible: isVisible,
   child: Text('Hello'),
 )
-
 // Opacity
 Opacity(
   opacity: isVisible ? 1.0 : 0.0,
   child: Text('Hello'),
 )
-
 // OffStage
 Offstage(
   offstage: !isVisible,
@@ -600,7 +570,6 @@ Offstage(
 TextField(
   decoration: InputDecoration(labelText: 'Name'),
 )
-
 // TextFormField
 TextFormField(
   decoration: InputDecoration(labelText: 'Email'),
@@ -629,7 +598,6 @@ InkWell(
   onTap: () {},
   child: Container(child: Text('Tap me')),
 )
-
 // GestureDetector - more gestures
 GestureDetector(
   onTap: () {},
@@ -651,7 +619,6 @@ GestureDetector(
 ```dart
 // Image.asset - widget
 Image.asset('assets/image.png')
-
 // AssetImage - provider
 Image(image: AssetImage('assets/image.png'))
 ```
@@ -674,7 +641,6 @@ FutureBuilder<String>(
     return CircularProgressIndicator();
   },
 )
-
 // StreamBuilder
 StreamBuilder<int>(
   stream: counterStream(),
@@ -699,7 +665,6 @@ Align(
   alignment: Alignment.center,
   child: Text('Centered'),
 )
-
 // Positioned (inside Stack)
 Stack(
   children: [
@@ -743,13 +708,11 @@ Row(
 ClipRect(
   child: Image.network('url'),
 )
-
 // ClipRRect
 ClipRRect(
   borderRadius: BorderRadius.circular(20),
   child: Image.network('url'),
 )
-
 // ClipOval
 ClipOval(
   child: Image.network('url'),
@@ -767,11 +730,9 @@ Object-Oriented Programming is a paradigm (نموذج) based on objects containi
 abstract class Shape {
   double area(); // Abstract method
 }
-
 class Circle extends Shape {
   double radius;
   Circle(this.radius);
-  
   @override
   double area() => 3.14 * radius * radius;
 }
@@ -785,7 +746,6 @@ class Circle extends Shape {
 class Animal {
   void makeSound() => print('Some sound');
 }
-
 class Dog extends Animal {
   @override
   void makeSound() => print('Woof!');
@@ -800,7 +760,6 @@ class Dog extends Animal {
 abstract class Person {}
 class Me extends Person {}
 class Him extends Person {}
-
 Person person1 = Me(); // Polymorphism
 Person person2 = Him();
 ```
@@ -812,9 +771,7 @@ Person person2 = Him();
 ```dart
 class BankAccount {
   double _balance = 0; // Private
-  
   double get balance => _balance; // Getter
-  
   void deposit(double amount) {
     _balance += amount;
   }
@@ -838,15 +795,12 @@ class BankAccount {
 class Animal {
   void makeSound() => print('Sound');
 }
-
 mixin Flyable {
   void fly() => print('Flying');
 }
-
 class Bird extends Animal with Flyable {
   // Inherits makeSound, includes fly
 }
-
 class Robot implements Animal {
   @override
   void makeSound() => print('Beep'); // Must implement
@@ -859,7 +813,6 @@ Method overriding occurs when a subclass provides a specific implementation of a
 class Animal {
   void makeSound() => print('Generic sound');
 }
-
 class Dog extends Animal {
   @override
   void makeSound() => print('Woof!'); // Overridden
@@ -875,16 +828,12 @@ class Dog extends Animal {
 ```dart
 class Animal {
   String name;
-  Animal(this.name);
-  
+  Animal(this.name); 
   void makeSound() => print('Sound');
 }
-
 class Dog extends Animal {
-  String breed;
-  
-  Dog(String name, this.breed) : super(name); // Call super constructor
-  
+  String breed; 
+  Dog(String name, this.breed) : super(name); // Call super constructor 
   @override
   void makeSound() {
     super.makeSound(); // Call super method
@@ -948,7 +897,6 @@ void processData(String data, void Function(String) callback) {
   String processed = data.toUpperCase();
   callback(processed); // Call the callback
 }
-
 void main() {
   processData('hello', (result) {
     print(result); // 'HELLO'
@@ -986,11 +934,9 @@ When people say “StatefulWidget lifecycle,” they usually mean the **State** 
 ```dart
 class MyWidget extends StatefulWidget {
   const MyWidget({super.key});
-
   @override
   State<MyWidget> createState() => _MyWidgetState();
 }
-
 class _MyWidgetState extends State<MyWidget> {
   @override
   Widget build(BuildContext context) {
@@ -1000,7 +946,6 @@ class _MyWidgetState extends State<MyWidget> {
 ```
 * `MyWidget` (the widget) is immutable.
 * `_MyWidgetState` (the state) is persistent and has the lifecycle methods.
-
 #### 2. State lifecycle – in order
 ##### 1️⃣ `createState()`
 * Called **once** when Flutter needs a State for this widget.
@@ -1134,17 +1079,14 @@ A simplified custom InheritedWidget:
 ```dart
 class CounterProvider extends InheritedWidget {
   final int counter;
-
   const CounterProvider({
     super.key,
     required this.counter,
     required Widget child,
   }) : super(child: child);
-
   static CounterProvider of(BuildContext context) {
     return context.dependOnInheritedWidgetOfExactType<CounterProvider>()!;
   }
-
   @override
   bool updateShouldNotify(CounterProvider oldWidget) {
     return counter != oldWidget.counter;
@@ -1162,14 +1104,11 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
     final counter = CounterProvider.of(context).counter;
-
     return Text('Counter: $counter');
   }
 }
@@ -1184,9 +1123,7 @@ There are **two ways** to access an InheritedWidget:
    ```
    * Widget **subscribes** to changes.
    * It will **rebuild** when `updateShouldNotify` returns true.
-
 - 2. **Without dependency** (just read once):
-
    ```dart
    context.getInheritedWidgetOfExactType<CounterProvider>()
    ```
@@ -1224,7 +1161,6 @@ State management is the process of managing and sharing application state across
 // Events
 sealed class CounterEvent {}
 final class CounterIncrementPressed extends CounterEvent {}
-
 // States
 sealed class CounterState {}
 final class CounterInitial extends CounterState {}
@@ -1232,7 +1168,6 @@ final class CounterLoaded extends CounterState {
   final int count;
   CounterLoaded(this.count);
 }
-
 // BLoC
 class CounterBloc extends Bloc<CounterEvent, CounterState> {
   CounterBloc() : super(CounterInitial()) {
@@ -1328,10 +1263,8 @@ BlocSelector<CounterBloc, CounterState, int>(
 // Cubit
 class CounterCubit extends Cubit<int> {
   CounterCubit() : super(0);
-  
   void increment() => emit(state + 1);
 }
-
 // BLoC
 class CounterBloc extends Bloc<CounterEvent, int> {
   CounterBloc() : super(0) {
@@ -1348,7 +1281,6 @@ class CounterBloc extends Bloc<CounterEvent, int> {
 class CounterModel extends ChangeNotifier {
   int _count = 0;
   int get count => _count;
-  
   void increment() {
     _count++;
     notifyListeners();
@@ -1544,6 +1476,46 @@ Stream<int> countStream() async* {
   }
 }
 ```
-
-
-
+### 23. App Lifecycle States
+**Flutter App Lifecycle:**
+```dart
+enum AppLifecycleState {
+  resumed,    // App visible and interactive
+  inactive,   // App in foreground but not receiving input
+  paused,     // App in background
+  detached,   // App still hosted but detached from engine
+}
+```
+**Listening to Lifecycle:**
+```dart
+class _MyWidgetState extends State<MyWidget> 
+    with WidgetsBindingObserver {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    switch (state) {
+      case AppLifecycleState.resumed:
+        // App came to foreground
+        break;
+      case AppLifecycleState.paused:
+        // App went to background
+        break;
+      case AppLifecycleState.inactive:
+        // App is inactive
+        break;
+      case AppLifecycleState.detached:
+        // App is detached
+        break;
+    }
+  }
+}
+```
