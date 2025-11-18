@@ -1205,6 +1205,345 @@ These are basically **nice wrappers around InheritedWidget**.
 #### 6. How to answer in an interview (short version)
 You can say something like:
 > *“InheritedWidget is a special widget in Flutter that allows data to be efficiently propagated down the widget tree. Descendant widgets can access it using the BuildContext (e.g. `MyInherited.of(context)`), and they automatically rebuild when the InheritedWidget updates and `updateShouldNotify` returns true. Flutter’s `Theme.of`, `MediaQuery.of`, and many state management solutions like Provider are built on top of InheritedWidget.”*
+### 1. What is State Management?
+State management is the process of managing and sharing application state across widgets in a predictable and efficient way.
+**Why needed:**
+- Share data between widgets
+- Maintain UI consistency
+- Handle complex app state
+- Improve code organization
+### 2. BLoC Pattern
+#### What is BLoC?
+**BLoC** (Business Logic Component) is a design pattern that separates business logic from presentation.
+**Key Concepts:**
+- **Events**: User actions or triggers
+- **States**: Application state at a point in time
+- **Bloc**: Handles events and emits states
+**Example:**
+```dart
+// Events
+sealed class CounterEvent {}
+final class CounterIncrementPressed extends CounterEvent {}
+
+// States
+sealed class CounterState {}
+final class CounterInitial extends CounterState {}
+final class CounterLoaded extends CounterState {
+  final int count;
+  CounterLoaded(this.count);
+}
+
+// BLoC
+class CounterBloc extends Bloc<CounterEvent, CounterState> {
+  CounterBloc() : super(CounterInitial()) {
+    on<CounterIncrementPressed>((event, emit) {
+      final currentCount = state is CounterLoaded 
+        ? (state as CounterLoaded).count 
+        : 0;
+      emit(CounterLoaded(currentCount + 1));
+    });
+  }
+}
+```
+#### BLoC Widgets
+**BlocProvider:**
+- Provides BLoC to widget tree
+- Dependency injection widget
+- Creates and closes BLoC automatically
+```dart
+BlocProvider(
+  create: (context) => CounterBloc(),
+  child: MyWidget(),
+)
+```
+**BlocBuilder:**
+- Rebuilds widget when state changes
+- Receives current state
+- Can use `buildWhen` for conditional rebuilds
+```dart
+BlocBuilder<CounterBloc, CounterState>(
+  builder: (context, state) {
+    if (state is CounterLoaded) {
+      return Text('Count: ${state.count}');
+    }
+    return Text('Initial');
+  },
+)
+```
+**BlocListener:**
+- Listens to state changes for side effects
+- Called once per state change
+- Use for navigation, dialogs, snackbars
+```dart
+BlocListener<CounterBloc, CounterState>(
+  listener: (context, state) {
+    if (state is CounterLoaded && state.count == 10) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Reached 10!')),
+      );
+    }
+  },
+  child: MyWidget(),
+)
+```
+**BlocConsumer:**
+- Combines BlocBuilder and BlocListener
+- Use when you need both UI updates and side effects
+```dart
+BlocConsumer<CounterBloc, CounterState>(
+  listener: (context, state) {
+    // Side effects
+  },
+  builder: (context, state) {
+    // UI updates
+    return MyWidget();
+  },
+)
+```
+**BlocSelector:**
+- Filters updates by selecting specific state
+- Prevents unnecessary rebuilds
+- Only rebuilds when selected value changes
+```dart
+BlocSelector<CounterBloc, CounterState, int>(
+  selector: (state) => state is CounterLoaded ? state.count : 0,
+  builder: (context, count) {
+    return Text('Count: $count');
+  },
+)
+```
+### 3. Cubit vs BLoC
+**Cubit:**
+- Simpler subset of BLoC
+- No events, uses methods directly
+- Synchronous state updates
+- Less boilerplate
+**BLoC:**
+- Event-driven
+- More structured
+- Better for complex state management
+- Easier to test event flow
+**Example:**
+```dart
+// Cubit
+class CounterCubit extends Cubit<int> {
+  CounterCubit() : super(0);
+  
+  void increment() => emit(state + 1);
+}
+
+// BLoC
+class CounterBloc extends Bloc<CounterEvent, int> {
+  CounterBloc() : super(0) {
+    on<IncrementEvent>((event, emit) => emit(state + 1));
+  }
+}
+```
+### 4. Provider Pattern
+**ChangeNotifier:**
+- Simple class for change notification
+- Extends or mix in for state management
+- Call `notifyListeners()` to update listeners
+```dart
+class CounterModel extends ChangeNotifier {
+  int _count = 0;
+  int get count => _count;
+  
+  void increment() {
+    _count++;
+    notifyListeners();
+  }
+}
+```
+**ChangeNotifierProvider:**
+- Provides ChangeNotifier to widget tree
+- Automatically disposes when no longer needed
+```dart
+ChangeNotifierProvider(
+  create: (_) => CounterModel(),
+  child: MyApp(),
+)
+```
+**Consumer:**
+- Rebuilds when ChangeNotifier changes
+- Receives model instance
+```dart
+Consumer<CounterModel>(
+  builder: (context, counter, child) {
+    return Text('Count: ${counter.count}');
+  },
+)
+```
+**Provider.of:**
+- Access provider without rebuilding
+- Use when you need to call methods but don't need UI updates
+```dart
+Provider.of<CounterModel>(context, listen: false).increment();
+```
+## SOLID Principles
+### 18. Single Responsibility Principle (SRP)
+A class should have only one reason to change, A class should be responsible for one thing.
+**Bad:**
+```dart
+class FileHandler {
+  void saveToFile(String data) { }
+  void processUserData(String data) { } // Different responsibility
+}
+```
+**Good:**
+```dart
+class FileSaver {
+  void saveToFile(String data) { }
+}
+class UserDataProcessor {
+  void processUserData(String data) { }
+}
+```
+### 19. Open/Closed Principle (OCP)
+A class or a code entity should be Open for extension, closed for modification.
+**Bad:**
+```dart
+class Rectangle {
+  double width;
+  double height;
+  double area() => width * height;
+}
+// Adding new shapes requires modifying existing code
+```
+**Good:**
+```dart
+abstract class Shape {
+  double area();
+}
+class Rectangle implements Shape {
+  double width;
+  double height;
+  @override
+  double area() => width * height;
+}
+class Circle implements Shape {
+  double radius;
+  @override
+  double area() => 3.14 * radius * radius;
+}
+// New shapes can be added without modifying existing code
+```
+### 20. Liskov Substitution Principle (LSP)
+Subtypes must be substitutable for their base types. We should be able to interchange between subclasses with their superclasses without breaking the app.
+**Bad:**
+```dart
+class Bird {
+  void fly() { }
+}
+class Penguin extends Bird {
+  @override
+  void fly() {
+    throw Exception('Penguins cannot fly'); // Violates LSP
+  }
+}
+```
+**Good:**
+```dart
+abstract class Bird { }
+abstract class FlyingBird extends Bird {
+  void fly();
+}
+class Sparrow extends FlyingBird {
+  @override
+  void fly() { }
+}
+class Penguin extends Bird {
+  // No fly method - correct behavior
+}
+```
+### 21. Interface Segregation Principle (ISP)
+Clients should not be forced to depend on methods they don't use.
+**Bad:**
+```dart
+abstract class Worker {
+  void work();
+  void eat(); // Not all workers eat
+}
+class Robot implements Worker {
+  @override
+  void work() { }
+  @override
+  void eat() {
+    // Robots don't eat - forced to implement
+  }
+}
+```
+**Good:**
+```dart
+abstract class Worker {
+  void work();
+}
+abstract class Eater {
+  void eat();
+}
+class Robot implements Worker {
+  @override
+  void work() { }
+}
+class Human implements Worker, Eater {
+  @override
+  void work() { }
+  @override
+  void eat() { }
+}
+```
+### 22. Dependency Inversion Principle (DIP)
+Depend on abstractions, not concrete implementations.
+**Bad:**
+```dart
+class LightBulb {
+  void turnOn() { }
+}
+class Switch {
+  LightBulb bulb; // Depends on concrete class
+  Switch(this.bulb);
+}
+```
+**Good:**
+```dart
+abstract class Switchable {
+  void turnOn();
+  void turnOff();
+}
+class LightBulb implements Switchable {
+  @override
+  void turnOn() { }
+  @override
+  void turnOff() { }
+}
+class Switch {
+  Switchable device; // Depends on abstraction
+  Switch(this.device);
+}
+```
+### 30. Async/Await
+**Future:**
+- Represents a value that will be available in the future
+- Single value or error
+**Stream:**
+- Sequence of asynchronous events
+- Multiple values over time
+**Example:**
+```dart
+// Future
+Future<String> fetchData() async {
+  await Future.delayed(Duration(seconds: 1));
+  return 'Data';
+}
+
+// Stream
+Stream<int> countStream() async* {
+  for (int i = 0; i < 5; i++) {
+    yield i;
+    await Future.delayed(Duration(seconds: 1));
+  }
+}
+```
 
 
 
