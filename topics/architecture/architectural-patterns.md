@@ -307,3 +307,39 @@ In the `main` function, the `MyApp` widget creates an instance of `CounterPresen
 - View and Presenter layers in MVP are reusable, and hence it is easy to maintain this architecture. Also, it can be maintained with the help of readable codes written in either markup language or other coding language. There is no interaction between view and model in MVVM, and hence the code is run by units. This helps to do unit testing in MVVM.
 - The whole unit can be done integration testing in MVP, while only unit testing can be done in MVVM. This is because codes are easily maintainable in MVP, while in MVVM, it is not.
 - The size of the code is huge and cannot be managed easily in MVVM. This creates issues while doing testing and creating interactions between the layers. But in MVP, the codes are small and are easily manageable.
+
+---
+
+## Platform Architecture
+
+Platform architecture involves designing the structure of a software system, including its components, their relationships, and how they interact. The goal is to create a scalable, reliable, and maintainable system.
+
+### Key Architecture Types
+
+- **Microservices**: Architecture dividing applications into small, loosely coupled services.
+- **Monolithic Architecture**: A single, unified software structure — all components in one deployable unit.
+- **Service-Oriented Architecture (SOA)**: Similar to microservices but with larger, more complex services.
+- **Event-Driven Architecture**: Systems that respond to events and trigger actions.
+- **Layered (Three-Tier)**: Presentation → Business Logic → Data layers.
+
+### Best Practices
+- **Scalability**: Design for growth in users and data.
+- **Reliability**: Build for fault tolerance and minimal downtime.
+- **Maintainability**: Make the system easy to update and debug.
+- **Security**: Protect against threats and vulnerabilities.
+
+---
+
+## Clean Architecture — Domain, Use Cases
+
+### Domain Layer
+Contains the enterprise logic and types. Should not depend on anything outside of itself. Defines models and data structures representing business entities and concepts.
+
+### Use Cases (Application Layer)
+A use case encapsulates a single business task the system needs to perform. It defines:
+- The inputs and outputs required.
+- The rules and logic to perform the task.
+- Independence from frameworks, databases, or UI.
+
+Use cases call domain entities and return results to the outer layers (presentation/data).
+

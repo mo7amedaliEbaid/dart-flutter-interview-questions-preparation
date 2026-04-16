@@ -387,7 +387,7 @@ When it’s time to render:
 
 ### 4. Compositing
 
-Finally, Flutter sends the layer tree to **Skia**, the graphics engine, which rasterizes it into actual pixels on the screen.
+Finally, Flutter sends the layer tree to the graphics engine (**Impeller** by default since Flutter 3.10 on iOS and 3.16 on Android; the older **Skia** backend is still available but no longer the default), which rasterizes it into actual pixels on the screen.
 
 ---
 
@@ -415,4 +415,69 @@ Would you like me to draw you a **step-by-step diagram from Widget → RenderObj
 
 
 <img width="1024" height="1536" alt="image" src="https://github.com/user-attachments/assets/fdc34f28-2c93-45d7-9317-71fb11a6923d" />
+
+
+---
+
+## Flutter Clip Widgets
+
+### ClipRect
+Clips the child to a rectangle. Prevents the child from painting outside the box.
+
+```dart
+ClipRect(
+  child: Align(
+    alignment: Alignment.center,
+    widthFactor: 0.4,
+    heightFactor: 1.0,
+    child: Image.network('https://example.com/image.jpg'),
+  ),
+)
+```
+
+Use `Align` inside `ClipRect` with `widthFactor`/`heightFactor` to crop images.
+
+### ClipRRect
+Clips the child with rounded corners. The extra "R" stands for "rounded".
+
+```dart
+ClipRRect(
+  borderRadius: BorderRadius.circular(300.0),
+  child: Image.network("https://example.com/image.jpg"),
+)
+```
+
+### ClipOval
+Clips the child in an oval shape. If width and height are equal, produces a circle.
+
+```dart
+ClipOval(
+  child: Image.network('https://example.com/image.jpg'),
+)
+```
+
+### ClipPath
+Clips the child in a custom shape defined by a `CustomClipper<Path>`.
+
+```dart
+ClipPath(
+  clipper: TriangleClipper(),
+  child: Image.network("https://example.com/image.jpg"),
+)
+
+class TriangleClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    final path = Path();
+    path.moveTo(size.width / 2, 0.0);
+    path.lineTo(size.width, size.height);
+    path.lineTo(0.0, size.height);
+    path.close();
+    return path;
+  }
+
+  @override
+  bool shouldReclip(TriangleClipper oldClipper) => false;
+}
+```
 

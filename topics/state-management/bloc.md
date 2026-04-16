@@ -165,3 +165,28 @@ BlocListener<BlocA, BlocAState>(
 
 
 
+
+---
+
+## Difference between Bloc and Cubit
+
+- **Cubit** is a subset of the BLoC pattern that does not rely on events. Instead, it exposes methods to emit new states directly.
+- **Cubit** reduces complexity by eliminating event classes.
+- **Cubit** uses `emit` (synchronous) rather than `yield` to emit state.
+- **Bloc** is event-driven — events are dispatched and mapped to states.
+
+Use **Cubit** for simpler state management; use **Bloc** for complex, event-driven state machines.
+
+## CounterCubit Example
+
+```dart
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+class CounterCubit extends Cubit<int> {
+  CounterCubit() : super(0);
+
+  void increment() => emit(state + 1);
+  void decrement() => emit(state - 1);
+}
+```
+

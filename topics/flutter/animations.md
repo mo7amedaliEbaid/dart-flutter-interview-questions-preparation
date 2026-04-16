@@ -341,3 +341,22 @@ class _MyCustomAnimationState extends State<MyCustomAnimation> with SingleTicker
 }
 ```
 - These are just a few examples of the types of animations you can implement in Dart and Flutter. Depending on your needs, you may choose different animation techniques for different scenarios.
+
+---
+
+## What is vsync?
+
+`vsync` keeps track of the screen so that Flutter does not render animations when the screen is not being displayed. It synchronizes animations with the device's vertical sync signal to avoid off-screen rendering, saving battery and CPU.
+
+Typically, `vsync: this` is used in a `State` class that uses `TickerProviderStateMixin` or `SingleTickerProviderStateMixin`.
+
+---
+
+## What is ephemeral state?
+
+Ephemeral state refers to **local, short-lived state** specific to a particular widget. It's temporary and typically used for UI interactions.
+
+Example: A toggle button's current state doesn't need to be stored globally — use `StatefulWidget` to manage it locally within the widget.
+
+In contrast, state that persists across widget instances or app sessions requires global state management solutions like Provider, Bloc, or Riverpod.
+

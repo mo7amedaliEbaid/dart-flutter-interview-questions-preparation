@@ -72,3 +72,72 @@ git merge <branch_name>
 
 ##### These are just a few basic commands to get you started with Git. Git offers a wide range of functionalities, including handling conflicts, reverting changes, and collaborating with others. Understanding these basics will provide a solid foundation for using Git in your development workflow.
 
+
+---
+
+## CI/CD Pipeline
+
+A CI/CD pipeline automates the process of integrating code changes, testing them, and deploying to production.
+
+### Key Concepts
+
+- **Version Control**: Git to track code changes.
+- **Build Automation**: Jenkins, Travis CI, GitHub Actions, CircleCI.
+- **Testing Automation**: Unit tests, integration tests, end-to-end tests.
+- **Deployment Automation**: Kubernetes, Docker, Terraform.
+
+### Best Practices
+
+- **Pipeline as Code**: Define pipelines in YAML files (version-controlled).
+- **Incremental Changes**: Deploy small changes to reduce risk.
+- **Monitoring and Logging**: Catch issues in production.
+- **Rollback Strategies**: Plan for reverting bad deployments.
+- **Infrastructure as Code (IaC)**: Terraform, Ansible, CloudFormation for infrastructure management.
+
+### CI/CD Metrics (DORA)
+- Deployment frequency.
+- Lead time for changes.
+- Mean time to recovery (MTTR).
+- Change failure rate.
+
+---
+
+## Development and Production Branches
+
+- **Development branch** (`develop` / `dev`): Where active development happens. Feature branches are merged here. Less stable.
+- **Production branch** (`main` / `master`): The stable branch representing the latest release.
+
+Typical GitFlow:
+1. Create feature branches from `develop`.
+2. Merge completed features back into `develop`.
+3. Merge `develop` into `main` for releases.
+
+---
+
+## Deploying a Flutter App
+
+### Google Play Store
+1. Create a Google Play Developer account.
+2. Create a signing key.
+3. Configure the app (signing, metadata).
+4. Submit for review.
+5. Publish.
+
+### Apple App Store
+1. Create an Apple Developer account.
+2. Create a signing certificate and provisioning profile.
+3. Configure the app (bundle ID, capabilities).
+4. Submit via Xcode or Transporter for review.
+5. Publish.
+
+### TestFlight (iOS Beta Testing)
+TestFlight is Apple's service for over-the-air installation and testing of iOS apps. Developers distribute to internal or external beta testers who can send feedback. The TestFlight SDK provides remote logs, crash reports, and tester feedback.
+
+### Shorebird (Code Push / OTA Updates)
+Shorebird allows deploying new Flutter app versions directly to users' devices without going through the app stores.
+
+Components:
+1. **shorebird CLI**: Command-line tool for building and deploying updates.
+2. **Modified Flutter engine**: Included in the app.
+3. **Public-cloud infrastructure**: Hosts app updates.
+

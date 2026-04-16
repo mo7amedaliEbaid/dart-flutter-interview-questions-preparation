@@ -21,7 +21,7 @@
 
 #### Engine.
 - At the core of Flutter's runtime is the Engine, implemented in C++. This component handles the low-level tasks essential for app execution, including rendering, input handling, and threading. The Engine is responsible for efficiently executing Dart code and managing communication with the Embedder. Its architecture allows Flutter to achieve high performance and smooth animations across diverse platforms.
-- At the core of Flutter is the Flutter engine, which is mostly written in C++ and supports the primitives necessary to support all Flutter applications. The engine is responsible for rasterizing composited scenes whenever a new frame needs to be painted. It provides the low-level implementation of Flutter’s core API, including graphics (through Impeller on iOS and coming to Android, and Skia on other platforms) text layout, file and network I/O, accessibility support, plugin architecture, and a Dart runtime and compile toolchain.
+- At the core of Flutter is the Flutter engine, which is mostly written in C++ and supports the primitives necessary to support all Flutter applications. The engine is responsible for rasterizing composited scenes whenever a new frame needs to be painted. It provides the low-level implementation of Flutter’s core API, including graphics (through **Impeller**, Flutter’s default renderer since Flutter 3.10 on iOS and 3.16 on Android, replacing the legacy Skia backend), text layout, file and network I/O, accessibility support, plugin architecture, and a Dart runtime and compile toolchain.
 - The engine is exposed to the Flutter framework through dart:ui, which wraps the underlying C++ code in Dart classes. This library exposes the lowest-level primitives, such as classes for driving input, graphics, and text rendering subsystems.
 
 #### Framework.
@@ -1733,3 +1733,204 @@ main(){
 - Domain. The Domain layer contains the enterprise logic and types. This layer should not depend on anything outside of itself. This layer typically defines the models and data structures that represent the business entities and concepts.
 ### UseCases
 - In Clean Architecture, a use case is a piece of business logic that represents a single task that the system needs to perform. The use case encapsulates the rules and logic required to perform the task, and defines the inputs and outputs required for the operation.
+
+---
+
+## JIT vs AOT in Flutter
+
+### Just-In-Time (JIT)
+- Used **during development** for a faster development cycle.
+- Enables **hot reload**: see code changes instantly without a full restart.
+- Run with: `flutter run` (default in debug mode).
+
+### Ahead-Of-Time (AOT)
+- Used for **production builds**.
+- Compiles Dart code to native machine code ahead of time.
+- Results in smaller, more optimized binary and better startup performance.
+- Build with: `flutter build <platform> --release`.
+
+**Summary**: JIT for development speed; AOT for production performance.
+
+---
+
+## Debug, Profile, and Release Modes in Flutter
+
+### Debug Mode
+- For development. Enables hot reload, extensive debugging tools, and additional checks.
+- Run: `flutter run` (default).
+
+### Profile Mode
+- Middle ground between Debug and Release.
+- Retains debugging info for performance profiling while including some optimizations.
+- Run: `flutter run --profile`.
+
+### Release Mode
+- For production deployment. Aggressive optimizations, stripped-down binary, best performance.
+- Build: `flutter build <platform> --release`.
+
+---
+
+## Types of Scope in Dart
+
+Dart uses **lexical scoping** — the scope of a variable is determined by its location in the source code.
+
+### Global Scope
+Variables declared outside any function or class — accessible throughout the entire program.
+```dart
+var globalVariable = 42;
+void main() {
+  print(globalVariable); // Accessible anywhere
+}
+```
+
+### Local Scope
+Variables declared within a function or block — only accessible within that function/block.
+```dart
+void myFunction() {
+  var localVariable = 10;
+  print(localVariable);
+}
+```
+
+### Class Scope
+Members (fields and methods) of a class — accessible within the class.
+```dart
+class MyClass {
+  var classVariable = 5;
+  void myMethod() {
+    print(classVariable);
+  }
+}
+```
+
+### Block Scope
+Variables declared in a block (if, for, while) — only accessible within that block.
+```dart
+void example() {
+  if (true) {
+    var insideIf = 'inside if';
+    print(insideIf);
+  }
+  // insideIf not accessible here
+}
+```
+
+---
+
+## The Range of int and double in Dart
+
+- **int**: Represents integers (whole numbers). Range: -2^63 to 2^63 - 1 on 64-bit systems; -2^31 to 2^31 - 1 on 32-bit systems.
+- **double**: Represents floating-point numbers (IEEE 754 double-precision). Range: approximately ±4.9 × 10^−324 to ±1.8 × 10^308.
+
+---
+
+## Difference between where() and takeWhile() in Dart
+
+- **`where()`**: General-purpose method that filters all elements in a collection that satisfy a condition. Considers the entire iterable.
+- **`takeWhile()`**: Takes elements from the **beginning** of the iterable until the condition is no longer satisfied. Stops at the first element that fails the condition.
+
+```dart
+var numbers = [1, 2, 3, 4, 5, 2];
+print(numbers.where((n) => n < 4).toList());      // [1, 2, 3, 2]
+print(numbers.takeWhile((n) => n < 4).toList());  // [1, 2, 3] — stops at 4
+```
+
+---
+
+## count(), custom(), builder(), extent() in GridView / SliverGrid
+
+### SliverGrid Methods
+- **count()**: Fixed number of children in the cross-axis.
+- **custom()**: Custom delegate controlling sliver children layout.
+- **builder()**: Used with `SliverList`; takes `SliverChildBuilderDelegate`.
+- **extent()**: Fixed cross-axis extent (width for vertical grids) for items.
+
+### GridView Named Constructors
+- **GridView.count()**: Fixed `crossAxisCount` (columns).
+- **GridView.builder()**: Lazily builds items on-demand.
+- **GridView.custom()**: Custom delegate for layout control.
+- **GridView.extent()**: Fixed `maxCrossAxisExtent` for each item.
+
+---
+
+## Composition in Programming
+
+Composition is a design principle where a class is built from other classes/objects rather than inheriting from them.
+
+### Object Composition (OOP)
+Creating instances of other classes within a class to reuse functionality without parent/child relationships. More modular and flexible than inheritance.
+
+### Function Composition (Functional Programming)
+Combining multiple functions where each takes the output of the previous one as input. Often done with higher-order functions.
+
+Both forms promote code reuse, maintainability, and flexibility.
+
+---
+
+## What is CI/CD and DevOps?
+
+### Continuous Integration (CI)
+- Code changes from multiple contributors are automatically integrated into a shared repository multiple times a day.
+- Involves automated builds, testing, and code analysis.
+- Goal: detect integration issues early.
+
+### Continuous Deployment (CD)
+- Extends CI by automatically deploying code changes to production after passing automated tests.
+- Reduces manual intervention and accelerates the release cycle.
+
+### DevOps
+- Cultural and organizational approach that improves collaboration between software development (Dev) and IT operations (Ops) teams.
+- Emphasizes automation, continuous integration/deployment, infrastructure as code (IaC), monitoring, and feedback loops.
+- Goal: shorter development lifecycle, frequent releases, higher quality.
+
+---
+
+## Development and Production branches in Git
+
+- **Development branch** (often `develop` or `dev`): Where ongoing work takes place. Feature branches are created from and merged into this branch. Less stable.
+- **Production branch** (often `main` or `master`): The stable branch representing the latest release. Features from development are merged here after thorough testing.
+
+Typical workflow:
+1. Create feature branches from `develop`.
+2. Merge completed features back into `develop`.
+3. Periodically merge `develop` into `main` for a stable release.
+
+---
+
+## Gradle in Android Development
+
+Gradle is a build automation tool used in Android development. It manages project dependencies, build processes, and task automation.
+
+- Uses Groovy (or Kotlin DSL) for build scripts.
+- Takes source code and resources to produce an APK.
+- Uses a directed acyclic graph (DAG) to determine task execution order.
+- Combines the flexibility of Apache Ant with Maven's dependency management.
+
+### Benefits
+- Multi-project build support.
+- Highly scalable from single to enterprise projects.
+- Publish projects and attach self-contained libraries.
+- Customizable build execution and configuration.
+
+---
+
+## What is the iOS build tool?
+
+**Xcode** is the primary build tool for iOS. Apple's Xcode build system manages tools that transform your code and resource files into a finished app. It analyzes your files and uses project settings to assemble build tasks.
+
+---
+
+## What is the difference between test API and production API?
+
+### Test API (Sandbox)
+- Designed for testing and development purposes.
+- Uses dummy/simulated data.
+- More permissive access controls.
+- Non-production environment mirroring production.
+
+### Production API
+- Live, operational version used by real users.
+- Handles real, sensitive data.
+- Optimized for performance, scalability, and reliability.
+- Strict access controls, authentication, and authorization.
+

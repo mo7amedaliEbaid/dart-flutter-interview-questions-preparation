@@ -91,3 +91,59 @@ ORDER BY username ASC;
 - This query retrieves all users and sorts them in ascending order based on the username.
 
 - These are just some fundamental SQL basics. SQL is a powerful language with a rich set of features for working with relational databases. Depending on the specific database system you're using (e.g., MySQL, PostgreSQL, SQLite), there may be some variations in syntax and supported features.
+
+---
+
+## Using sqflite in Flutter
+
+`sqflite` is the SQLite plugin for Flutter, allowing interaction with SQLite databases from Dart.
+
+```dart
+import 'package:sqflite/sqflite.dart';
+import 'package:path/path.dart';
+
+void main() async {
+  // Open the database
+  var databasesPath = await getDatabasesPath();
+  String path = join(databasesPath, 'example.db');
+  Database database = await openDatabase(path, version: 1,
+      onCreate: (Database db, int version) async {
+    // Create the table
+    await db.execute(
+        'CREATE TABLE Test (id INTEGER PRIMARY KEY, name TEXT, value INTEGER, other_value REAL)');
+  });
+
+  // Insert records using a transaction
+  await database.transaction((txn) async {
+    int id1 = await txn.rawInsert(
+        'INSERT INTO Test(name, value, other_value) VALUES("some name", 1234, 456.789)');
+    print('Inserted row id: $id1');
+    int id2 = await txn.rawInsert(
+        'INSERT INTO Test(name, value, other_value) VALUES(?, ?, ?)',
+        ['another name', 12345678, 3.1416]);
+    print('Inserted row id: $id2');
+  });
+
+  // Query the database
+  List<Map> list = await database.rawQuery('SELECT * FROM Test');
+  list.forEach((row) {
+    print('Record: ${row['id']}, ${row['name']}, ${row['value']}, ${row['other_value']}');
+  });
+
+  // Close the database
+  await database.close();
+}
+```
+
+### sqflite Key Operations
+- **openDatabase()**: Open (or create) a database at a given path.
+- **execute()**: Run SQL DDL statements (CREATE TABLE, etc.).
+- **rawInsert()**: Insert records using raw SQL.
+- **rawQuery()**: Query records using raw SQL.
+- **transaction()**: Group multiple operations in an atomic transaction.
+- **close()**: Close the database connection.
+
+### sqflite vs Hive
+- **sqflite**: Full relational database (SQL queries, transactions, indexes, complex relationships).
+- **Hive**: Lightweight key-value store (simple data, fast, no SQL knowledge required).
+

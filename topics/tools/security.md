@@ -42,3 +42,67 @@ flutter build ios --obfuscate --split-debug-info=<output-directory>
 - Keep Software Up-to-Date: Regularly update your software, libraries, and operating systems to protect against known vulnerabilities that attackers can exploit to perform MITM attacks.
 
 - By implementing these security measures and best practices, you can significantly reduce the risk of Man-in-the-Middle attacks and protect the integrity and privacy of the communication between clients and servers.
+
+---
+
+## OTP (One-Time Password) with Firebase Auth in Flutter
+
+### Phone Number OTP
+
+```dart
+import 'package:firebase_auth/firebase_auth.dart';
+
+Future<void> sendOTP(String phoneNumber) async {
+  FirebaseAuth auth = FirebaseAuth.instance;
+
+  await auth.verifyPhoneNumber(
+    phoneNumber: phoneNumber,
+    verificationCompleted: (PhoneAuthCredential credential) async {
+      // Auto-retrieval of OTP completed
+      await auth.signInWithCredential(credential);
+    },
+    verificationFailed: (FirebaseAuthException e) {
+      print('Verification Failed: ${e.message}');
+    },
+    codeSent: (String verificationId, int resendToken) {
+      // Store verificationId for later use when user enters OTP
+      print('Code Sent');
+    },
+    codeAutoRetrievalTimeout: (String verificationId) {
+      // Auto-retrieval timer expired
+    },
+  );
+}
+```
+
+### Email Verification
+
+```dart
+Future<void> sendEmailVerification() async {
+  FirebaseAuth auth = FirebaseAuth.instance;
+  User? user = auth.currentUser;
+
+  if (user != null && !user.emailVerified) {
+    await user.sendEmailVerification();
+    print('Email Verification Sent');
+  } else {
+    print('User is already verified or user is null');
+  }
+}
+```
+
+---
+
+## Cryptographic Principles
+
+### Basic Concepts
+- **Hashing**: Converts data into a fixed-length string (digest). Used for password storage and blockchain integrity. One-way — you cannot reverse a hash to get the original data.
+- **Public/Private Key Cryptography**: Used for secure transactions and identity verification. Data encrypted with a public key can only be decrypted with the corresponding private key.
+- **Encryption**: Converts plaintext into ciphertext using an algorithm and key. Two types: symmetric (same key) and asymmetric (key pair).
+
+### Secure Coding Practices
+- **Input Validation**: Prevent SQL injection, XSS, and other injection attacks.
+- **Data Encryption**: Protect sensitive information in transit (HTTPS/TLS) and at rest.
+- **Use Established Libraries**: Avoid rolling your own cryptography; use vetted libraries.
+- **Dependency Management**: Regularly update dependencies to patch vulnerabilities.
+

@@ -126,3 +126,45 @@ abstract base class UseCase {
 ---
 
 Do you want me to also give you a **visual diagram** that summarizes all Dart 3 class modifiers in one view (like a cheat sheet)?
+
+---
+
+## Difference between Sealed Class and Enum
+
+### Sealed Class
+- Allows defining a **hierarchy of types** (subtypes).
+- Subtypes can have **properties, methods, and constructors**.
+- Can be instantiated via subtype constructors.
+- Often used with **pattern matching** for expressive control flow.
+- Subtypes can only be defined within the same library.
+
+```dart
+sealed class Result {}
+class Success extends Result {
+  final String data;
+  Success(this.data);
+}
+class Error extends Result {
+  final String message;
+  Error(this.message);
+}
+
+// Pattern matching
+switch (result) {
+  case Success(data: var d): print('Success: $d');
+  case Error(message: var m): print('Error: $m');
+}
+```
+
+### Enum
+- Represents a **fixed set of named constants**.
+- No subtype hierarchy.
+- Enum values typically don't have associated behavior (though Dart 3 enums can have methods).
+- Simpler; best for a predefined set of constant values.
+
+```dart
+enum Status { pending, active, inactive }
+```
+
+**Summary**: Sealed classes are for type hierarchies with behavior; enums are for simple fixed sets of named values.
+

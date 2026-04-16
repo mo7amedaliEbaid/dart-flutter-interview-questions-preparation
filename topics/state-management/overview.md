@@ -56,3 +56,88 @@
 - Those features are what make Riverpod so powerful.
 ## WidgetRef class abstract
 An object that allows widgets to interact with providers.
+
+---
+
+## ValueNotifier
+
+A `ChangeNotifier` that holds a **single value**. Notifies listeners when the value is replaced with something not equal (by `==`) to the old value.
+
+```dart
+final counter = ValueNotifier<int>(0);
+counter.value = 1; // Notifies listeners
+```
+
+- Does **not** notify when mutable state inside the value changes (e.g., contents of a List).
+- Best used with **immutable data types**.
+- For mutable data types, extend `ChangeNotifier` directly.
+
+---
+
+## ListenableBuilder
+
+A general-purpose widget for rebuilding a subtree when a `Listenable` changes. Useful when only part of the widget tree should rebuild.
+
+```dart
+class CounterModel with ChangeNotifier {
+  int _count = 0;
+  int get count => _count;
+
+  void increment() {
+    _count += 1;
+    notifyListeners();
+  }
+}
+
+// In the widget tree:
+ListenableBuilder(
+  listenable: counterModel,
+  builder: (BuildContext context, Widget? child) {
+    return Text('${counterModel.count}');
+  },
+)
+```
+
+Any subtype of `Listenable` (including `ChangeNotifier`, `ValueNotifier`, or `Animation`) can be used. For animations, consider `AnimatedBuilder` for clarity.
+
+---
+
+## get_it — Dependency Injection
+
+`get_it` is a service locator for Dart and Flutter. It allows registering and retrieving dependencies without needing the BuildContext.
+
+```dart
+final sl = GetIt.instance;
+
+Future<void> init() async {
+  sl.registerLazySingleton<QuranCubit>(
+      () => QuranCubit(quranUsecase: sl(), quranAudioUsecase: sl()));
+  sl.registerLazySingleton<SurahCubit>(() => SurahCubit(surahUsecase: sl()));
+}
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await di.init();
+  runApp(const MyApp());
+}
+
+// Usage with BlocProvider:
+providers: [
+  BlocProvider(create: (context) => sl<QuranCubit>()),
+  BlocProvider(create: (context) => sl<SurahCubit>()),
+],
+```
+
+`registerLazySingleton` creates the instance only on first access.
+
+---
+
+## What is Dependency Injection?
+
+A design pattern used to implement **Inversion of Control**. It allows the creation of dependent objects outside of a class and provides those objects to the class through different means (constructor, method, or property injection).
+
+Benefits:
+- Decoupling — classes don't create their own dependencies.
+- Testability — easier to mock dependencies in tests.
+- Flexibility — swap implementations without changing the dependent class.
+

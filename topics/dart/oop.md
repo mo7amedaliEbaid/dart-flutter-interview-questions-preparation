@@ -863,3 +863,67 @@ Person him=new Him();
 
 ## what is composition in oop?
 - Like Inheritance, Composition is a concept in object-oriented programming that models the relationship between two classes. Composition involves using other classes to build more complex classes and there is no parent/child relationship exists in this case. Basically, complex objects are composed of other objects.
+
+---
+
+## Override vs Overload in Programming
+
+**Important**: Dart does **not support method overloading**.
+
+### Method Overriding
+- The same method signature in a superclass and its subclass.
+- The subclass provides a different implementation.
+- `@override` annotation enforces correct overriding at compile time.
+
+```dart
+class Animal {
+  void speak() => print('...');
+}
+
+class Dog extends Animal {
+  @override
+  void speak() => print('Woof!');
+}
+```
+
+### Method Overloading (not in Dart)
+- Two or more methods in the same class with the same name but different parameters.
+- Dart does not support overloading; use optional/named parameters instead.
+
+```
+// Not valid in Dart:
+void foo(int a) {}
+void foo(int a, double b) {} // ERROR
+```
+
+---
+
+## toString() Override
+
+Overriding `toString()` allows you to provide a human-readable string representation of a class:
+
+```dart
+class BankAccount {
+  double _balance = 0;
+
+  BankAccount({double balance = 0}) : _balance = balance;
+
+  double get balance => _balance;
+
+  void deposit(double amount) { _balance += amount; }
+
+  bool withdraw(double amount) {
+    if (amount <= _balance) { _balance -= amount; return true; }
+    return false;
+  }
+
+  @override
+  String toString() => 'The balance is $_balance USD.';
+}
+
+void main() {
+  var account = BankAccount(balance: 100);
+  print(account); // The balance is 100.0 USD.
+}
+```
+

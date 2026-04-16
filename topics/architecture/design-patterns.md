@@ -178,3 +178,86 @@ class UserRepository {
   }
 }
 ```
+
+---
+
+## Facade Pattern
+
+The Facade pattern is a **structural design pattern** that provides a simplified interface to a complex subsystem. It defines a higher-level interface that makes the subsystem easier to use, hiding underlying complexity.
+
+```dart
+// Component classes
+class DVDPlayer {
+  void on() => print("DVD Player is ON");
+  void play(String movie) => print("Playing movie: $movie");
+  void stop() => print("DVD Player stopped");
+  void off() => print("DVD Player is OFF");
+}
+
+class Amplifier {
+  void on() => print("Amplifier is ON");
+  void setVolume(int level) => print("Amplifier volume set to $level");
+  void off() => print("Amplifier is OFF");
+}
+
+class Projector {
+  void on() => print("Projector is ON");
+  void wideScreenMode() => print("Projector in widescreen mode");
+  void off() => print("Projector is OFF");
+}
+
+// Facade class
+class HomeTheaterFacade {
+  final DVDPlayer dvdPlayer;
+  final Amplifier amplifier;
+  final Projector projector;
+
+  HomeTheaterFacade(this.dvdPlayer, this.amplifier, this.projector);
+
+  void watchMovie(String movie) {
+    print("Get ready to watch a movie...");
+    dvdPlayer.on();
+    dvdPlayer.play(movie);
+    amplifier.on();
+    amplifier.setVolume(5);
+    projector.on();
+    projector.wideScreenMode();
+  }
+
+  void endMovie() {
+    print("Shutting movie theater down...");
+    dvdPlayer.stop();
+    dvdPlayer.off();
+    amplifier.off();
+    projector.off();
+  }
+}
+
+// Client code
+void main() {
+  var homeTheater = HomeTheaterFacade(DVDPlayer(), Amplifier(), Projector());
+  homeTheater.watchMovie("Inception");
+  homeTheater.endMovie();
+}
+```
+
+---
+
+## Difference between Design Patterns and Architectural Patterns
+
+### Design Patterns
+- **Scope**: Smaller-scale; solve specific problems within a module or class.
+- **Granularity**: More granular; target object creation, composition, or interaction.
+- **Examples**: Singleton, Factory Method, Observer, Strategy, Decorator, Adapter, Facade.
+- **Intent**: Provide solutions to recurring design problems at the class/object level.
+
+### Architectural Patterns
+- **Scope**: High-level; organize the entire software system or application.
+- **Granularity**: More comprehensive; define structure, responsibility distribution, and communication between large components/modules.
+- **Examples**: MVC, MVVM, Microservices, Monolithic, Layered (three-tier).
+- **Intent**: Define high-level structure and behavior of a system for scalability, maintainability, and global concerns.
+
+### Relationship
+- Architectural patterns can contain multiple design patterns.
+- Design patterns operate at the class/object level; architectural patterns shape the entire application.
+

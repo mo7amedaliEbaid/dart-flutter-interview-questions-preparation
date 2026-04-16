@@ -318,3 +318,82 @@ class Solution {
   }
 }
 ```
+
+---
+
+## Search and Sort Algorithm Complexity Summary
+
+### Linear Search
+Sequentially checks each element until a match is found or the end is reached.
+- Time Complexity: **O(n)**
+
+### Binary Search
+Efficiently finds a target value in a **sorted** array by repeatedly halving the search interval.
+- Time Complexity: **O(log n)**
+
+### Bubble Sort
+Repeatedly compares adjacent elements and swaps them if in the wrong order.
+- Time Complexity: **O(n²)**
+
+### Insertion Sort
+Builds the sorted array one element at a time by inserting each new element into the correct position.
+- Time Complexity: **O(n²)**
+
+### Merge Sort
+Divides the list into sublists of one element, then repeatedly merges sorted sublists.
+- Time Complexity: **O(n log n)**
+
+### Quick Sort
+Selects a pivot, partitions the array into two sub-arrays (less-than and greater-than pivot), and recursively sorts.
+- Time Complexity: **O(n log n)** average, **O(n²)** worst case.
+
+---
+
+## Graph Traversal Algorithms
+
+### Depth-First Search (DFS)
+Explores as far as possible along each branch before backtracking.
+- Use case: Tree and graph traversal, cycle detection, topological sort.
+- Time Complexity: **O(V + E)** (vertices + edges).
+
+### Breadth-First Search (BFS)
+Visits all vertices at the same level before moving to the next level.
+- Use case: Shortest path in unweighted graphs, network broadcasting.
+- Time Complexity: **O(V + E)**.
+
+### Difference between BFS and DFS
+- BFS explores level by level (uses a queue); DFS explores depth-first (uses a stack or recursion).
+- BFS finds the shortest path in unweighted graphs; DFS is better for exhaustive search.
+
+---
+
+## Dijkstra's Algorithm
+Finds the **shortest path** between two nodes in a graph with **non-negative** edge weights.
+- Time Complexity: **O((V + E) log V)** with a priority queue.
+- Use case: Navigation, network routing.
+
+---
+
+## Dynamic Programming
+Breaks a problem into simpler **overlapping subproblems** and solves each only once, storing results (memoization/tabulation) to avoid redundant computation.
+- Use case: Fibonacci sequence, knapsack problem, shortest paths (Floyd-Warshall).
+
+---
+
+## Algorithm Complexity Q&A
+
+**What is the difference between time complexity and space complexity?**
+- **Time complexity**: How the running time grows relative to input size.
+- **Space complexity**: How the memory usage grows relative to input size.
+
+**What is Big O notation?**
+Big O describes the **upper bound** on the growth rate of an algorithm's time or space complexity. It characterizes the worst-case behavior as input size grows (e.g., O(1), O(log n), O(n), O(n log n), O(n²)).
+
+**Best-case vs average-case vs worst-case complexity**
+- **Best-case**: Minimum time for any input.
+- **Average-case**: Expected time for typical inputs.
+- **Worst-case**: Maximum time for any input of given size.
+
+**How does a hash table work?**
+A hash function maps keys to array indexes. Average O(1) for search, insert, and delete. Collisions are handled via chaining (linked lists at each index) or open addressing (probing for the next available slot).
+
