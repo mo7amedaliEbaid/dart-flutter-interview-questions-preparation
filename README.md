@@ -1,88 +1,154 @@
-- This Repo includes Some questions i have been asked in my previous interviews and other related questions.
-- I created This Repo to collect most questions , topics and resources in one place, So I wouldn't waste much time in my preparation for technical interviews.
+# Dart & Flutter Interview Preparation
 
-## Repository Structure
+> A personal collection of questions, answers, and resources gathered from real technical interviews — organized in one place to save preparation time.
 
+![Language](https://img.shields.io/badge/language-Dart%20%7C%20Flutter-02569B?style=flat&logo=flutter)
+![License](https://img.shields.io/badge/license-MIT-green?style=flat)
+![Last Commit](https://img.shields.io/github/last-commit/mo7amedaliEbaid/dart-flutter-interview-questions-preparation?style=flat)
+
+---
+
+## File Navigation
+
+| File | Topics |
+|------|--------|
+| [`dart.md`](./dart.md) | OOP · SOLID · Class Modifiers · Algorithms · Data Structures |
+| [`flutter.md`](./flutter.md) | Widgets · Animations · Lifecycle · Paint & Clip · Semantics · InheritedWidget |
+| [`architecture-and-state.md`](./architecture-and-state.md) | MVC/MVP/MVVM · Clean Architecture · Design Patterns · BLoC · Riverpod · GetX · Provider |
+| [`interview-prep.md`](./interview-prep.md) | Beginner → Senior Guides · General Q&A · Testing · Security · Git · SQL · Session Notes |
+| [`live_coding/`](./live_coding/) | Isolates · Extensions · Singletons · `super` / `this` · Runes · Lifecycle demos |
+| [`pdf/`](./pdf/) | PDF exports of key topic files |
+
+---
+
+## Topics Overview
+
+```mermaid
+mindmap
+  root((Flutter Interview))
+    Dart Language
+      OOP
+      SOLID
+      Class Modifiers
+      Algorithms
+      Data Structures
+    Flutter Framework
+      Widgets
+      Animations
+      App Lifecycle
+      Paint and Clip
+      Semantics
+      InheritedWidget
+    Architecture and State
+      MVC / MVP / MVVM
+      Clean Architecture
+      Design Patterns
+      BLoC and Cubit
+      Riverpod
+      GetX
+      Provider
+    Interview Prep
+      Beginner Guide
+      Mid Level Guide
+      Senior Guide
+      General Q and A
+      Testing
+      Security
+      Session Notes
 ```
-README.md                  → this file (navigation + external links)
-dart.md                    → Dart language: OOP, SOLID, class modifiers, algorithms, data structures
-flutter.md                 → Flutter framework: widgets, animations, lifecycle, paint/clip, semantics
-architecture-and-state.md  → Architecture patterns, clean arch, design patterns, BLoC, Riverpod, GetX
-interview-prep.md          → Study guides (Beginner/Mid/Senior), general Q&A, testing, security, interview notes
-live_coding/               → Standalone Dart snippets (isolates, extensions, lifecycle demos, etc.)
-pdf/                       → PDF exports of key topic files
-assets/                    → Images used in notes
-```
 
-# General Questions
+---
 
-- https://github.com/mo7amedaliEbaid/dart-flutter-interview-questions-preparation/blob/main/interview-prep.md
+## Official Documentation
 
-# Bloc
+| Resource | Link |
+|----------|------|
+| Flutter | [docs.flutter.dev](https://docs.flutter.dev/) |
+| Flutter Cookbook | [docs.flutter.dev/cookbook](https://docs.flutter.dev/cookbook) |
+| Flutter Performance | [docs.flutter.dev/perf](https://docs.flutter.dev/perf) |
+| Flutter Animations | [docs.flutter.dev/ui/animations](https://docs.flutter.dev/ui/animations) |
+| Dart | [dart.dev/guides](https://dart.dev/guides) |
+| Dart Null Safety | [dart.dev/null-safety](https://dart.dev/null-safety) |
+| Dart Isolates | [dart.dev/language/isolates](https://dart.dev/language/isolates) |
+| Dart Packages | [pub.dev](https://pub.dev) |
 
-- https://github.com/mo7amedaliEbaid/dart-flutter-interview-questions-preparation/blob/main/architecture-and-state.md
+---
 
-# Solid
-- https://github.com/mo7amedaliEbaid/dart-flutter-interview-questions-preparation/blob/main/dart.md
+## State Management
 
-# Architectural Pattern
-- https://github.com/mo7amedaliEbaid/dart-flutter-interview-questions-preparation/blob/main/architecture-and-state.md
-- https://www.educba.com/mvp-vs-mvvm/
-- https://medium.com/@samra.sajjad0001/unleashing-creativity-exploring-architecture-patterns-in-flutter-12b7465bc927
-- https://www.geeksforgeeks.org/difference-between-mvp-and-mvvm-architecture-pattern-in-android/
+| Package | Link |
+|---------|------|
+| BLoC / Cubit | [bloclibrary.dev](https://bloclibrary.dev/#/gettingstarted) |
+| Riverpod | [riverpod.dev — Why Riverpod?](https://riverpod.dev/docs/introduction/why_riverpod) |
+| GetX | [pub.dev/packages/get](https://pub.dev/packages/get#reactive-state-manager) |
+| GetX — GetBuilder vs Obx | [Stack Overflow](https://stackoverflow.com/questions/67121941/flutter-get-when-to-use-getxcontroller-getbuildercontroller-or-obx?rq=3) |
+| Provider | [pub.dev/packages/provider](https://pub.dev/packages/provider) |
+| Provider — Flutter docs | [Simple app state management](https://docs.flutter.dev/data-and-backend/state-mgmt/simple) |
 
-# Clean Arch Overview
+---
 
-- https://github.com/mo7amedaliEbaid/dart-flutter-interview-questions-preparation/blob/main/architecture-and-state.md
+## Architecture & Design Patterns
 
-# Flutter Documentaion
-- https://docs.flutter.dev/
+| Resource | Link |
+|----------|------|
+| Clean Architecture (Reso Coder) | [resocoder.com/flutter-clean-architecture](https://resocoder.com/2019/08/27/flutter-tdd-clean-architecture-course-1-explanation-overview/) |
+| MVP vs MVVM | [educba.com/mvp-vs-mvvm](https://www.educba.com/mvp-vs-mvvm/) |
+| MVP vs MVVM (Android) | [geeksforgeeks.org](https://www.geeksforgeeks.org/difference-between-mvp-and-mvvm-architecture-pattern-in-android/) |
+| Architecture Patterns in Flutter | [Medium — samra.sajjad](https://medium.com/@samra.sajjad0001/unleashing-creativity-exploring-architecture-patterns-in-flutter-12b7465bc927) |
+| Dart Design Patterns (AhmedLSayed9) | [github.com/AhmedLSayed9/dart_design_patterns](https://github.com/AhmedLSayed9/dart_design_patterns) |
+| Dart Design Patterns (hamed-rezaee) | [github.com/hamed-rezaee/dart_design_patterns_collection](https://github.com/hamed-rezaee/dart_design_patterns_collection) |
 
-# CookBook
-- https://docs.flutter.dev/cookbook
+---
 
-# Dart Documentaion
+## Testing
 
-- https://dart.dev/guides
+| Resource | Link |
+|----------|------|
+| Flutter Testing Docs | [docs.flutter.dev/testing](https://docs.flutter.dev/testing) |
+| Mockito for Dart | [pub.dev/packages/mockito](https://pub.dev/packages/mockito) |
+| bloc_test | [pub.dev/packages/bloc_test](https://pub.dev/packages/bloc_test) |
+| Very Good Testing (blog) | [verygood.ventures/blog/guide-to-flutter-testing](https://verygood.ventures/blog/guide-to-flutter-testing) |
 
-# Bloc Documentation
-- https://bloclibrary.dev/#/gettingstarted
+---
 
-# Riverpod Docs
+## CI / CD & DevOps
 
-- https://riverpod.dev/docs/introduction/why_riverpod
+| Resource | Link |
+|----------|------|
+| GitHub Actions | [docs.github.com/actions](https://docs.github.com/en/actions/using-workflows/about-workflows) |
+| Fastlane for Flutter | [docs.flutter.dev/deployment/cd](https://docs.flutter.dev/deployment/cd) |
+| Shorebird (code push) | [shorebird.dev](https://shorebird.dev) |
 
-# Getx
-- https://pub.dev/packages/get#reactive-state-manager
-- https://stackoverflow.com/questions/67121941/flutter-get-when-to-use-getxcontroller-getbuildercontroller-or-obx?rq=3
+---
 
-# Provider
-- https://pub.dev/packages/provider
-- https://docs.flutter.dev/data-and-backend/state-mgmt/simple
-  
-# Design Patterns
+## SQL Reference
 
-- https://github.com/mo7amedaliEbaid/dart-flutter-interview-questions-preparation/blob/main/architecture-and-state.md
-- https://github.com/AhmedLSayed9/dart_design_patterns
-- https://github.com/hamed-rezaee/dart_design_patterns_collection
+| Resource | Link |
+|----------|------|
+| W3Schools SQL | [w3schools.com/sql](https://www.w3schools.com/sql/default.asp) |
+| sqflite (Flutter SQLite) | [pub.dev/packages/sqflite](https://pub.dev/packages/sqflite) |
 
-# Github Overflows
-- https://docs.github.com/en/actions/using-workflows/about-workflows
+---
 
-# Related Repos
+## Related Repositories
 
-- https://github.com/power19942/flutter-interview-questions
-- https://github.com/debasmitasarkar/flutter_interview_topics
+| Repo | Description |
+|------|-------------|
+| [flutter-interview-questions](https://github.com/power19942/flutter-interview-questions) | Community Flutter interview Q&A |
+| [flutter_interview_topics](https://github.com/debasmitasarkar/flutter_interview_topics) | Curated Flutter interview topics |
 
-# Other Resources
+---
 
-- https://www.interviewbit.com/flutter-interview-questions/
-- https://www.simplilearn.com/flutter-interview-questions-article
-- https://www.turing.com/interview-questions/flutter
-- https://www.fullstack.cafe/blog/flutter-interview-questions
-- https://www.fullstack.cafe/interview-questions/flutter
-- https://ingeniousmindslab.com/blogs/flutter-bloc-interview-question-2023/
-- https://climbtheladder.com/flutter-bloc-interview-questions/
-- https://interviewprep.org/bloc-pattern-interview-questions/
-- https://www.fullstack.cafe/blog/dart-interview-questions
-- https://www.w3schools.com/sql/default.asp
+## Other Interview Resources
+
+| Resource | Link |
+|----------|------|
+| InterviewBit — Flutter | [interviewbit.com/flutter-interview-questions](https://www.interviewbit.com/flutter-interview-questions/) |
+| Simplilearn — Flutter | [simplilearn.com](https://www.simplilearn.com/flutter-interview-questions-article) |
+| Turing — Flutter | [turing.com/interview-questions/flutter](https://www.turing.com/interview-questions/flutter) |
+| Fullstack.cafe — Flutter | [fullstack.cafe/blog/flutter-interview-questions](https://www.fullstack.cafe/blog/flutter-interview-questions) |
+| Fullstack.cafe — Dart | [fullstack.cafe/blog/dart-interview-questions](https://www.fullstack.cafe/blog/dart-interview-questions) |
+| Fullstack.cafe — Flutter Q&A | [fullstack.cafe/interview-questions/flutter](https://www.fullstack.cafe/interview-questions/flutter) |
+| Ingenious Minds — BLoC | [ingeniousmindslab.com/blogs](https://ingeniousmindslab.com/blogs/flutter-bloc-interview-question-2023/) |
+| ClimbTheLadder — BLoC | [climbtheladder.com](https://climbtheladder.com/flutter-bloc-interview-questions/) |
+| InterviewPrep — BLoC | [interviewprep.org](https://interviewprep.org/bloc-pattern-interview-questions/) |
