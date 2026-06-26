@@ -1,26 +1,40 @@
 - This Repo includes Some questions i have been asked in my previous interviews and other related questions.
 - I created This Repo to collect most questions , topics and resources in one place, So I wouldn't waste much time in my preparation for technical interviews.
 
+## Repository Structure
+
+```
+dart/               → Dart language: OOP, SOLID, class modifiers, algorithms, data structures
+flutter/            → Flutter UI: widgets, animations, lifecycle, paint/clip, semantics
+architecture/       → Patterns: architectural patterns, clean architecture, design patterns
+state-management/   → BLoC, Riverpod, GetX, state management overview
+study-guides/       → Level-based guides (Beginner/Mid/Senior), general Q&A, testing, security, git, sql
+interview-notes/    → Date-stamped session notes, self-intro, study plans
+live_coding/        → Standalone Dart snippets (isolates, extensions, lifecycle demos, etc.)
+pdf/                → PDF exports of key topic files
+assets/             → Images used in notes
+```
+
 # General Questions
 
-- https://github.com/mo7amedaliEbaid/dart-flutter-interview-questions/blob/main/general.md
+- https://github.com/mo7amedaliEbaid/dart-flutter-interview-questions-preparation/blob/main/study-guides/general.md
 
 # Bloc
 
-- https://github.com/mo7amedaliEbaid/dart-flutter-interview-questions/blob/main/bloc.md
+- https://github.com/mo7amedaliEbaid/dart-flutter-interview-questions-preparation/blob/main/state-management/bloc.md
 
 # Solid
-- https://github.com/mo7amedaliEbaid/dart-flutter-interview-questions/blob/main/solid.md
+- https://github.com/mo7amedaliEbaid/dart-flutter-interview-questions-preparation/blob/main/dart/solid.md
 
 # Architectural Pattern
-- https://github.com/mo7amedaliEbaid/dart-flutter-interview-questions-preparation/blob/main/architectural-patterns.md
+- https://github.com/mo7amedaliEbaid/dart-flutter-interview-questions-preparation/blob/main/architecture/architectural-patterns.md
 - https://www.educba.com/mvp-vs-mvvm/
 - https://medium.com/@samra.sajjad0001/unleashing-creativity-exploring-architecture-patterns-in-flutter-12b7465bc927
 - https://www.geeksforgeeks.org/difference-between-mvp-and-mvvm-architecture-pattern-in-android/
 
 # Clean Arch Overview
 
-- https://github.com/mo7amedaliEbaid/dart-flutter-interview-questions-preparation/blob/main/clean-arch.md
+- https://github.com/mo7amedaliEbaid/dart-flutter-interview-questions-preparation/blob/main/architecture/clean-arch.md
 
 # Flutter Documentaion
 - https://docs.flutter.dev/
@@ -49,7 +63,7 @@
   
 # Design Patterns
 
-- https://github.com/mo7amedaliEbaid/dart-flutter-interview-questions-preparation/blob/main/design-patterns.md
+- https://github.com/mo7amedaliEbaid/dart-flutter-interview-questions-preparation/blob/main/architecture/design-patterns.md
 - https://github.com/AhmedLSayed9/dart_design_patterns
 - https://github.com/hamed-rezaee/dart_design_patterns_collection
 
