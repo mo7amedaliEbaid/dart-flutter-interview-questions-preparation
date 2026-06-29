@@ -1578,3 +1578,107 @@ The choice between global and scoped access depends on your app's complexity and
 
 - Vsync basically keeps the track of screen, so that Flutter does not renders the animation when the screen is not being displayed
 
+# Imperative vs Declarative vs Reactive UI
+
+- Understanding these three paradigms explains why Flutter is built the way it is.
+
+## 1. Imperative UI
+
+- **Definition:** Developers explicitly define **how** the UI should be updated step-by-step, writing logic to modify UI state and redraw components as needed.
+- **Characteristics:** Focuses on *how* things are done; state and UI updates are managed manually.
+- **Example frameworks:** Swing, Android XML layouts (pre-Jetpack Compose).
+
+```dart
+// Imperative: step-by-step mutation
+Button button = Button();
+button.setText("Click Me");
+button.setOnClickListener(() {
+  button.setText("Clicked");
+});
+```
+
+## 2. Declarative UI
+
+- **Definition:** Developers define **what** the UI should look like for any given state, and the framework updates it when the state changes.
+- **Characteristics:** Focuses on *what* the UI should look like; state drives the UI.
+- **Example frameworks:** Flutter, React, SwiftUI, Jetpack Compose.
+
+```dart
+@override
+Widget build(BuildContext context) {
+  return ElevatedButton(
+    onPressed: () {
+      setState(() {
+        text = "Clicked";
+      });
+    },
+    child: Text(text),
+  );
+}
+```
+
+## 3. Reactive UI
+
+- **Definition:** Reactive programming focuses on the **propagation of changes** — the UI reacts to data streams or observables. Often combined with declarative UI frameworks.
+- **Characteristics:** Uses streams/observables to listen to data changes and automatically update the UI.
+- **Example frameworks:** Flutter (with Provider, Riverpod, Bloc), React with RxJS.
+
+```dart
+Stream<String> buttonTextStream = Stream.value("Click Me");
+
+Widget build(BuildContext context) {
+  return StreamBuilder<String>(
+    stream: buttonTextStream,
+    builder: (context, snapshot) {
+      return ElevatedButton(
+        onPressed: () {},
+        child: Text(snapshot.data ?? "Loading"),
+      );
+    },
+  );
+}
+```
+
+## What does Flutter use?
+
+- Flutter primarily uses a **Declarative UI** approach combined with **Reactive Programming** principles for state.
+  - **Declarative:** The `build` method describes what the UI should look like for a given state; when the state changes, `setState` (or a state manager) triggers a rebuild.
+  - **Reactive:** Integrated via `Stream`, `Bloc`, `Provider`, and `Riverpod`, letting the UI react dynamically to state changes or data streams.
+
+| Aspect | Imperative | Declarative | Reactive |
+|--------|------------|-------------|----------|
+| UI update control | Manual | Automatic based on state | Automatic based on streams |
+| Code simplicity | Complex/verbose | Simple/expressive | Simplified with state mgmt. |
+| State management | Managed by developer | Framework manages re-renders | Driven by streams/observables |
+| Used in Flutter? | No | Yes | Yes |
+
+## What is MaterialStateProperty (WidgetStateProperty)?
+
+- `MaterialStateProperty` (renamed `WidgetStateProperty` in newer Flutter versions) lets you define values that depend on the **state** of a Material widget — instead of hardcoding a single value, you provide values that change based on whether the widget is hovered, focused, pressed, disabled, or selected.
+- **States** are predefined in `MaterialState`/`WidgetState`: `hovered`, `focused`, `pressed`, `disabled`, `selected`. They can be combined, and the property adapts to the active state(s).
+- **Common use cases:** changing a button's background color when pressed, updating text style on hover, customizing a slider's thumb for specific states.
+
+```dart
+// Single value for all states:
+ElevatedButton(
+  style: ButtonStyle(
+    backgroundColor: MaterialStateProperty.all(Colors.blue),
+  ),
+  onPressed: () {},
+  child: const Text('Button'),
+);
+
+// Different value per state:
+ElevatedButton(
+  style: ButtonStyle(
+    backgroundColor: MaterialStateProperty.resolveWith<Color>((states) {
+      if (states.contains(MaterialState.pressed)) return Colors.green;
+      if (states.contains(MaterialState.disabled)) return Colors.grey;
+      return Colors.blue;
+    }),
+  ),
+  onPressed: () {},
+  child: const Text('Button'),
+);
+```
+

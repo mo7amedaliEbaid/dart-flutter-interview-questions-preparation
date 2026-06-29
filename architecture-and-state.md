@@ -595,6 +595,197 @@ class UserRepository {
 }
 ```
 
+# Factory Pattern:
+- Type: Creational
+- Explanation: Provides a way to create objects without specifying the exact class of the object being created, delegating instantiation to a factory. There are three common forms:
+
+**1. Simple Factory (Static Factory Method)** — a single (usually static) method returns different types of objects.
+```dart
+abstract class Animal {
+  void speak();
+}
+
+class Dog implements Animal {
+  @override
+  void speak() => print('Woof! Woof!');
+}
+
+class Cat implements Animal {
+  @override
+  void speak() => print('Meow! Meow!');
+}
+
+class AnimalFactory {
+  static Animal getAnimal(String type) {
+    switch (type) {
+      case 'dog':
+        return Dog();
+      case 'cat':
+        return Cat();
+      default:
+        throw Exception('Unknown animal type');
+    }
+  }
+}
+
+void main() {
+  AnimalFactory.getAnimal('dog').speak(); // Woof! Woof!
+  AnimalFactory.getAnimal('cat').speak(); // Meow! Meow!
+}
+```
+
+**2. Factory Method (Polymorphic Factory)** — relies on inheritance: subclasses decide which class to instantiate.
+```dart
+abstract class AnimalFactory {
+  Animal createAnimal();
+}
+
+class DogFactory extends AnimalFactory {
+  @override
+  Animal createAnimal() => Dog();
+}
+
+class CatFactory extends AnimalFactory {
+  @override
+  Animal createAnimal() => Cat();
+}
+
+void main() {
+  AnimalFactory dogFactory = DogFactory();
+  dogFactory.createAnimal().speak(); // Woof! Woof!
+}
+```
+
+**3. Abstract Factory** — provides an interface to create *families* of related objects without specifying their concrete classes.
+```dart
+abstract class Button { void render(); }
+abstract class Checkbox { void render(); }
+
+class WindowsButton implements Button {
+  @override
+  void render() => print('Rendering Windows Button');
+}
+class WindowsCheckbox implements Checkbox {
+  @override
+  void render() => print('Rendering Windows Checkbox');
+}
+
+abstract class GUIFactory {
+  Button createButton();
+  Checkbox createCheckbox();
+}
+
+class WindowsFactory implements GUIFactory {
+  @override
+  Button createButton() => WindowsButton();
+  @override
+  Checkbox createCheckbox() => WindowsCheckbox();
+}
+
+void main() {
+  GUIFactory factory = WindowsFactory();
+  factory.createButton().render();   // Rendering Windows Button
+  factory.createCheckbox().render(); // Rendering Windows Checkbox
+}
+```
+- **In Dart:** `factory` constructors implement this pattern natively. Core classes use it too — `DateTime.now()`, `List.filled()`, `Map.identity()`, `Stream.fromIterable()`, `Uri.parse()` — and the common `Model.fromJson()` factory constructor is the Factory Pattern applied to API parsing.
+- **Benefits:** encapsulates object-creation details, makes adding new types easy, and decouples the client from concrete classes.
+
+# Builder Pattern:
+- Type: Creational
+- Explanation: Separates the construction of a complex object from its representation, letting you build it step-by-step. A *Director* orchestrates a *Builder* to produce different configurations of the same product.
+```dart
+class House {
+  String? foundation;
+  String? structure;
+  String? roof;
+  bool? hasSwimmingPool;
+  bool? hasGarage;
+}
+
+abstract class HouseBuilder {
+  void buildFoundation();
+  void buildStructure();
+  void buildRoof();
+  void addSwimmingPool();
+  House getHouse();
+}
+
+class LuxuryHouseBuilder implements HouseBuilder {
+  final House _house = House();
+
+  @override
+  void buildFoundation() => _house.foundation = "Concrete, steel, reinforced beams";
+  @override
+  void buildStructure() => _house.structure = "Modern steel and glass structure";
+  @override
+  void buildRoof() => _house.roof = "Glass and solar panels";
+  @override
+  void addSwimmingPool() => _house.hasSwimmingPool = true;
+  @override
+  House getHouse() => _house;
+}
+
+class HouseDirector {
+  final HouseBuilder builder;
+  HouseDirector(this.builder);
+
+  House constructLuxuryHouse() {
+    builder.buildFoundation();
+    builder.buildStructure();
+    builder.buildRoof();
+    builder.addSwimmingPool();
+    return builder.getHouse();
+  }
+}
+```
+- **Use case:** objects with many optional parameters/configurations, where a telescoping constructor would be unwieldy.
+
+# Iterator Pattern:
+- Type: Behavioral
+- Explanation: Provides a way to access elements of a collection sequentially **without exposing its underlying structure**. An *Aggregate* creates an *Iterator* that exposes `hasNext()` / `next()`.
+```dart
+abstract class Iterator<T> {
+  bool hasNext();
+  T next();
+}
+
+abstract class IterableCollection<T> {
+  Iterator<T> createIterator();
+}
+
+class Book {
+  final String title;
+  Book(this.title);
+}
+
+class BookCollection implements IterableCollection<Book> {
+  final List<Book> _books = [];
+  void addBook(Book book) => _books.add(book);
+
+  @override
+  Iterator<Book> createIterator() => BookIterator(_books);
+}
+
+class BookIterator implements Iterator<Book> {
+  final List<Book> _books;
+  int _currentIndex = 0;
+  BookIterator(this._books);
+
+  @override
+  bool hasNext() => _currentIndex < _books.length;
+
+  @override
+  Book next() {
+    if (!hasNext()) throw Exception('No more books.');
+    return _books[_currentIndex++];
+  }
+}
+```
+- **Benefits:** encapsulates traversal logic and lets you iterate different collection types uniformly. Dart's own `Iterable`/`Iterator` interfaces (used by `for-in`) are a built-in implementation.
+
+> Runnable implementations of all these patterns (plus Adapter, Decorator, Facade, Observer, Strategy, Singleton, IoC) live in [`code_examples/design_patterns/`](./code_examples/design_patterns/).
+
 
 ---
 
@@ -1105,6 +1296,78 @@ Get.put<MyController>(MyController());
   ```dart
   Get.changeTheme(ThemeData.dark());
   ```
+
+# Reactive Programming with RxDart
+
+## The relationship between MVVM and the Observer pattern
+
+- The **Observer Design Pattern** allows objects (observers) to be notified of changes in another object (the subject) they observe, achieving a separation of concerns where the subject doesn't need to know the details of its observers.
+- In **MVVM** the **ViewModel** holds state and exposes **observable** properties; the **View** observes the ViewModel and refreshes automatically when data changes. When a ViewModel property changes, it notifies the View (observer), ensuring the View updates accordingly.
+- Frameworks facilitate this: Flutter (Streams / `ChangeNotifier` / RxDart), Android (`LiveData`, Data Binding), .NET (`INotifyPropertyChanged`).
+- **Benefits of combining MVVM + Observer:** loose coupling (better testability/maintainability), automatic UI updates, and clear separation of concerns.
+
+```dart
+class CounterViewModel extends ChangeNotifier {
+  int _counter = 0;
+  int get counter => _counter;
+
+  void incrementCounter() {
+    _counter++;
+    notifyListeners(); // Observer pattern in action
+  }
+}
+```
+
+Here the View subscribes to the ViewModel and updates automatically whenever `notifyListeners()` is called.
+
+## What is RxDart?
+
+- **RxDart** is a Dart library that provides **Reactive Extensions (Rx)** for building asynchronous, event-based programs using observable streams. It extends Dart's native `Stream` API with more powerful and flexible operators. The **"Rx"** stands for **Reactive Extensions**, and *reactive* refers to a paradigm focused on asynchronous data streams and the propagation of changes.
+
+**Key concepts:**
+- **Stream:** a sequence of asynchronous events (single-subscription or broadcast); RxDart builds on top of this.
+- **Observable:** a wrapper around Dart's `Stream` with extra operators to transform, filter, combine, and control streams.
+- **Subjects:** act as both an Observable (for subscribers) and an Observer (to emit data):
+  - `PublishSubject`: emits new items to subscribers only after they subscribe.
+  - `BehaviorSubject`: emits the most recent item to new subscribers, then all subsequent items.
+  - `ReplaySubject`: buffers items and replays them to any new subscriber.
+- **Operators:** `map`, `flatMap`, `merge`, `combineLatest`, `debounce`, `throttle`, `filter`, `distinct`, etc.
+- **Schedulers:** control how and when stream emissions occur (e.g. throttling, debouncing).
+
+**Why use RxDart?** Powerful stream manipulation, clean reactive programming, and event-driven state management (commonly used inside the BLoC pattern).
+
+```dart
+// Native Dart stream
+final streamController = StreamController<int>();
+streamController.stream.listen((data) => print(data));
+streamController.add(1);
+streamController.add(2);
+
+// With RxDart (BehaviorSubject + operators)
+import 'package:rxdart/rxdart.dart';
+
+final subject = BehaviorSubject<int>();
+subject.stream
+    .map((data) => data * 2)
+    .listen((data) => print(data)); // Outputs: 2, 4
+subject.add(1);
+subject.add(2);
+```
+
+**Common use cases:** debounced search queries, real-time form validation (combining input streams), and real-time features like chat messages, notifications, or live data feeds.
+
+## Comparing common RxDart operators
+
+| Operator | Description | Example use case |
+|----------|-------------|------------------|
+| `map` | Transforms each item using a function. | Type conversion, data transformation. |
+| `flatMap` | Flattens and merges inner observables into one stream. | Multiple async operations, chaining API calls. |
+| `merge` | Combines multiple streams, emitting items from all sources as they arrive. | Merging user inputs / data streams. |
+| `combineLatest` | Combines the latest values from multiple streams whenever any emits. | Handling multiple related data sources. |
+| `debounce` | Delays emission until there's a pause for a given duration. | Search boxes — reduce excessive updates/API calls. |
+| `throttle` | Emits only the first item in each time period. | Limiting fast-emitting events. |
+| `filter` | Emits only items that satisfy a condition. | Filtering data (e.g. even numbers, valid inputs). |
+| `distinct` | Emits only unique values, filtering duplicates. | Removing duplicate emissions from a stream. |
 
 
 

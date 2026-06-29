@@ -12,11 +12,12 @@
 
 | File | Topics |
 |------|--------|
-| [`dart.md`](./dart.md) | OOP · SOLID · Class Modifiers · Algorithms · Data Structures |
-| [`flutter.md`](./flutter.md) | Widgets · Animations · Lifecycle · Paint & Clip · Semantics · InheritedWidget |
-| [`architecture-and-state.md`](./architecture-and-state.md) | MVC/MVP/MVVM · Clean Architecture · Design Patterns · BLoC · Riverpod · GetX · Provider |
-| [`interview-prep.md`](./interview-prep.md) | Beginner → Senior Guides · General Q&A · Testing · Security · Git · SQL · Session Notes |
-| [`live_coding/`](./live_coding/) | Isolates · Extensions · Singletons · `super` / `this` · Runes · Lifecycle demos |
+| [`dart.md`](./dart.md) | OOP · SOLID · Class Modifiers · Algorithms · Data Structures · FP vs OOP · Dartz · Binary Tree Diameter |
+| [`flutter.md`](./flutter.md) | Widgets · Animations · Lifecycle · Paint & Clip · Semantics · InheritedWidget · Imperative/Declarative/Reactive UI · MaterialStateProperty |
+| [`architecture-and-state.md`](./architecture-and-state.md) | MVC/MVP/MVVM · Clean Architecture · Design Patterns · BLoC · Riverpod · GetX · Provider · RxDart |
+| [`interview-prep.md`](./interview-prep.md) | Beginner → Senior Guides · General Q&A · Testing · Security · APK Penetration · Git · SQL · Session Notes |
+| [`live_coding/`](./live_coding/) | Isolates · Extensions · Singletons · `super` / `this` · Runes · Streams · Lifecycle demos |
+| [`code_examples/`](./code_examples/) | Architecture (MVC/MVP/MVVM/MVI) · Design Patterns · Data Structure & Algorithm solutions in Dart |
 | [`pdf/`](./pdf/) | PDF exports of key topic files |
 
 ---
@@ -32,6 +33,8 @@ mindmap
       Class Modifiers
       Algorithms
       Data Structures
+      FP vs OOP
+      Dartz
     Flutter Framework
       Widgets
       Animations
@@ -39,14 +42,16 @@ mindmap
       Paint and Clip
       Semantics
       InheritedWidget
+      Imperative Declarative Reactive
     Architecture and State
-      MVC / MVP / MVVM
+      MVC / MVP / MVVM / MVI
       Clean Architecture
       Design Patterns
       BLoC and Cubit
       Riverpod
       GetX
       Provider
+      RxDart
     Interview Prep
       Beginner Guide
       Mid Level Guide
@@ -54,6 +59,7 @@ mindmap
       General Q and A
       Testing
       Security
+      APK Penetration
       Session Notes
 ```
 

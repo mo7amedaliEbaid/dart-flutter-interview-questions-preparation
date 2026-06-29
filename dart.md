@@ -1970,3 +1970,208 @@ The algorithm's performance doubles with each additional input, making it highly
 The algorithm's performance grows factorially with the size of the input. Highly inefficient and typically avoided for large inputs.
 - Big O notation provides a high-level understanding of how an algorithm scales and allows developers and computer scientists to compare algorithms without getting bogged down by specific implementation details. It focuses on the most significant factors influencing an algorithm's performance as the input size becomes arbitrarily large.
 
+# Functional Programming vs OOP
+
+- Functional Programming (FP) and Object-Oriented Programming (OOP) are two fundamental paradigms, each with its own principles, benefits, and use cases.
+
+## Core Principles
+
+**Functional Programming (FP):**
+- Focuses on functions and immutability.
+- Emphasizes pure functions (no side effects) and data transformation.
+- Avoids mutable state; relies on immutable data (changes return new data structures).
+- Keeps data and behavior separate.
+- Functions are first-class citizens (passed as arguments, returned as values).
+- Easier concurrency due to immutability and pure functions.
+- Easier testing and debugging since output depends solely on input.
+
+**Object-Oriented Programming (OOP):**
+- Focuses on objects (data) and classes (blueprints).
+- Models real-world entities with objects that contain both data and behavior.
+- Uses mutable state; state changes are encapsulated within objects.
+- Methods belong to classes and are called on objects.
+- Achieved via inheritance, polymorphism, and encapsulation.
+- Concurrency can be challenging due to shared mutable state.
+
+## Examples
+
+**FP (Dart):**
+
+```dart
+int sum(int a, int b) => a + b;
+
+List<int> numbers = [1, 2, 3, 4];
+var doubled = numbers.map((n) => n * 2); // Functional operation
+print(doubled); // Output: (2, 4, 6, 8)
+```
+
+**OOP (Dart):**
+
+```dart
+class Animal {
+  String name;
+  Animal(this.name);
+
+  void speak() {
+    print('$name makes a sound.');
+  }
+}
+
+void main() {
+  var dog = Animal('Dog');
+  dog.speak(); // Output: Dog makes a sound.
+}
+```
+
+## Advantages & Disadvantages
+
+| Paradigm | Advantages | Disadvantages |
+|----------|------------|---------------|
+| **FP** | Predictable (pure functions), easy debugging/testing, better concurrency | Steep learning curve, verbose for simple tasks, immutability memory overhead |
+| **OOP** | Modularity, reusability (inheritance/polymorphism), real-world modeling | Complexity in large systems, concurrency challenges, rigid inheritance hierarchies |
+
+- **Use FP** for data transformation, pipelines, and concurrent/parallel systems.
+- **Use OOP** for complex systems with interacting entities (enterprise apps, games) and GUI/event-driven apps.
+- Modern languages like Dart support both paradigms, letting you choose the best approach per problem.
+
+# Functional Programming in Dart with Dartz
+
+- **Dartz** is a functional programming library for Dart. It provides data types and tools that enable functional-style code, focusing on immutability, composability, and safer handling of errors, nullability, and asynchronous computations. It introduces constructs commonly found in Haskell, Scala, or Elm.
+
+## 1. Option
+
+Represents a value that may or may not exist (similar to `null`, but safer). `Some` represents a value that exists; `None` represents the absence of a value. This helps avoid null checks and null-related errors.
+
+```dart
+import 'package:dartz/dartz.dart';
+
+Option<int> someValue = Some(10);
+Option<int> noValue = None();
+
+someValue.match(
+  (value) => print("Value is $value"), // Value exists.
+  () => print("No value"),             // No value.
+);
+```
+
+## 2. Either
+
+Represents a computation that returns one of two possible types — typically used for error handling. `Left` represents a failure/error; `Right` represents a success/valid result.
+
+```dart
+import 'package:dartz/dartz.dart';
+
+Either<String, int> divide(int a, int b) {
+  if (b == 0) {
+    return Left("Division by zero error");
+  } else {
+    return Right(a ~/ b);
+  }
+}
+
+final result = divide(10, 2);
+result.fold(
+  (l) => print("Error: $l"),  // Left case (error).
+  (r) => print("Result: $r"), // Right case (success).
+);
+```
+
+## 3. Task and TaskEither
+
+- `Task`: Encapsulates an asynchronous computation that returns a value.
+- `TaskEither`: Like `Task`, but supports error handling like `Either`.
+
+```dart
+import 'package:dartz/dartz.dart';
+
+Task<int> asyncTask() => Task(() async => 42);
+
+void main() {
+  asyncTask().run().then((value) => print("Value: $value")); // Outputs 42.
+}
+```
+
+## 4. Validation & Functional Utilities
+
+- **Validation:** A way to validate data through a combination of multiple operations — a more advanced form of error aggregation than `Either`.
+- **Utilities:** `fold`, `map`, `flatMap`, `filter`, etc. for manipulating data structures, plus **Tuples** (immutable fixed-length collections) and immutable collections like `IList` and `ISet`.
+
+## Benefits of Dartz
+
+- **Safe error handling:** Avoids traditional try-catch by making error states explicit via `Either`.
+- **Null safety:** `Option` ensures safer handling of potentially absent values.
+- **Immutability:** Encourages immutable data structures, avoiding bugs from mutable state.
+- **Composability:** `map`/`flatMap` allow transforming and chaining operations seamlessly.
+
+```dart
+import 'package:dartz/dartz.dart';
+
+Future<Either<String, int>> fetchData() async {
+  try {
+    int result = await Future.delayed(Duration(seconds: 1), () => 200);
+    return Right(result); // Success case.
+  } catch (e) {
+    return Left("Failed to fetch data"); // Failure case.
+  }
+}
+
+void main() async {
+  final result = await fetchData();
+  result.fold(
+    (error) => print("Error: $error"),
+    (data) => print("Data: $data"),
+  );
+}
+```
+
+# Diameter of Binary Tree (LeetCode 543)
+
+- Given the root of a binary tree, return the length of the **diameter** of the tree. The diameter is the length of the longest path between any two nodes; this path may or may not pass through the root. The length of a path is the number of **edges** between the nodes.
+
+**Approach (DFS):** For each node, the longest path passing through it equals the sum of the heights of its left and right subtrees. Traverse recursively, compute subtree heights, and track the maximum `leftHeight + rightHeight` seen.
+
+```dart
+class TreeNode {
+  int val;
+  TreeNode? left;
+  TreeNode? right;
+  TreeNode([this.val = 0, this.left, this.right]);
+}
+
+class Solution {
+  int _maxDiameter = 0;
+
+  int diameterOfBinaryTree(TreeNode? root) {
+    _calculateHeight(root);
+    return _maxDiameter;
+  }
+
+  int _calculateHeight(TreeNode? node) {
+    if (node == null) return 0;
+
+    int leftHeight = _calculateHeight(node.left);
+    int rightHeight = _calculateHeight(node.right);
+
+    // Update the maximum diameter (longest path through this node).
+    _maxDiameter = _maxDiameter > (leftHeight + rightHeight)
+        ? _maxDiameter
+        : (leftHeight + rightHeight);
+
+    // Return the height of the current node.
+    return 1 + (leftHeight > rightHeight ? leftHeight : rightHeight);
+  }
+}
+
+void main() {
+  TreeNode root = TreeNode(1);
+  root.left = TreeNode(2, TreeNode(4), TreeNode(5));
+  root.right = TreeNode(3);
+
+  Solution solution = Solution();
+  print(solution.diameterOfBinaryTree(root)); // Output: 3
+}
+```
+
+- **Why `return 1 + max(leftHeight, rightHeight)`?** It returns the height of the subtree rooted at the current node — the higher of the two child subtree heights, plus `1` for the edge connecting the node to that child. Propagating heights upward lets the algorithm compute the diameter in a single pass.
+- **Time complexity:** O(N) — each node is visited once. **Space complexity:** O(H) — recursion stack, where H is the tree height.
+
